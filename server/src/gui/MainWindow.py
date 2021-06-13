@@ -19,6 +19,7 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow):
             QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No,
             QtWidgets.QMessageBox.No)
         if result == QtWidgets.QMessageBox.Yes:
+            # TODO 保存聊天记录
             a0.accept()
             QtWidgets.QWidget.closeEvent(self, a0)
         else:

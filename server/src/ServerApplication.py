@@ -16,5 +16,4 @@ if __name__ == '__main__':
     window = MainWindow.MainWindow()
     window.show()
 
-    if app.exec_() == 0:
-        print("窗口关闭了，保存聊天记录")
+    sys.exit(app.exec_())

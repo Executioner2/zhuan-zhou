@@ -18,8 +18,8 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
     mouseClick = QtCore.pyqtSignal(object)
     headColor = None # 头像颜色
     username = None # 用户名
-    msgWidgetList = []
-    msgType = {}
+    msgWidgetList = [] # 消息widget集合
+    groupPositionList = [] # 群组坐标集合
 
     """重写鼠标点击信号"""
     def mouseReleaseEvent(self, a0: QtGui.QMouseEvent) -> None:
@@ -37,23 +37,27 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
             QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No,
             QtWidgets.QMessageBox.No)
         if result == QtWidgets.QMessageBox.Yes:
+            # TODO 保存聊天记录
             a0.accept()
             QtWidgets.QWidget.closeEvent(self, a0)
         else:
             a0.ignore()
 
+    """初始化"""
     def __init__(self):
         super(MainWindow, self).__init__()
         self.setupUi(self)
         # 绑定发送按钮（当发送按钮发送消息时追加消息）
         # self.pushBtn.clicked.connect(self.addReceiveMsgWidgets)
         self.pushBtn.clicked.connect(self.addSendMsgWidgets)
-        self.mouseClick.connect(self.testFun)
+        self.mouseClick.connect(self.checkClickGroup)
 
-
-    """测试"""
-    def testFun(self, a0: QtGui.QMouseEvent):
-        print("x:{}  y:{}".format(a0.x(), a0.y()))
+    """检测是否点击到了群组列表"""
+    def checkClickGroup(self, a0: QtGui.QMouseEvent):
+        for index, item in enumerate(self.groupPositionList):
+            if a0.x() >= item[0] and a0.x() <= item[1] and a0.y() >= item[2] and a0.y() <= item[3]:
+                print("第{}组被点击了".format(index+1))
+                break
 
     """接收到登录页跳转信号"""
     def recevieSkipSignal(self, loginDto:LoginDto):
@@ -63,9 +67,9 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
         # 获得groupVL中所有的widget（所有分组）
         for index in range(self.groupVL.count()):
             child = self.groupVL.itemAt(index).widget()
-            print(child.x(), child.width()+child.x())
-            print(child.y(), child.height()+child.y())
-            print("==========")
+            tempTuple = (child.x(), child.width() + child.x(), child.y(),
+                         child.height() + child.y())  # (left_x, right_x, top_y, bottom_y)
+            self.groupPositionList.append(tempTuple)
 
     """添加接收消息到聊天界面"""
     """
