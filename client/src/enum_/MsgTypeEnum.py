@@ -9,6 +9,6 @@
 
 from enum import Enum
 
-class MsgType(Enum):
+class MsgTypeEnum(Enum):
     SEND = 1
     RECEIVE = 0

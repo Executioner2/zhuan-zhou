@@ -8,10 +8,15 @@
 # version：1.0.0
 
 import datetime
-from enum_.MsgTypeEnum import MsgType
+from enum_.MsgTypeEnum import MsgTypeEnum
 
 class MsgWidgetUtil:
     def __init__(self):
+        pass
+
+    """刷新（重新设置坐标）"""
+    @staticmethod
+    def refresh():
         pass
 
     """设置显示效果（widget大小位置以及scroll大小）"""
@@ -42,8 +47,8 @@ class MsgWidgetUtil:
 
     """设置title样式"""
     @staticmethod
-    def setTitleStyle(title, name:str, msgType:MsgType):
-        if msgType.value == MsgType.SEND.value:
+    def setTitleStyle(title, name:str, msgType:MsgTypeEnum):
+        if msgType.value == MsgTypeEnum.SEND.value:
             title.setText("{} {}".format(datetime.datetime.now().replace(microsecond=0), name))
         else:
             title.setText("{} {}".format(name, datetime.datetime.now().replace(microsecond=0)))

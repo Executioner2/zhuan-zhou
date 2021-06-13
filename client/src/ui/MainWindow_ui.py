@@ -215,4 +215,3 @@ class Ui_MainWindow(object):
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9.16364pt;\"><br /></p></body></html>"))
         self.textEdit.setPlaceholderText(_translate("MainWindow", "此处输入文字...  "))
         self.pushBtn.setText(_translate("MainWindow", "发送"))
-import MainWindow_rc
