@@ -10,7 +10,7 @@
 from ui import MainWindow_ui
 from enum_.MsgTypeEnum import MsgType
 from util.MsgWidgetUtil import MsgWidgetUtil
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtGui, QtCore
 from dto import LoginDto
 
 # 该用户的颜色
@@ -18,22 +18,35 @@ ONESELF_COLOR = None
 # 用户名
 USER_NAME = None
 
-class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow):
+class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObject):
+    mouseClick = QtCore.pyqtSignal(object)
+    def mouseReleaseEvent(self, a0: QtGui.QMouseEvent) -> None:
+        self.mouseClick.emit(a0)
+
     headColor = None
     username = None
     def __init__(self):
         super(MainWindow, self).__init__()
         self.setupUi(self)
-        # 设置窗口固定大小
-        self.setFixedSize(self.width(), self.height())
         # 绑定发送按钮（当发送按钮发送消息时追加消息）
         # self.pushBtn.clicked.connect(self.addReceiveMsgWidgets)
         self.pushBtn.clicked.connect(self.addSendMsgWidgets)
+        self.mouseClick.connect(self.testFun)
 
+
+
+    """测试"""
+    def testFun(self, a0: QtGui.QMouseEvent):
+        print("x:{}  y:{}".format(a0.x(), a0.y()))
+
+    """接收到登录页跳转信号"""
     def recevieSkipSignal(self, loginDto:LoginDto):
         self.show()
         self.headColor = loginDto.headStyle
         self.username = loginDto.cryp if loginDto.cryp else loginDto.token
+
+        print(self.horizontalLayout.geometry().x())
+        print(self.horizontalLayout.geometry().y())
 
     """添加接收消息到聊天界面"""
     def addReceiveMsgWidgets(self):

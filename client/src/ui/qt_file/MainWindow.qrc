@@ -1,0 +1,7 @@
+<RCC>
+  <qresource prefix="image">
+    <file alias="group_1">QQ图片20210613153455.jpg</file>
+    <file alias="group_3">QQ图片20210613153054.jpg</file>
+    <file alias="group_2">QQ图片20210613151928.jpg</file>
+  </qresource>
+</RCC>
