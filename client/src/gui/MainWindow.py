@@ -39,7 +39,6 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
         self.mouseClick.connect(self.testFun)
 
 
-
     """测试"""
     def testFun(self, a0: QtGui.QMouseEvent):
         print("x:{}  y:{}".format(a0.x(), a0.y()))
@@ -49,6 +48,12 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
         self.show()
         self.headColor = loginDto.headStyle
         self.username = loginDto.cryp if loginDto.cryp else loginDto.token
+        # 获得groupVL中所有的widget（所有分组）
+        for index in range(self.groupVL.count()):
+            child = self.groupVL.itemAt(index).widget()
+            print(child.x(), child.width()+child.x())
+            print(child.y(), child.height()+child.y())
+            print("==========")
 
     """添加接收消息到聊天界面"""
     """
