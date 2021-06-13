@@ -2,15 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="824463d5-eacc-4b7d-bb38-0e74345ac0a3" name="Default Changelist" comment="agc">
-      <change afterPath="$PROJECT_DIR$/client/src/ui/qt_file/MainWindow_rc.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/ui/qt_file/MainWindow_rc_rc.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MainWindow_ui.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MainWindow_ui.ui" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/gui/MainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/gui/MainWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/ui/MainWindow_ui.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/ui/MainWindow_ui.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/ui/qt_file/MainWindow.qrc" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/ui/qt_file/MainWindow_rc.qrc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/ui/qt_file/MainWindow_ui.ui" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/ui/qt_file/MainWindow_ui.ui" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,16 +32,17 @@
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/server/src/ui" />
     <property name="settings.editor.selected.configurable" value="preferences.externalTools" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\PythonProject\study\pythonProject\agc\server\src\ui" />
       <recent name="E:\PythonProject\study\pythonProject\agc" />
       <recent name="E:\PythonProject\study\pythonProject\agc\client\src\ui" />
-      <recent name="E:\PythonProject\study\pythonProject\agc\server\src\ui" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\PythonProject\study\pythonProject\agc\server\src\ui" />
       <recent name="E:\PythonProject\study\pythonProject\agc\client\src\ui\qt_file" />
       <recent name="E:\PythonProject\study\pythonProject\agc\client\src\ui" />
       <recent name="E:\PythonProject\study\pythonProject\agc\server\src" />
@@ -172,7 +165,21 @@
       <option name="project" value="LOCAL" />
       <updated>1623576977764</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="agc">
+      <created>1623583295329</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1623583295329</updated>
+    </task>
+    <task id="LOCAL-00007" summary="agc">
+      <created>1623583571254</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1623583571254</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

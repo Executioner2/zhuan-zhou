@@ -30,6 +30,18 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
         # 重新设置sendWidget的坐标
         MsgWidgetUtil.refresh(self.scrollArea, self.scrollWidget, self.msgWidgetList)
 
+    """重写关闭确认"""
+    def closeEvent(self, a0: QtGui.QCloseEvent) -> None:
+        result = QtWidgets.QMessageBox.question(
+            self, "退出客户端", "确认要退出客户端？",
+            QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No,
+            QtWidgets.QMessageBox.No)
+        if result == QtWidgets.QMessageBox.Yes:
+            a0.accept()
+            QtWidgets.QWidget.closeEvent(self, a0)
+        else:
+            a0.ignore()
+
     def __init__(self):
         super(MainWindow, self).__init__()
         self.setupUi(self)
