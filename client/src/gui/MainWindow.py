@@ -27,26 +27,8 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
 
     """重写窗口缩放事件"""
     def resizeEvent(self, a0: QtGui.QResizeEvent) -> None:
-        # 取得scrollWidget原始宽度-5
-        scrollWidth = self.scrollArea.width() - 5
-        for item in self.msgWidgetList:
-            if item["type"] == MsgTypeEnum.SEND:
-                widget = item["widget"]
-                kinds = widget.children()
-                # 按照title userHead content的顺序取子项
-                if isinstance(kinds[0], QtWidgets.QLabel):
-                    # 设置title坐标
-                    kinds[0].move(scrollWidth - kinds[0].width() - 25, 10)
-                if isinstance(kinds[1], QtWidgets.QLabel):
-                    # 设置头像坐标
-                    kinds[1].move(scrollWidth - kinds[1].width() - 25, 35)
-                if isinstance(kinds[2], QtWidgets.QLabel):
-                    # 设置content坐标
-                    kinds[2].move(scrollWidth - kinds[2].width() - kinds[1].width() - 30, 35)
-                # 更新widget长度
-                widget.setFixedWidth(scrollWidth)
-        # 更新滚动widget最小宽度
-        self.scrollWidget.setMinimumWidth(scrollWidth - 19)
+        # 重新设置sendWidget的坐标
+        MsgWidgetUtil.refresh(self.scrollArea, self.scrollWidget, self.msgWidgetList)
 
     def __init__(self):
         super(MainWindow, self).__init__()

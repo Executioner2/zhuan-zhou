@@ -8,6 +8,7 @@
 # version：1.0.0
 
 import datetime
+from PyQt5 import QtWidgets
 from enum_.MsgTypeEnum import MsgTypeEnum
 
 class MsgWidgetUtil:
@@ -16,8 +17,27 @@ class MsgWidgetUtil:
 
     """刷新（重新设置坐标）"""
     @staticmethod
-    def refresh():
-        pass
+    def refresh(scrollArea, scrollWidget, msgWidgetList):
+        # 取得scrollWidget原始宽度-5
+        scrollWidth = scrollArea.width() - 5
+        for item in msgWidgetList:
+            if item["type"] == MsgTypeEnum.SEND:
+                widget = item["widget"]
+                kinds = widget.children()
+                # 按照title userHead content的顺序取子项
+                if isinstance(kinds[0], QtWidgets.QLabel):
+                    # 设置title坐标
+                    kinds[0].move(scrollWidth - kinds[0].width() - 25, 10)
+                if isinstance(kinds[1], QtWidgets.QLabel):
+                    # 设置头像坐标
+                    kinds[1].move(scrollWidth - kinds[1].width() - 25, 35)
+                if isinstance(kinds[2], QtWidgets.QLabel):
+                    # 设置content坐标
+                    kinds[2].move(scrollWidth - kinds[2].width() - kinds[1].width() - 30, 35)
+                # 更新widget长度
+                widget.setFixedWidth(scrollWidth)
+        # 更新滚动widget最小宽度
+        scrollWidget.setMinimumWidth(scrollWidth - 19)
 
     """设置显示效果（widget大小位置以及scroll大小）"""
     @staticmethod
