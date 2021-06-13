@@ -10,7 +10,7 @@
 from ui import MainWindow_ui
 from PyQt5 import QtWidgets
 
-class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_Form):
+class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
 
