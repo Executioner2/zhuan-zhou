@@ -12,6 +12,7 @@ from enum_.MsgTypeEnum import MsgTypeEnum
 from client.src.util.MsgWidgetUtil import MsgWidgetUtil
 from PyQt5 import QtWidgets, QtGui, QtCore
 from dto import LoginDto
+from handler import MyTextEdit
 
 
 class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObject):
@@ -52,14 +53,15 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
     def __init__(self):
         super(MainWindow, self).__init__()
         self.setupUi(self)
-        # 绑定发送按钮（当发送按钮发送消息时追加消息）
-        # self.pushBtn.clicked.connect(self.addReceiveMsgWidgets)
-        self.pushBtn.clicked.connect(self.sendMsg)
+        # 鼠标点击事件
         self.mouseClick.connect(self.checkClickGroup)
-
+        # 绑定发送按钮（当发送按钮发送消息时追加消息）
+        self.pushBtn.clicked.connect(self.sendMsg)
+        self.textEdit.sendSignal.connect(self.sendMsg)
 
     """检测是否点击到了群组列表"""
     def checkClickGroup(self, a0: QtGui.QMouseEvent):
+        flag = False
         for index, item in enumerate(self.groupPositionList):
             if a0.x() >= item[0] and a0.x() <= item[1] and a0.y() >= item[2] and a0.y() <= item[3]:
                 if self.checkedGroupIndex == index:
@@ -68,15 +70,18 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
                 else:
                     # 如果不是当前选中的分组，那么把当前的分组中的输入消息记录存入inputBoxList中
                     self.inputBoxList[self.checkedGroupIndex] = self.textEdit.toPlainText()
-                # 遍历设置所有群组无背景色
-                for temp in self.groupVLList:
-                    temp.setStyleSheet("")
-                # 设置当前选中的群组的背景色
-                self.groupVLList[index].setStyleSheet("background-color: rgb(186, 186, 186)")
-                self.checkedGroupIndex = index # 设置当前选中的群组的下标
-                break
-        # 重绘聊天区域
-        MsgWidgetUtil.redraw(self.verticalLayout, self.scrollWidget, self.groupMsgWidgetList[self.checkedGroupIndex],
+                    flag = True
+                    # 遍历设置所有群组无背景色
+                    for temp in self.groupVLList:
+                        temp.setStyleSheet("")
+                    # 设置当前选中的群组的背景色
+                    self.groupVLList[index].setStyleSheet("background-color: rgb(186, 186, 186)")
+                    self.checkedGroupIndex = index # 设置当前选中的群组的下标
+                    break
+        # 选中的是群组才重绘
+        if flag:
+            # 重绘聊天区域
+            MsgWidgetUtil.redraw(self.verticalLayout, self.scrollWidget, self.groupMsgWidgetList[self.checkedGroupIndex],
                              self.scrollArea, self.textEdit, self.inputBoxList[self.checkedGroupIndex])
 
     """接收到登录页跳转信号"""

@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="824463d5-eacc-4b7d-bb38-0e74345ac0a3" name="Default Changelist" comment="agc">
+      <change afterPath="$PROJECT_DIR$/client/src/handler/MyTextEdit.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/gui/MainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/gui/MainWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/util/MsgWidgetUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/util/MsgWidgetUtil.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/ui/MainWindow_ui.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/ui/MainWindow_ui.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -234,7 +235,21 @@
       <option name="project" value="LOCAL" />
       <updated>1623758001875</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="agc">
+      <created>1623764567024</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1623764567024</updated>
+    </task>
+    <task id="LOCAL-00013" summary="agc">
+      <created>1623764865564</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1623764865564</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

@@ -9,6 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from handler import MyTextEdit
 
 
 class Ui_MainWindow(object):
@@ -181,7 +182,8 @@ class Ui_MainWindow(object):
         self.verticalLayout.setObjectName("verticalLayout")
         self.scrollArea.setWidget(self.scrollWidget)
         self.chatLayout.addWidget(self.scrollArea)
-        self.textEdit = QtWidgets.QTextEdit(self.centralwidget)
+        # self.textEdit = QtWidgets.QTextEdit(self.centralwidget)
+        self.textEdit = MyTextEdit.MyTextEdit(self.centralwidget)
         self.textEdit.setEnabled(True)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
@@ -222,4 +224,6 @@ class Ui_MainWindow(object):
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9.16364pt;\"><br /></p></body></html>"))
         self.textEdit.setPlaceholderText(_translate("MainWindow", "此处输入文字...  "))
         self.pushBtn.setText(_translate("MainWindow", "发送"))
+
 import ui.qt_file.MainWindow_rc
+
