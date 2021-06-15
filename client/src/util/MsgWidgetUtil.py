@@ -38,9 +38,8 @@ class MsgWidgetUtil:
             widgetHeight += maxHeight + minHeight + 25 + 6
         # 修改scrollWidget尺寸
         scrollWidget.setMinimumSize(scrollWidth - 19, scrollWidget.minimumHeight() + widgetHeight + 6)
-        # 滚动条自动滚动到最下方
-        scrollBar = scrollArea.verticalScrollBar()
-        scrollBar.setValue(scrollWidget.minimumHeight())
+        # 刷新
+        MsgWidgetUtil.refresh(scrollArea, scrollWidget, msgWidgetList)
         # 重设输入框文本
         textEdit.setPlainText(inputText)
         # 光标移动至最后
@@ -69,6 +68,9 @@ class MsgWidgetUtil:
                 widget.setFixedWidth(scrollWidth)
         # 更新滚动widget最小宽度
         scrollWidget.setMinimumWidth(scrollWidth - 19)
+        # 滚动条自动滚动到最下方
+        scrollBar = scrollArea.verticalScrollBar()
+        scrollBar.setValue(scrollWidget.minimumHeight())
 
     """设置显示效果（widget大小位置以及scroll大小）"""
     @staticmethod
