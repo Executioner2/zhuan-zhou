@@ -5,7 +5,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/gui/MainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/gui/MainWindow.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/util/MsgWidgetUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/util/MsgWidgetUtil.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/util/MsgWidgetUtil.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -143,8 +142,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.ClientApplication" />
-        <item itemvalue="Python.TokenUtil" />
         <item itemvalue="Python.ServerApplication" />
+        <item itemvalue="Python.TokenUtil" />
         <item itemvalue="Python.changeSize" />
       </list>
     </recent_temporary>
@@ -228,7 +227,14 @@
       <option name="project" value="LOCAL" />
       <updated>1623753769172</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="agc">
+      <created>1623758001875</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1623758001875</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -267,5 +273,16 @@
     </ignored-roots>
     <MESSAGE value="agc" />
     <option name="LAST_COMMIT_MESSAGE" value="agc" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

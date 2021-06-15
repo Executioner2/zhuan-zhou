@@ -8,7 +8,7 @@
 # version：1.0.0
 
 import datetime
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtGui
 from enum_.MsgTypeEnum import MsgTypeEnum
 
 class MsgWidgetUtil:
@@ -17,8 +17,34 @@ class MsgWidgetUtil:
 
     """完全重绘"""
     @staticmethod
-    def redraw():
-        pass
+    def redraw(layout, scrollWidget, msgWidgetList, scrollArea, textEdit, inputText):
+        # 隐藏layout中所有widget
+        for index in range(layout.count()):
+            layout.itemAt(index).widget().hide()
+        # 重置scrollWidget的最小尺寸
+        scrollWidget.setMinimumSize(0, 0)
+        # 取得滚动窗口的宽度
+        scrollWidth = scrollArea.width() - 5
+        # 循环显示layout中指定的widget
+        widgetHeight = 0
+        for item in msgWidgetList:
+            heightList = []
+            widget = item['widget']
+            widget.show()
+            for kids in widget.children():
+                heightList.append(kids.height())
+            maxHeight = max(heightList)
+            minHeight = min(heightList)
+            widgetHeight += maxHeight + minHeight + 25 + 6
+        # 修改scrollWidget尺寸
+        scrollWidget.setMinimumSize(scrollWidth - 19, scrollWidget.minimumHeight() + widgetHeight + 6)
+        # 滚动条自动滚动到最下方
+        scrollBar = scrollArea.verticalScrollBar()
+        scrollBar.setValue(scrollWidget.minimumHeight())
+        # 重设输入框文本
+        textEdit.setPlainText(inputText)
+        # 光标移动至最后
+        textEdit.moveCursor(QtGui.QTextCursor.End)
 
     """刷新（重新设置坐标）"""
     @staticmethod
@@ -60,7 +86,7 @@ class MsgWidgetUtil:
         if checkedGroupIndex == None: return
         # 添加到layout中
         layout.addWidget(widget)
-        # 设置scrollWidget的最小高度
+        # 设置scrollWidget的最小尺寸
         scrollWidget.setMinimumSize(scrollWidth - 19, scrollWidget.minimumHeight() + widgetHeight + 6)
         # 滚动条自动滚动到最下方
         scrollBar = scrollArea.verticalScrollBar()

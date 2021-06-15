@@ -18,8 +18,7 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
     mouseClick = QtCore.pyqtSignal(object)
     headColor = None # 头像颜色
     username = None # 用户名
-    msgWidgetList = [] # 消息widget集合
-    groupMsgWidgetList = [] # 群组消息widget集合，用于存放上面的widget集合
+    groupMsgWidgetList = [] # 群组消息widget集合，用于存放msgWidget集合
     groupPositionList = [] # 群组坐标集合
     groupVLList = [] # 群组对象集合
     checkedGroupIndex = 0 # 选中的群组的下标，默认第一个分组
@@ -32,7 +31,9 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
     """重写窗口缩放事件"""
     def resizeEvent(self, a0: QtGui.QResizeEvent) -> None:
         # 重新设置sendWidget的坐标
-        MsgWidgetUtil.refresh(self.scrollArea, self.scrollWidget, self.msgWidgetList)
+        if len(self.groupMsgWidgetList) > 0:
+            msgWidgetList = self.groupMsgWidgetList[self.checkedGroupIndex]
+            MsgWidgetUtil.refresh(self.scrollArea, self.scrollWidget, msgWidgetList)
 
     """重写关闭确认"""
     def closeEvent(self, a0: QtGui.QCloseEvent) -> None:
@@ -74,12 +75,9 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
                 self.groupVLList[index].setStyleSheet("background-color: rgb(186, 186, 186)")
                 self.checkedGroupIndex = index # 设置当前选中的群组的下标
                 break
-        # TODO 重绘聊天区域
-        # 重设输入框文本
-        self.textEdit.setPlainText(self.inputBoxList[self.checkedGroupIndex])
-        # 光标移动至最后
-        self.textEdit.moveCursor(QtGui.QTextCursor.End)
-
+        # 重绘聊天区域
+        MsgWidgetUtil.redraw(self.verticalLayout, self.scrollWidget, self.groupMsgWidgetList[self.checkedGroupIndex],
+                             self.scrollArea, self.textEdit, self.inputBoxList[self.checkedGroupIndex])
 
     """接收到登录页跳转信号"""
     def recevieSkipSignal(self, loginDto:LoginDto):
@@ -93,9 +91,9 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
             tempTuple = (child.x(), child.width() + child.x(), child.y(),
                          child.height() + child.y())  # (left_x, right_x, top_y, bottom_y)
             self.groupPositionList.append(tempTuple)
+            self.groupMsgWidgetList.append([]) # 不要用下面的*来创建，创建的是同一个list
         # 初始化数据框list的大小
         self.inputBoxList = [""] * self.groupVL.count()
-        self.groupMsgWidgetList = [[]] * self.groupVL.count()
 
 
     """通过socket发送消息"""
@@ -113,7 +111,6 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
         # 添加到集合中
         msgObj = {"widget":widget, "type":MsgTypeEnum.RECEIVE}
         self.groupMsgWidgetList[self.checkedGroupIndex].append(msgObj)
-        self.msgWidgetList.append(msgObj)
 
 
     """添加发送到聊天界面"""
@@ -123,6 +120,6 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
                                               MsgTypeEnum.SEND, self.username, self.headColor, msg, self.checkedGroupIndex)
         # 添加到集合中
         msgObj = {"widget": widget, "type": MsgTypeEnum.SEND}
-        self.msgWidgetList.append(msgObj)
+        self.groupMsgWidgetList[self.checkedGroupIndex].append(msgObj)
         # 清空textEdit的内容
         self.textEdit.clear()
