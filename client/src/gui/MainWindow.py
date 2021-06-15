@@ -7,7 +7,7 @@
 # editBy：
 # version：1.0.0
 
-from ui import MainWindow_ui
+from client.src.ui import MainWindow_ui
 from enum_.MsgTypeEnum import MsgTypeEnum
 from util.MsgWidgetUtil import MsgWidgetUtil
 from PyQt5 import QtWidgets, QtGui, QtCore
@@ -20,6 +20,9 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
     username = None # 用户名
     msgWidgetList = [] # 消息widget集合
     groupPositionList = [] # 群组坐标集合
+    groupVLList = [] # 群组对象集合
+    checkedGroupIndex = 0 # 选中的群组的下标，默认第一个分组
+    inputBoxList = [] # 输入框的内容
 
     """重写鼠标点击信号"""
     def mouseReleaseEvent(self, a0: QtGui.QMouseEvent) -> None:
@@ -51,13 +54,33 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
         # self.pushBtn.clicked.connect(self.addReceiveMsgWidgets)
         self.pushBtn.clicked.connect(self.addSendMsgWidgets)
         self.mouseClick.connect(self.checkClickGroup)
+        self.textEdit.textChanged.connect(self.textEditChange)
 
     """检测是否点击到了群组列表"""
     def checkClickGroup(self, a0: QtGui.QMouseEvent):
         for index, item in enumerate(self.groupPositionList):
             if a0.x() >= item[0] and a0.x() <= item[1] and a0.y() >= item[2] and a0.y() <= item[3]:
-                print("第{}组被点击了".format(index+1))
+                if self.checkedGroupIndex == index:
+                    # 如果当前点击了已经选中的群组就直接返回
+                    return
+                else:
+                    # 如果不是当前选中的分组，那么把当前的分组中的输入消息记录存入inputBoxList中
+                    self.inputBoxList[self.checkedGroupIndex] = self.textEdit.toPlainText()
+                # 遍历设置所有群组无背景色
+                for temp in self.groupVLList:
+                    temp.setStyleSheet("")
+                # 设置当前选中的群组的背景色
+                self.groupVLList[index].setStyleSheet("background-color: rgb(186, 186, 186)")
+                self.checkedGroupIndex = index # 设置当前选中的群组的下标
                 break
+        # TODO 重绘聊天区域
+        # 重设输入框文本
+        self.textEdit.setPlainText(self.inputBoxList[self.checkedGroupIndex])
+        # 光标移动至最后
+        self.textEdit.moveCursor(QtGui.QTextCursor.End)
+
+
+
 
     """接收到登录页跳转信号"""
     def recevieSkipSignal(self, loginDto:LoginDto):
@@ -67,9 +90,16 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
         # 获得groupVL中所有的widget（所有分组）
         for index in range(self.groupVL.count()):
             child = self.groupVL.itemAt(index).widget()
+            self.groupVLList.append(child) # 把群组存入群组集合
             tempTuple = (child.x(), child.width() + child.x(), child.y(),
                          child.height() + child.y())  # (left_x, right_x, top_y, bottom_y)
             self.groupPositionList.append(tempTuple)
+        # 初始化数据框list的大小
+        self.inputBoxList = [""] * self.groupVL.count()
+
+    """文本框输入"""
+    def textEditChange(self):
+        pass
 
     """添加接收消息到聊天界面"""
     """

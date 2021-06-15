@@ -15,6 +15,11 @@ class MsgWidgetUtil:
     def __init__(self):
         pass
 
+    """完全重绘"""
+    @staticmethod
+    def redraw():
+        pass
+
     """刷新（重新设置坐标）"""
     @staticmethod
     def refresh(scrollArea, scrollWidget, msgWidgetList):
