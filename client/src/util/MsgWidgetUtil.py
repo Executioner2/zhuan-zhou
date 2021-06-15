@@ -46,7 +46,7 @@ class MsgWidgetUtil:
 
     """设置显示效果（widget大小位置以及scroll大小）"""
     @staticmethod
-    def setShowStyle(widget, scrollWidget, layout, scrollArea):
+    def setShowStyle(widget, scrollWidget, layout, scrollArea, checkedGroupIndex = None):
         itemList = widget.children()
         heightList = []
         for item in itemList:
@@ -56,6 +56,8 @@ class MsgWidgetUtil:
         scrollWidth = scrollArea.width() - 5
         widgetHeight = maxHeight + minHeight + 25
         widget.setFixedSize(scrollWidth, widgetHeight)
+        # 如果不是当前显示组则不显示
+        if checkedGroupIndex == None: return
         # 添加到layout中
         layout.addWidget(widget)
         # 设置scrollWidget的最小高度
@@ -104,3 +106,45 @@ class MsgWidgetUtil:
 
         # 设置样式表
         content.setStyleSheet("background-color: rgb(255, 255, 255); border-radius: 10px; padding: 10px; border: 2px solid gainsboro;")
+
+    """简单设置样式"""
+    """
+        注意：下列widget子组件的存储方式必须按title userHead content
+        的顺序存储，不然会导致组件样式出现意想不到的问题
+    """
+    @staticmethod
+    def simpleSetStyle(scrollWidget, verticalLayout, scrollArea, msgType:MsgTypeEnum, username = None, headColor = None, msg = "", checkedGroupIndex = None):
+        # 取得scrollWidget原始宽度-5
+        scrollWidth = scrollArea.width() - 5
+        # 创建widget 父组件为scrollWidget (滚动窗口)
+        widget = QtWidgets.QWidget(scrollWidget)
+        # 创建用户名，发送日期时间的label 父组件为widget
+        title = QtWidgets.QLabel(widget)
+        # 创建头像，父组件为widget
+        userHead = QtWidgets.QLabel(widget)
+        # 创建装消息内容的label 父组件为widget
+        content = QtWidgets.QLabel(widget)
+        if msgType == MsgTypeEnum.SEND:
+            # 设置title样式
+            MsgWidgetUtil.setTitleStyle(title, username, MsgTypeEnum.SEND)
+            # 设置头像样式
+            MsgWidgetUtil.setHeadStyle(userHead, headColor)
+            # 设置消息内容样式
+            MsgWidgetUtil.setTextStyle(content, msg)
+            title.move(scrollWidth - title.width() - 25, 10)
+            userHead.move(scrollWidth - userHead.width() - 25, 35)
+            content.move(scrollWidth - content.width() - userHead.width() - 30, 35)
+        elif msgType == MsgTypeEnum.RECEIVE:
+            # 设置title样式
+            MsgWidgetUtil.setTitleStyle(title, username, MsgTypeEnum.RECEIVE)
+            # 设置头像样式
+            MsgWidgetUtil.setHeadStyle(userHead, headColor)
+            # 设置消息内容样式
+            MsgWidgetUtil.setTextStyle(content, msg)
+            title.move(5, 10)
+            userHead.move(5, 35)
+            content.move(userHead.width() + 10, 35)
+
+        # 设置聊天框显示效果
+        MsgWidgetUtil.setShowStyle(widget, scrollWidget, verticalLayout, scrollArea, checkedGroupIndex)
+        return widget

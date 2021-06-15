@@ -9,7 +9,7 @@
 
 from client.src.ui import MainWindow_ui
 from enum_.MsgTypeEnum import MsgTypeEnum
-from util.MsgWidgetUtil import MsgWidgetUtil
+from client.src.util.MsgWidgetUtil import MsgWidgetUtil
 from PyQt5 import QtWidgets, QtGui, QtCore
 from dto import LoginDto
 
@@ -19,6 +19,7 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
     headColor = None # 头像颜色
     username = None # 用户名
     msgWidgetList = [] # 消息widget集合
+    groupMsgWidgetList = [] # 群组消息widget集合，用于存放上面的widget集合
     groupPositionList = [] # 群组坐标集合
     groupVLList = [] # 群组对象集合
     checkedGroupIndex = 0 # 选中的群组的下标，默认第一个分组
@@ -52,9 +53,9 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
         self.setupUi(self)
         # 绑定发送按钮（当发送按钮发送消息时追加消息）
         # self.pushBtn.clicked.connect(self.addReceiveMsgWidgets)
-        self.pushBtn.clicked.connect(self.addSendMsgWidgets)
+        self.pushBtn.clicked.connect(self.sendMsg)
         self.mouseClick.connect(self.checkClickGroup)
-        self.textEdit.textChanged.connect(self.textEditChange)
+
 
     """检测是否点击到了群组列表"""
     def checkClickGroup(self, a0: QtGui.QMouseEvent):
@@ -80,8 +81,6 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
         self.textEdit.moveCursor(QtGui.QTextCursor.End)
 
 
-
-
     """接收到登录页跳转信号"""
     def recevieSkipSignal(self, loginDto:LoginDto):
         self.show()
@@ -96,80 +95,32 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
             self.groupPositionList.append(tempTuple)
         # 初始化数据框list的大小
         self.inputBoxList = [""] * self.groupVL.count()
+        self.groupMsgWidgetList = [[]] * self.groupVL.count()
 
-    """文本框输入"""
-    def textEditChange(self):
-        pass
+
+    """通过socket发送消息"""
+    def sendMsg(self):
+        msg = self.textEdit.toPlainText()
+        # 先发送过去，发过去了再显示到聊天框中
+        self.addSendMsgWidgets(msg)
+
 
     """添加接收消息到聊天界面"""
-    """
-        注意：下列widget子组件的存储方式必须按title userHead content
-        的顺序存储，不然会导致组件样式出现意想不到的问题
-    """
-    def addReceiveMsgWidgets(self):
-        msg = self.textEdit.toPlainText()
-
-        # 创建widget 父组件为scrollWidget (滚动窗口)
-        widget = QtWidgets.QWidget(self.scrollWidget)
-        # 创建用户名，发送日期时间的label 父组件为widget
-        title = QtWidgets.QLabel(widget)
-        # 创建头像，父组件为widget
-        userHead = QtWidgets.QLabel(widget)
-        # 创建装消息内容的label 父组件为widget
-        content = QtWidgets.QLabel(widget)
-
-        # 设置title样式
-        MsgWidgetUtil.setTitleStyle(title, self.username, MsgTypeEnum.RECEIVE)
-        # 设置坐标
-        title.move(5, 10)
-        # 设置头像样式
-        MsgWidgetUtil.setHeadStyle(userHead, self.headColor)
-        # 设置坐标
-        userHead.move(5, 35)
-        # 设置消息内容样式
-        MsgWidgetUtil.setTextStyle(content, msg)
-        # 设置坐标
-        content.move(userHead.width() + 10, 35)
-        # 设置聊天框显示效果
-        MsgWidgetUtil.setShowStyle(widget, self.scrollWidget, self.verticalLayout, self.scrollArea)
+    def addReceiveMsgWidgets(self, msg, checkedGroupIndex = None):
+        # 超简单设置文本效果
+        widget = MsgWidgetUtil.simpleSetStyle(self.scrollWidget, self.verticalLayout, self.scrollArea,
+                                              MsgTypeEnum.RECEIVE, self.username, self.headColor, msg, checkedGroupIndex)
         # 添加到集合中
-        msgObj = {"widget": widget, "type":MsgTypeEnum.RECEIVE}
+        msgObj = {"widget":widget, "type":MsgTypeEnum.RECEIVE}
+        self.groupMsgWidgetList[self.checkedGroupIndex].append(msgObj)
         self.msgWidgetList.append(msgObj)
 
 
     """添加发送到聊天界面"""
-    """
-        注意：下列widget子组件的存储方式必须按title userHead content
-        的顺序存储，不然会导致组件样式出现意想不到的问题
-    """
-    def addSendMsgWidgets(self):
-        msg = self.textEdit.toPlainText()
-        # 取得scrollWidget原始宽度-5
-        scrollWidth = self.scrollArea.width() - 5
-
-        # 创建widget 父组件为scrollWidget (滚动窗口)
-        widget = QtWidgets.QWidget(self.scrollWidget)
-        # 创建用户名，发送日期时间的label 父组件为widget
-        title = QtWidgets.QLabel(widget)
-        # 创建头像，父组件为widget
-        userHead = QtWidgets.QLabel(widget)
-        # 创建装消息内容的label 父组件为widget
-        content = QtWidgets.QLabel(widget)
-
-        # 设置title样式
-        MsgWidgetUtil.setTitleStyle(title, self.username, MsgTypeEnum.SEND)
-        # 设置坐标
-        title.move(scrollWidth - title.width() - 25, 10)
-        # 设置头像样式
-        MsgWidgetUtil.setHeadStyle(userHead, self.headColor)
-        # 设置坐标
-        userHead.move(scrollWidth - userHead.width() - 25, 35)
-        # 设置消息内容样式
-        MsgWidgetUtil.setTextStyle(content, msg)
-        # 设置坐标
-        content.move(scrollWidth - content.width() - userHead.width() - 30, 35)
-        # 设置聊天框显示效果
-        MsgWidgetUtil.setShowStyle(widget, self.scrollWidget, self.verticalLayout, self.scrollArea)
+    def addSendMsgWidgets(self, msg):
+        # 超简单设置文本效果
+        widget = MsgWidgetUtil.simpleSetStyle(self.scrollWidget, self.verticalLayout, self.scrollArea,
+                                              MsgTypeEnum.SEND, self.username, self.headColor, msg, self.checkedGroupIndex)
         # 添加到集合中
         msgObj = {"widget": widget, "type": MsgTypeEnum.SEND}
         self.msgWidgetList.append(msgObj)
