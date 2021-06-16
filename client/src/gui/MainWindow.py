@@ -8,11 +8,10 @@
 # version：1.0.0
 
 from client.src.ui import MainWindow_ui
-from enum_.MsgTypeEnum import MsgTypeEnum
-from client.src.util.MsgWidgetUtil import MsgWidgetUtil
+from model.enum_.MsgTypeEnum import MsgTypeEnum
+from common.util.MsgWidgetUtil import MsgWidgetUtil
 from PyQt5 import QtWidgets, QtGui, QtCore
-from dto import LoginDto
-from handler import MyTextEdit
+from model.dto import LoginDto
 
 
 class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObject):
@@ -85,7 +84,7 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
                              self.scrollArea, self.textEdit, self.inputBoxList[self.checkedGroupIndex])
 
     """接收到登录页跳转信号"""
-    def recevieSkipSignal(self, loginDto:LoginDto):
+    def recevieSkipSignal(self, loginDto: LoginDto):
         self.show()
         self.headColor = loginDto.headStyle
         self.username = loginDto.cryp if loginDto.cryp else loginDto.token

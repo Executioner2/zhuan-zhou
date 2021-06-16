@@ -9,7 +9,9 @@
 
 from PyQt5 import QtCore
 
+
 class ClientSocketThread(QtCore.QThread):
     
-    def __init__(self):
+    def __init__(self, loginDto):
         super(ClientSocketThread, self).__init__()
+        self.loginDto = loginDto

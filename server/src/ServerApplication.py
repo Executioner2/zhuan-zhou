@@ -8,10 +8,11 @@
 # version：1.0.0
 
 import sys
-from server.src.gui import MainWindow
+
 from PyQt5 import QtWidgets
+
+from server.src.gui import MainWindow
 from server.src.signal import ServerSignal
-from server.src.thread_ import ServerSocketThread
 
 if __name__ == '__main__':
     # 自定义信号类

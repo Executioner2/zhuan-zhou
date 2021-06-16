@@ -45,7 +45,7 @@ class SocketService(QtCore.QThread):
             print("服务器已经关闭")
 
     """初始化"""
-    def __init__(self, serverSignal, parent = None):
+    def __init__(self, serverSignal):
         super(SocketService, self).__init__()
         self.serverSignal = serverSignal
         self.serverSignal.startupSignal.connect(self.startup)

@@ -9,8 +9,8 @@
 
 from ui import LoginWindow_ui
 from PyQt5 import QtWidgets, QtCore
-from enum_.HeadStyleEnum import HeadStyleEnum
-from dto import LoginDto
+from model.enum_.HeadStyleEnum import HeadStyleEnum
+from model.dto import LoginDto
 import re # 正则表达式
 
 
@@ -122,6 +122,7 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
         if self.crypCheck.isChecked():
             self._loginDto.cryp = "匿名用户" if self.crypLE.text().strip() else self.crypLE.text().strip()
         self.skipSignal.emit(self._loginDto)
+        # TODO 创建tcp连接
         self.close()
 
     """切换到配置页"""

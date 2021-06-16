@@ -2,10 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="824463d5-eacc-4b7d-bb38-0e74345ac0a3" name="Default Changelist" comment="agc">
-      <change afterPath="$PROJECT_DIR$/client/src/service/ClientSocketService.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/agc.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/agc.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/dto/LoginDto.py" beforeDir="false" afterPath="$PROJECT_DIR$/module/dto/LoginDto.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/gui/LoginWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/gui/LoginWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/gui/MainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/gui/MainWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/thread_/ClientSocketThread.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/thread_/ClientSocketThread.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/ServerApplication.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/ServerApplication.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/gui/MainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/gui/MainWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/service/SocketService.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/thread_/ServerSocketThread.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/thread_/ServerSocketThread.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/thread_/ServerSocketThread.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,7 +67,7 @@
       <recent name="E:\PythonProject\study\pythonProject\agc\server\src" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.ServerApplication">
+  <component name="RunManager" selected="Python.ClientApplication">
     <configuration name="ClientApplication" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="agc" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -171,11 +175,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.ClientApplication" />
         <item itemvalue="Python.ServerApplication" />
         <item itemvalue="Python.ServerSocketThread" />
         <item itemvalue="Python.SignalTest" />
         <item itemvalue="Python.customSignal" />
-        <item itemvalue="Python.ClientApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -293,7 +297,14 @@
       <option name="project" value="LOCAL" />
       <updated>1623851682780</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="agc">
+      <created>1623852430901</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1623852430901</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

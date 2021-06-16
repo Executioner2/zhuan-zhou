@@ -9,7 +9,7 @@
 
 import datetime
 from PyQt5 import QtWidgets, QtGui
-from enum_.MsgTypeEnum import MsgTypeEnum
+from model.enum_.MsgTypeEnum import MsgTypeEnum
 
 class MsgWidgetUtil:
     def __init__(self):
