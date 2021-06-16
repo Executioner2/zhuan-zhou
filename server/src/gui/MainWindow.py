@@ -7,10 +7,11 @@
 # editBy：
 # version：1.0.0
 
-from server.src.ui import MainWindow_ui
 from PyQt5 import QtWidgets, QtGui
-from server.src.service import SocketService
-from server.src.signal import ServerSignal
+
+from server.src.thread_ import ServerSocketThread
+from server.src.ui import MainWindow_ui
+
 
 class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow):
 
@@ -33,7 +34,7 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow):
         self.serverSignal = serverSignal
         self.startServerBtn.clicked.connect(self.onStartServerCliecked)
         # 启动socket服务线程
-        self.socketService = SocketService.SocketService(serverSignal)
+        self.socketService = ServerSocketThread.SocketService(serverSignal)
 
 
     """服务器开关"""

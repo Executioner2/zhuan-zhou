@@ -11,7 +11,7 @@ import sys
 from server.src.gui import MainWindow
 from PyQt5 import QtWidgets
 from server.src.signal import ServerSignal
-from server.src.service import SocketService
+from server.src.thread_ import ServerSocketThread
 
 if __name__ == '__main__':
     # 自定义信号类
