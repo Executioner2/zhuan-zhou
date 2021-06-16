@@ -7,8 +7,10 @@
 # editBy：
 # version：1.0.0
 
-from ui import MainWindow_ui
+from server.src.ui import MainWindow_ui
 from PyQt5 import QtWidgets, QtGui
+from server.src.service import SocketService
+from server.src.signal import ServerSignal
 
 class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow):
 
@@ -25,8 +27,24 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow):
         else:
             a0.ignore()
 
-    def __init__(self):
+    def __init__(self, serverSignal):
         super(MainWindow, self).__init__()
-
-        self.setDockNestingEnabled(True)
         self.setupUi(self)
+        self.serverSignal = serverSignal
+        self.startServerBtn.clicked.connect(self.onStartServerCliecked)
+        # 启动socket服务线程
+        self.socketService = SocketService.SocketService(serverSignal)
+
+
+    """服务器开关"""
+    def onStartServerCliecked(self):
+        if self.startServerBtn.text() == "启动服务器":
+            self.serverSignal.startupSignal.emit((self.serverIpLE.text(), int(self.serverPortLE.text())))
+            self.serverIpLE.setEnabled(False)
+            self.serverPortLE.setEnabled(False)
+            self.startServerBtn.setText("关闭服务器")
+        else:
+            self.serverSignal.shutdownSignal.emit()
+            self.serverIpLE.setEnabled(True)
+            self.serverPortLE.setEnabled(True)
+            self.startServerBtn.setText("启动服务器")

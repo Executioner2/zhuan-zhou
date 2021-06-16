@@ -8,12 +8,21 @@
 # version：1.0.0
 
 import sys
-from gui import MainWindow
+from server.src.gui import MainWindow
 from PyQt5 import QtWidgets
+from server.src.signal import ServerSignal
+from server.src.service import SocketService
 
 if __name__ == '__main__':
+    # 自定义信号类
+    serverSignal = ServerSignal.ServerSignal()
+
     app = QtWidgets.QApplication(sys.argv)
-    window = MainWindow.MainWindow()
+    window = MainWindow.MainWindow(serverSignal)
     window.show()
+
+    # 开启socket服务
+    # socketService = SocketService.SocketService()
+    # socketService.start(serverSignal)
 
     sys.exit(app.exec_())

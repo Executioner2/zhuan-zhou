@@ -10,11 +10,11 @@
 from PyQt5.QtCore import pyqtSignal,QObject
 class Signal(QObject):
     sendmsg = pyqtSignal(str)
-    def run(this, msg):
-        this.sendmsg.emit(msg)
+    def run(self, msg):
+        self.sendmsg.emit(msg)
 
 class Slot(QObject):
-    def get(this, msg):
+    def get(self, msg):
         print("收到了自定义信号1发来的信息：" + msg)
 
 if __name__ == '__main__':
@@ -22,5 +22,6 @@ if __name__ == '__main__':
     slot = Slot()
     msg.sendmsg.connect(slot.get)
     msg.run("干饭干饭！")
+
 
 
