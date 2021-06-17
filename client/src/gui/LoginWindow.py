@@ -12,6 +12,7 @@ from PyQt5 import QtWidgets, QtCore
 from model.enum_.HeadStyleEnum import HeadStyleEnum
 from model.dto import LoginDto
 import re # 正则表达式
+import socket
 
 
 class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject):
@@ -121,9 +122,29 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
         # 判断是否开启别称，如果开启则设置别称
         if self.crypCheck.isChecked():
             self._loginDto.cryp = "匿名用户" if self.crypLE.text().strip() else self.crypLE.text().strip()
+
+        # 这里直接创建socket，然后用户登录成功后把socket传入ClientSocketThread中去
+        clientSocket = self.__createClientSocket()
+        if clientSocket == None:
+            # 如果返回为空，则连接服务器失败
+            QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical, "连接服务器失败！")
+        else:
+            # 否则连接成功，开始用户登录
+            pass
+
         self.skipSignal.emit(self._loginDto)
-        # TODO 创建tcp连接
         self.close()
+
+    """创建client socket"""
+    def __createClientSocket(self):
+        serverIp = self.serverIpLE.text()
+        serverPort = int(self.serverPortLE.text())
+        clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        result = clientSocket.connect((serverIp, serverPort))
+        if result == None:
+            print("成功连接上服务器")
+            return clientSocket
+        return None
 
     """切换到配置页"""
     def config(self):

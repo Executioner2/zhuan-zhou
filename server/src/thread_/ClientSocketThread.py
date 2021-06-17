@@ -11,5 +11,5 @@ from PyQt5 import QtCore
 
 class ClientSocketThread(QtCore.QThread):
 
-    def __init__(self):
+    def __init__(self, clientSocketList, clientSocket, ):
         super(ClientSocketThread, self).__init__()
