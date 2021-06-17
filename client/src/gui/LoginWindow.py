@@ -19,6 +19,7 @@ from common.util.TokenUtil import TokenUtil
 from model.dto import LoginDto
 from model.enum_.HeadStyleEnum import HeadStyleEnum
 from ui import LoginWindow_ui
+from model.enum_.RegisterLeNameEnum import RegisterLeNameEnum
 
 
 class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject):
@@ -54,6 +55,21 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
         self.serverPortLE.editingFinished.connect(self.on_serverPortLE_editingFinished)
         # 别称
         self.crypCheck.clicked.connect(self.on_crypCheck_clicked)
+        # register LE失去焦点
+        self.registerUsernameLE.blurSignal.connect(self.on_register_blurSignal)
+        self.registerPasswordLE.blurSignal.connect(self.on_register_blurSignal)
+        self.registerCofirmPasswordLE.blurSignal.connect(self.on_register_blurSignal)
+
+    """register LE失去焦点时"""
+    def on_register_blurSignal(self, val):
+        if val == RegisterLeNameEnum.USERNAME.value:
+            if self.registerUsernameLE.text().strip() == "":
+                self.hint.setText("用户名不能为空")
+                self.hint.show()
+        elif val == RegisterLeNameEnum.PASSWORD.value:
+            pass
+        elif val == RegisterLeNameEnum.CONFIRM_PASSWORD.value:
+            pass
 
     """设置别称"""
     def on_crypCheck_clicked(self):

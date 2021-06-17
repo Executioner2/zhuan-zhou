@@ -2,12 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="824463d5-eacc-4b7d-bb38-0e74345ac0a3" name="Default Changelist" comment="agc">
-      <change afterPath="$PROJECT_DIR$/client/src/handler/MyLineEdit.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/enum_/RegisterLeNameEnum.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/gui/LoginWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/gui/LoginWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/handler/MyLineEdit.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/handler/MyLineEdit.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/ui/LoginWindow_ui.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/ui/LoginWindow_ui.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/ui/qt_file/LoginWindow_ui.ui" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/ui/qt_file/LoginWindow_ui.ui" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -365,7 +362,14 @@
       <option name="project" value="LOCAL" />
       <updated>1623937261934</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="agc">
+      <created>1623939190023</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1623939190023</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
