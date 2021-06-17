@@ -33,7 +33,7 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
         self._loginDto = LoginDto.LoginDto()
         self._loginDto.headStyle = HeadStyleEnum.GREEN.value['style'] # 头像默认为绿色
         # 绑定登录按钮
-        self.loginBtn.clicked.connect(self.on_loginBtn_clicked)
+        self.loginBtn.clicked.connect(self.on_loginBtn_clicke)
         # 绑定配置按钮
         self.configBtn.clicked.connect(self.on_configBtn_clicked)
         # 绑定注册跳转按钮
@@ -122,7 +122,14 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
                     break
 
     """登录"""
-    def on_loginBtn_clicked(self):
+    def on_loginBtn_clicke(self):
+        username = self.usernameLE.text().strip()
+        password = self.passwordLE.text().strip()
+        if username == "" or password == "":
+            msgHint = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Warning, "警告", "用户名或密码不能为空！")
+            msgHint.exec_()
+            return
+
         # 设置头像
         self.setHeadStyle()
         # 设置服务器ip和服务器端口
@@ -138,8 +145,7 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
             # 返回为空，则连接服务器失败
             msgHint = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical, "错误", "连接服务器失败！")
             msgHint.exec_()
-        else: # TODO socket
-            # 连接成功，开始用户登录
+        else: # 连接成功，开始用户登录
             # 封装用户名和密码，创建token
             token = TokenUtil.createToken(self.usernameLE.text(), self.passwordLE.text())
             # 封装传输对象

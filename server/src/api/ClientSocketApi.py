@@ -29,3 +29,7 @@ class ClientSocketApi:
     """用户注册"""
     def register(self):
         pass
+
+    """用户名重复性检测"""
+    def usernameCheck(self):
+        pass
