@@ -2,11 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="824463d5-eacc-4b7d-bb38-0e74345ac0a3" name="Default Changelist" comment="agc">
-      <change afterPath="$PROJECT_DIR$/common/result/IndexTableEnum.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/util/Json2ObjectUtil.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/gui/LoginWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/gui/LoginWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/result/Result.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/result/Result.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/gui/MainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/gui/MainWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/result/IndexTableEnum.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/result/IndexTableEnum.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/util/MsgWidgetUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/util/MsgWidgetUtil.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/util/TokenUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/util/TokenUtil.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/util/TransmitUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/util/TransmitUtil.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/thread_/ClientSocketThread.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/thread_/ClientSocketThread.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/thread_/ServerSocketThread.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/thread_/ServerSocketThread.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/test/Object2Json.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/test/Object2Json.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/test/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/test/test.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -65,7 +71,7 @@
       <recent name="E:\PythonProject\study\pythonProject\agc" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.test">
+  <component name="RunManager" selected="Python.ClientApplication">
     <configuration name="ClientApplication" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="agc" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -129,7 +135,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="ServerSocketThread" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="TokenUtil" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="agc" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -137,11 +143,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/server/src/service" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/common/util" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="E:\PythonProject\study\pythonProject\agc\server\src\service\ServerSocketThread.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/common/util/TokenUtil.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -173,11 +179,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.test" />
-        <item itemvalue="Python.Object2Json" />
         <item itemvalue="Python.ClientApplication" />
+        <item itemvalue="Python.test" />
+        <item itemvalue="Python.TokenUtil" />
         <item itemvalue="Python.ServerApplication" />
-        <item itemvalue="Python.ServerSocketThread" />
+        <item itemvalue="Python.Object2Json" />
       </list>
     </recent_temporary>
   </component>
@@ -316,7 +322,14 @@
       <option name="project" value="LOCAL" />
       <updated>1623923641050</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="agc">
+      <created>1623925852778</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1623925852778</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -358,6 +371,18 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/client/src/gui/LoginWindow.py</url>
+          <line>134</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/client/src/gui/LoginWindow.py</url>
+          <line>144</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+      </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">

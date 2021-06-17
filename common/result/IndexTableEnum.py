@@ -10,5 +10,6 @@
 from enum import Enum
 
 class IndexTableEnum(Enum):
-    LOGIN = "/login"
-    REGISTER = "/register"
+    LOGIN = "login"
+    REGISTER = "register"
+    NOTIFY = "notify"

@@ -19,6 +19,9 @@ class TokenUtil:
     # 加盐
     _salt = b"LK@NK#*&N!@"
 
+    def __init__(self):
+        pass
+
     @staticmethod
     def createToken(username:str, password:str):
         mapStr = '{"username":"'+username+'", "password":"'+password+'"}'
@@ -107,5 +110,6 @@ class TokenUtil:
 """测试"""
 if __name__ == '__main__':
     token = TokenUtil.createToken("zhangsan", "123321")
+    print(token)
     value = TokenUtil.getUserInfo(token)
     print(value)

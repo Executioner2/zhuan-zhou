@@ -9,7 +9,7 @@
 
 from client.src.ui import MainWindow_ui
 from model.enum_.MsgTypeEnum import MsgTypeEnum
-from common.util.MsgWidgetUtil import MsgWidgetUtil
+from common.util import MsgWidgetUtil
 from PyQt5 import QtWidgets, QtGui, QtCore
 from model.dto import LoginDto
 

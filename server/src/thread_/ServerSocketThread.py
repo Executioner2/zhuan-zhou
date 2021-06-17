@@ -9,6 +9,7 @@
 
 import socket
 import threading
+from server.src.thread_ import ClientSocketThread
 import time
 from PyQt5 import QtCore, QtWidgets
 
@@ -35,7 +36,7 @@ class SocketService(QtCore.QThread):
                 # 把客户端socket添加到列表中
                 self.clientList.append(clientSocket)
                 # 为这个客户端开启一个消息读取和发送的线程
-                clientThread = threading.Thread(target=self.clientMsgReadAndSend, args=(clientSocket,))
+                clientThread = ClientSocketThread.ClientSocketThread(self.clientList, clientSocket, clientAddress)
                 clientThread.start()
         except OSError:
             pass
@@ -50,10 +51,6 @@ class SocketService(QtCore.QThread):
         self.serverSignal = serverSignal
         self.serverSignal.startupSignal.connect(self.startup)
         self.serverSignal.shutdownSignal.connect(self.shutdown)
-
-    """读取和转发客户端消息"""
-    def clientMsgReadAndSend(self, clientSocekt):
-        pass
 
     """启动服务器"""
     def startup(self, address):
