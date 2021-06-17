@@ -19,9 +19,6 @@ class TokenUtil:
     # 加盐
     _salt = b"LK@NK#*&N!@"
 
-    def __init__(self):
-        pass
-
     @staticmethod
     def createToken(username:str, password:str):
         mapStr = '{"username":"'+username+'", "password":"'+password+'"}'

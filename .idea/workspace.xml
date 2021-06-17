@@ -2,14 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="824463d5-eacc-4b7d-bb38-0e74345ac0a3" name="Default Changelist" comment="agc">
-      <change afterPath="$PROJECT_DIR$/client/src/signal/ClientSignal.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/result/Result.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/result/ResultCodeEnum.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/util/TransmitUtil.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/test/Object2Json.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/result/IndexTableEnum.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/gui/LoginWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/gui/LoginWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/thread_/ClientSocketThread.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/thread_/ClientSocketThread.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/result/Result.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/result/Result.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/util/TokenUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/util/TokenUtil.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/test/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/test/test.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +65,7 @@
       <recent name="E:\PythonProject\study\pythonProject\agc" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.Object2Json">
+  <component name="RunManager" selected="Python.test">
     <configuration name="ClientApplication" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="agc" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -152,7 +150,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="SignalTest" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="agc" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -164,7 +162,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test/test/SignalTest.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test/test/test.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -175,11 +173,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.test" />
         <item itemvalue="Python.Object2Json" />
         <item itemvalue="Python.ClientApplication" />
         <item itemvalue="Python.ServerApplication" />
         <item itemvalue="Python.ServerSocketThread" />
-        <item itemvalue="Python.SignalTest" />
       </list>
     </recent_temporary>
   </component>
@@ -311,7 +309,14 @@
       <option name="project" value="LOCAL" />
       <updated>1623853356274</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="agc">
+      <created>1623923641050</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1623923641050</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

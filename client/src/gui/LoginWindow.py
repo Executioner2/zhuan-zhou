@@ -7,12 +7,20 @@
 # editBy：
 # version：1.0.0
 
-from ui import LoginWindow_ui
-from PyQt5 import QtWidgets, QtCore
-from model.enum_.HeadStyleEnum import HeadStyleEnum
-from model.dto import LoginDto
-import re # 正则表达式
+import re  # 正则表达式
 import socket
+
+from PyQt5 import QtWidgets, QtCore
+
+from common.result.Result import Result
+from common.result.IndexTableEnum import IndexTableEnum
+from common.util.TokenUtil import TokenUtil
+from common.util.TransmitUtil import TransmitUtil
+from model.dto import LoginDto
+from model.enum_.HeadStyleEnum import HeadStyleEnum
+from ui import LoginWindow_ui
+
+from common.result import *
 
 
 class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject):
@@ -126,11 +134,16 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
         # 这里直接创建socket，然后用户登录成功后把socket传入ClientSocketThread中去
         clientSocket = self.__createClientSocket()
         if clientSocket == None:
-            # 如果返回为空，则连接服务器失败
+            # 返回为空，则连接服务器失败
             QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical, "连接服务器失败！")
         else:
-            # 否则连接成功，开始用户登录
-            pass
+            # 连接成功，开始用户登录
+            # 封装用户名和密码，创建token
+            token = TokenUtil.createToken(self.usernameLE.text(), self.passwordLE.text())
+            # 封装传输对象
+            result = Result.ok(IndexTableEnum.LOGIN, token)
+            # 发送
+            TransmitUtil.send(clientSocket, result)
 
         self.skipSignal.emit(self._loginDto)
         self.close()
