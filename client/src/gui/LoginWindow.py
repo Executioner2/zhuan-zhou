@@ -60,7 +60,7 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
         self.registerPasswordLE.blurSignal.connect(self.on_register_blurSignal)
         self.registerCofirmPasswordLE.blurSignal.connect(self.on_register_blurSignal)
 
-    """register LE失去焦点时"""
+    """register LE失去焦点时""" # TODO 从这里开始写
     def on_register_blurSignal(self, val):
         if val == RegisterLeNameEnum.USERNAME.value:
             if self.registerUsernameLE.text().strip() == "":
