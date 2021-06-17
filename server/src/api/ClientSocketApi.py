@@ -7,6 +7,10 @@
 # editBy：
 # version：1.0.0
 
+from common.util import TransmitUtil
+from common.result.Result import Result
+
+
 class ClientSocketApi:
 
     """消息群发"""
@@ -14,12 +18,14 @@ class ClientSocketApi:
         pass
 
     """用户登录"""
-
-    def login(self, token):
+    def login(self, params):
+        socket = params[0]
+        token = params[1]
         print("开始执行用户登录")
-        pass
+        print(token)
+        TransmitUtil.send(socket, Result.ok("", True))
+
 
     """用户注册"""
-
     def register(self):
         pass

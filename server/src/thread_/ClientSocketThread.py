@@ -22,8 +22,8 @@ class ClientSocketThread(QtCore.QThread):
                     data = Json2ObjectUtil.jsonToObject(result["data"])
                     print(result["url"])
                     fun = getattr(ClientSocketApi(), result["url"])
-                    # print(self.fun)
-                    fun(data) # 调用有参数的方法
+                    params = (self.clientSocket, data)
+                    fun(params) # 调用有参数的方法
                 except AttributeError:
                     continue
                 except TypeError: # 出现此错误说明该方法没有参数，注：url的方法只能有一个参数
