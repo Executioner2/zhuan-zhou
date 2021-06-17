@@ -2,13 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="824463d5-eacc-4b7d-bb38-0e74345ac0a3" name="Default Changelist" comment="agc">
-      <change afterPath="$PROJECT_DIR$/common/handler/MyEncoder.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/api/ClientSocketApi.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/gui/LoginWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/gui/LoginWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/util/TransmitUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/util/TransmitUtil.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/thread_/ClientSocketThread.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/thread_/ClientSocketThread.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/test/Object2Json.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/test/Object2Json.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/gui/MainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/gui/MainWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/ui/LoginWindow_ui.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/ui/LoginWindow_ui.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/ui/qt_file/LoginWindow_ui.ui" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/ui/qt_file/LoginWindow_ui.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/gui/MainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/gui/MainWindow.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,14 +58,14 @@
       <recent name="E:\PythonProject\study\pythonProject\agc\client\src\ui" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\PythonProject\study\pythonProject\agc\client\src\ui" />
       <recent name="E:\PythonProject\study\pythonProject\agc\model" />
       <recent name="E:\PythonProject\study\pythonProject\agc\common\util" />
       <recent name="E:\PythonProject\study\pythonProject\agc\module" />
-      <recent name="E:\PythonProject\study\pythonProject\agc\client\src\ui" />
       <recent name="E:\PythonProject\study\pythonProject\agc" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.Object2Json">
+  <component name="RunManager" selected="Python.ClientApplication">
     <configuration name="ClientApplication" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="agc" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -331,7 +330,21 @@
       <option name="project" value="LOCAL" />
       <updated>1623930833332</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="agc">
+      <created>1623933560201</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1623933560201</updated>
+    </task>
+    <task id="LOCAL-00022" summary="agc">
+      <created>1623933823931</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1623933823931</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

@@ -28,17 +28,20 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
     def __init__(self):
         super(LoginWindow, self).__init__()
         self.setupUi(self)
-        # 隐藏配置widget
-        self.configWidget.hide()
+        self.setWindowTitle("登录")
         # 登录界面到聊天界面的传递对象
         self._loginDto = LoginDto.LoginDto()
         self._loginDto.headStyle = HeadStyleEnum.GREEN.value['style'] # 头像默认为绿色
         # 绑定登录按钮
-        self.loginBtn.clicked.connect(self.login)
+        self.loginBtn.clicked.connect(self.on_loginBtn_clicked)
         # 绑定配置按钮
-        self.configBtn.clicked.connect(self.config)
+        self.configBtn.clicked.connect(self.on_configBtn_clicked)
+        # 绑定注册跳转按钮
+        self.registSkipBtn.clicked.connect(self.on_registSkipBtn_clicked)
+        # 绑定返回到登录页的按钮
+        self.backBtn.clicked.connect(self.on_backBtn_clicked)
         # 绑定配置确认按钮
-        self.confirmBtn.clicked.connect(self.configConfirm)
+        self.confirmBtn.clicked.connect(self.on_confirmBtn_clicked)
         # 批量绑定相同事件
         for radio in self.radioBtnGroupWidget.children():
             # 判断是否是QRadioButton，如果是则绑定对应槽
@@ -46,14 +49,14 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
                 radio.clicked.connect(lambda: self.selectCustomHeadStyle(False))
         self.customRB.clicked.connect(lambda: self.selectCustomHeadStyle(True))
         # 服务器ip
-        self.serverIpLE.editingFinished.connect(self.serverIpEditFinish)
+        self.serverIpLE.editingFinished.connect(self.on_serverIpLE_editingFinished)
         # 服务器port
-        self.serverPortLE.editingFinished.connect(self.serverPortEditFinish)
+        self.serverPortLE.editingFinished.connect(self.on_serverPortLE_editingFinished)
         # 别称
-        self.crypCheck.clicked.connect(self.setCryp)
+        self.crypCheck.clicked.connect(self.on_crypCheck_clicked)
 
     """设置别称"""
-    def setCryp(self):
+    def on_crypCheck_clicked(self):
         flag = True if self.crypCheck.isChecked() else False
         self.crypLE.setEnabled(flag)
         if flag and self.crypLE.text().strip() == "":
@@ -61,7 +64,7 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
 
 
     """服务器port输入框编辑完毕"""
-    def serverPortEditFinish(self):
+    def on_serverPortLE_editingFinished(self):
         pattern = re.compile(r'^\d+$')
         port = self.serverPortLE.text()
         result = pattern.match(port)
@@ -80,7 +83,7 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
         return True
 
     """服务器ip输入框编辑完毕"""
-    def serverIpEditFinish(self):
+    def on_serverIpLE_editingFinished(self):
         pattern = re.compile(r'^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[0-9]{1,2})(\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[0-9]{1,2})){3}$')
         result = pattern.match(self.serverIpLE.text())
         if not result:
@@ -119,7 +122,7 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
                     break
 
     """登录"""
-    def login(self):
+    def on_loginBtn_clicked(self):
         # 设置头像
         self.setHeadStyle()
         # 设置服务器ip和服务器端口
@@ -133,7 +136,8 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
         clientSocket = self.__createClientSocket()
         if clientSocket == None:
             # 返回为空，则连接服务器失败
-            QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical, "连接服务器失败！")
+            msgHint = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical, "错误", "连接服务器失败！")
+            msgHint.exec_()
         else: # TODO socket
             # 连接成功，开始用户登录
             # 封装用户名和密码，创建token
@@ -146,33 +150,55 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
             # 服务器返回结果
             serverResult = TransmitUtil.receive(clientSocket)
             print("服务器返回的结果", serverResult)
-
-        self.skipSignal.emit(self._loginDto)
-        self.close()
+            if serverResult["code"] == 200: # 如果为200，则登录成功
+                self.skipSignal.emit(self._loginDto)
+                self.close()
 
     """创建client socket"""
     def __createClientSocket(self):
-        serverIp = self.serverIpLE.text()
-        serverPort = int(self.serverPortLE.text())
-        clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        result = clientSocket.connect((serverIp, serverPort))
-        if result == None:
-            print("成功连接上服务器")
-            return clientSocket
-        return None
+        try:
+            serverIp = self.serverIpLE.text()
+            serverPort = int(self.serverPortLE.text())
+            clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            result = clientSocket.connect((serverIp, serverPort))
+            if result == None:
+                print("成功连接上服务器")
+                return clientSocket
+        except ConnectionRefusedError:
+            return None
 
     """切换到配置页"""
-    def config(self):
+    def on_configBtn_clicked(self):
         # 隐藏登录widget
         self.loginWidget.hide()
+        # 隐藏注册widget
+        self.registerWidget.hide()
         # 显示配置widget
         self.configWidget.show()
 
+    """切换到注册页"""
+    def on_registSkipBtn_clicked(self):
+        # 隐藏登录widget
+        self.loginWidget.hide()
+        # 隐藏配置widget
+        self.configWidget.hide()
+        # 显示注册widget
+        self.registerWidget.show()
+
+    """切换到登录页"""
+    def on_backBtn_clicked(self):
+        # 隐藏配置widget
+        self.configWidget.hide()
+        # 隐藏注册widget
+        self.registerWidget.hide()
+        # 显示登录widget
+        self.loginWidget.show()
+
     """配置确认后切换到登录widget"""
-    def configConfirm(self):
-        if not self.serverIpEditFinish():
+    def on_confirmBtn_clicked(self):
+        if not self.on_serverIpLE_editingFinished():
             pass
-        elif not self.serverPortEditFinish():
+        elif not self.on_serverPortLE_editingFinished():
             pass
         else:
             # 隐藏配置widget

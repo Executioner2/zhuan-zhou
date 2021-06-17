@@ -32,13 +32,13 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow):
         super(MainWindow, self).__init__()
         self.setupUi(self)
         self.serverSignal = serverSignal
-        self.startServerBtn.clicked.connect(self.onStartServerCliecked)
+        self.startServerBtn.clicked.connect(self.on_startServer_cliecked)
         # 启动socket服务线程
         self.socketService = ServerSocketThread.SocketService(serverSignal)
 
 
     """服务器开关"""
-    def onStartServerCliecked(self):
+    def on_startServer_cliecked(self):
         if self.startServerBtn.text() == "启动服务器":
             self.serverSignal.startupSignal.emit((self.serverIpLE.text(), int(self.serverPortLE.text())))
             self.serverIpLE.setEnabled(False)
