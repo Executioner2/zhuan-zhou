@@ -8,6 +8,7 @@
 # version：1.0.0
 
 import json
+from common.handler.MyEncoder import MyEncoder
 
 class Student:
     def __init__(self, name, age):
@@ -49,8 +50,8 @@ def jsonToObject(jsonData):
 
 if __name__ == '__main__':
     zs = Student("张三", 22)
-    result = Result(200, "/login", -1)
-    jsonStr = json.dumps(result.result)
+    result = Result(200, "login",  b'1233')
+    jsonStr = json.dumps(result.result, cls=MyEncoder)
     print(jsonStr)
     objectStr = json.loads(jsonStr)
 

@@ -12,15 +12,13 @@ import socket
 
 from PyQt5 import QtWidgets, QtCore
 
-from common.result.Result import Result
 from common.result.IndexTableEnum import IndexTableEnum
-from common.util.TokenUtil import TokenUtil
+from common.result.Result import Result
 from common.util import TransmitUtil
+from common.util.TokenUtil import TokenUtil
 from model.dto import LoginDto
 from model.enum_.HeadStyleEnum import HeadStyleEnum
 from ui import LoginWindow_ui
-
-from common.result import *
 
 
 class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject):
@@ -141,13 +139,12 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
             # 封装用户名和密码，创建token
             token = TokenUtil.createToken(self.usernameLE.text(), self.passwordLE.text())
             # 封装传输对象
-            print(IndexTableEnum.LOGIN)
             result = Result.ok(IndexTableEnum.LOGIN.value, token)
             print("客户端传输过去的对象", result)
             # 发送
             TransmitUtil.send(clientSocket, result)
             # 服务器返回结果
-            serverResult = TransmitUtil.receive(socket)
+            serverResult = TransmitUtil.receive(clientSocket)
             print("服务器返回的结果", serverResult)
 
         self.skipSignal.emit(self._loginDto)

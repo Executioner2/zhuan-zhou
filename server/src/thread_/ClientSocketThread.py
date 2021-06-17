@@ -9,6 +9,7 @@
 
 from PyQt5 import QtCore
 from common.util import TransmitUtil, Json2ObjectUtil
+from server.src.api.ClientSocketApi import ClientSocketApi
 
 class ClientSocketThread(QtCore.QThread):
 
@@ -19,12 +20,14 @@ class ClientSocketThread(QtCore.QThread):
                 try:
                     result = TransmitUtil.receive(self.clientSocket)
                     data = Json2ObjectUtil.jsonToObject(result["data"])
-                    url = result["url"]
-                    url(data) # 调用有参数的方法
+                    print(result["url"])
+                    fun = getattr(ClientSocketApi(), result["url"])
+                    # print(self.fun)
+                    fun(data) # 调用有参数的方法
                 except AttributeError:
                     continue
                 except TypeError: # 出现此错误说明该方法没有参数，注：url的方法只能有一个参数
-                    url() # 调用没参数的方法
+                    fun() # 调用没参数的方法
         except ConnectionError:
             pass
         finally:
@@ -33,24 +36,10 @@ class ClientSocketThread(QtCore.QThread):
             # TODO 发送退出群聊通知
 
 
-
     """初始化"""
     def __init__(self, clientSocketList, clientSocket, clientAddress):
         super(ClientSocketThread, self).__init__()
         self.clientSocketList = clientSocketList
         self.clientSocket = clientSocket
         self.clientAddress = clientAddress
-
-    """消息群发"""
-    def notify(self):
-        pass
-
-    """用户登录"""
-    def login(self, token):
-        print("开始执行用户登录")
-        pass
-
-    """用户注册"""
-    def register(self):
-        pass
 

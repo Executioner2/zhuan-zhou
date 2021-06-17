@@ -8,12 +8,14 @@
 # version：1.0.0
 
 import json
-from common.result import Result
 from socket import socket
+
+from common.handler.MyEncoder import MyEncoder
+from common.result import Result
 
 """发送数据"""
 def send(socket:socket, result:Result):
-    jsonStr = json.dumps(result)
+    jsonStr = json.dumps(result.result, cls=MyEncoder)
     jsonStr += "\0"
     socket.send(jsonStr.encode())
 
@@ -25,6 +27,7 @@ def receive(socket:socket):
     while True:
         recvAll.extend(socket.recv(1024*1024)) # 默认1MB 缓冲区大小单位为字节
         if recvAll[-1] == 0: # 末尾为0则读取完毕，则跳出循环
+            recvAll.remove(recvAll[-1]) # 移除最后的'/0' 不然转json会报错
             break
 
     jsonStr = recvAll.decode()
