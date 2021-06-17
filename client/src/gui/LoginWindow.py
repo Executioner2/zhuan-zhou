@@ -37,7 +37,7 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
         # 绑定配置按钮
         self.configBtn.clicked.connect(self.on_configBtn_clicked)
         # 绑定注册跳转按钮
-        self.registSkipBtn.clicked.connect(self.on_registSkipBtn_clicked)
+        self.registerSkipBtn.clicked.connect(self.on_registerSkipBtn_clicked)
         # 绑定返回到登录页的按钮
         self.backBtn.clicked.connect(self.on_backBtn_clicked)
         # 绑定配置确认按钮
@@ -183,7 +183,7 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
         self.configWidget.show()
 
     """切换到注册页"""
-    def on_registSkipBtn_clicked(self):
+    def on_registerSkipBtn_clicked(self):
         # 隐藏登录widget
         self.loginWidget.hide()
         # 隐藏配置widget
