@@ -33,7 +33,7 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
         self._loginDto = LoginDto.LoginDto()
         self._loginDto.headStyle = HeadStyleEnum.GREEN.value['style'] # 头像默认为绿色
         # 绑定登录按钮
-        self.loginBtn.clicked.connect(self.on_loginBtn_clicke)
+        self.loginBtn.clicked.connect(self.on_loginBtn_click)
         # 绑定配置按钮
         self.configBtn.clicked.connect(self.on_configBtn_clicked)
         # 绑定注册跳转按钮
@@ -122,7 +122,7 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
                     break
 
     """登录"""
-    def on_loginBtn_clicke(self):
+    def on_loginBtn_click(self):
         username = self.usernameLE.text().strip()
         password = self.passwordLE.text().strip()
         if username == "" or password == "":
