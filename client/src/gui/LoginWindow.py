@@ -60,16 +60,32 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
         self.registerPasswordLE.blurSignal.connect(self.on_register_blurSignal)
         self.registerCofirmPasswordLE.blurSignal.connect(self.on_register_blurSignal)
 
-    """register LE失去焦点时""" # TODO 从这里开始写
+    """register LE失去焦点时"""
     def on_register_blurSignal(self, val):
         if val == RegisterLeNameEnum.USERNAME.value:
             if self.registerUsernameLE.text().strip() == "":
                 self.hint.setText("用户名不能为空")
                 self.hint.show()
         elif val == RegisterLeNameEnum.PASSWORD.value:
-            pass
+            pattern = re.compile(r"^[a-zA-Z]\w{5,17}$")
+            result = pattern.match(self.registerPasswordLE.text())
+            if self.registerPasswordLE.text().strip() == "":
+                self.hint.setText("密码不能为空")
+                self.hint.show()
+            elif not result:
+                self.hint.setText("密码太弱，请重新输入")
+                self.hint.show()
+            else:
+                self.hint.hide()
         elif val == RegisterLeNameEnum.CONFIRM_PASSWORD.value:
-            pass
+            if self.registerPasswordLE.text().strip() == "":
+                self.hint.setText("确认密码不能为空")
+                self.hint.show()
+            elif self.registerPasswordLE.text().strip() != self.registerCofirmPasswordLE.text().strip():
+                self.hint.setText("两次密码不一致，请重新输入")
+                self.hint.show()
+            else:
+                self.hint.hide()
 
     """设置别称"""
     def on_crypCheck_clicked(self):

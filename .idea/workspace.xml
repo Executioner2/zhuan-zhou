@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="824463d5-eacc-4b7d-bb38-0e74345ac0a3" name="Default Changelist" comment="agc">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/gui/LoginWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/gui/LoginWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/handler/MyLineEdit.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/handler/MyLineEdit.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/ui/LoginWindow_ui.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/ui/LoginWindow_ui.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,6 +19,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="MIXED" />
   </component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
@@ -45,6 +45,7 @@
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="TODO_SCOPE" value="All Places" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../test" />
     <property name="settings.editor.selected.configurable" value="preferences.externalTools" />
   </component>
@@ -369,7 +370,21 @@
       <option name="project" value="LOCAL" />
       <updated>1623939190023</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="agc">
+      <created>1623939747868</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1623939747868</updated>
+    </task>
+    <task id="LOCAL-00028" summary="agc">
+      <created>1623939787763</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1623939787763</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
