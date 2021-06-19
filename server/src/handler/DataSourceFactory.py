@@ -6,35 +6,21 @@
 # editDate：
 # editBy：
 # version：1.0.0
-import sys
 
-import configparser
-import os
-import time
 import threading
+import time
+
 import pymysql
 
+from common.util import DataSourceUtil
+import warnings
 
-def readConfig(path=None, datasource=None):
-    conf = configparser.ConfigParser()
-    datasource = "datasource01" if datasource == None else datasource
-    if path == None:
-        root_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(sys.argv[0]))))
-        conf.read(root_path + "/resource/config/datasource.conf")
-    else:
-        conf.read(path)
-    host = conf.get(datasource, "host")
-    db = conf.get(datasource, "db")
-    user = conf.get(datasource, "user")
-    password = conf.get(datasource, "password")
-
-    return host, db, user, password
-
+warnings.warn("该类不建议使用，有更好的替代品", DeprecationWarning)
 class DataSourceFactory:
     cursorList = [] # 数据库游标集合（j2ee的数据库连接池）
 
     def __init__(self, path=None, datasource=None):
-        self.datasource = readConfig(path, datasource) # 连接源
+        self.datasource = DataSourceUtil.readConfig(path, datasource) # 连接源
         self.conn = pymysql.connect(host=self.datasource[0], db=self.datasource[1], user=self.datasource[2],
                                     password=self.datasource[3])
         self.lock = threading.RLock()
@@ -112,11 +98,5 @@ class DataSourceFactory:
         self.conn.close()
 
     """获取当前毫秒级别的时间戳"""
-    def getCurrentTimestamp(self):
+    def __getCurrentTimestamp(self):
         return int(round(time.time() * 1000))
-
-# 测试
-if __name__ == '__main__':
-    dsf = DataSourceFactory()
-    print(time.time())
-    print(dsf.getCurrentTimestamp())

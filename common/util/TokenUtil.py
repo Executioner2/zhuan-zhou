@@ -73,7 +73,11 @@ class TokenUtil:
     """对加密后的base64编码进行解密"""
     @staticmethod
     def __decode(token):
-        # 先补充去掉的==
+        # 如果是str则进行转型
+        if isinstance(token, str):
+            token = str.encode(token)
+            token = bytearray(token)
+        # 补充去掉的==
         i = len(token) % 4
         for index in range(i):
             token.append(61)

@@ -21,9 +21,8 @@ class ClientSocketThread(QtCore.QThread):
                     result = TransmitUtil.receive(self.clientSocket)
                     data = Json2ObjectUtil.jsonToObject(result["data"])
                     print(result["url"])
-                    fun = getattr(ClientSocketApi(self.dsf), result["url"])
-                    params = (self.clientSocket, data)
-                    fun(params) # 调用有参数的方法
+                    fun = getattr(ClientSocketApi(self.clientSocket, self.sqlConnPool), result["url"])
+                    fun(data) # 调用有参数的方法
                 except AttributeError:
                     continue
                 except TypeError: # 出现此错误说明该方法没有参数，注：url的方法只能有一个参数
@@ -37,10 +36,10 @@ class ClientSocketThread(QtCore.QThread):
 
 
     """初始化"""
-    def __init__(self, clientSocketList, clientSocket, clientAddress, dsf):
+    def __init__(self, clientSocketList, clientSocket, clientAddress, sqlConnPool):
         super(ClientSocketThread, self).__init__()
         self.clientSocketList = clientSocketList
         self.clientSocket = clientSocket
         self.clientAddress = clientAddress
-        self.dsf = dsf # 数据库连接工厂
+        self.sqlConnPool = sqlConnPool # 数据库连接池
 

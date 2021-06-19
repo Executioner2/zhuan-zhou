@@ -13,6 +13,9 @@ from PyQt5 import QtCore
 
 from server.src.thread_ import ClientSocketThread
 from server.src.handler import DataSourceFactory
+from dbutils.pooled_db import PooledDB
+import pymysql
+from common.util import DataSourceUtil
 
 MAX_CONTENT = 100 # 排队个数
 
@@ -22,6 +25,23 @@ class SocketService(QtCore.QThread):
     server = None
     address = None
     dsf = None
+    datasource = DataSourceUtil.readConfig("E:\\PythonProject\\study\\pythonProject\\agc\server\\resource\\config\\datasource.conf")
+    # 数据库连接池
+    sqlConnPool = PooledDB(
+        creator=pymysql,  # 使用链接数据库的模块
+        maxconnections=50,  # 连接池允许的最大连接数，0和None表示不限制连接数
+        mincached=10,  # 初始化时，链接池中至少创建的空闲的链接，0表示不创建
+        maxcached=20,  # 链接池中最多闲置的链接，0和None不限制
+        blocking=True,  # 连接池中如果没有可用连接后，是否阻塞等待。True，等待；False，不等待然后报错
+        maxusage=None,  # 一个链接最多被重复使用的次数，None表示无限制
+        # 连接mysql
+        host=datasource[0],
+        port=int(datasource[1]),
+        database=datasource[2],
+        user=datasource[3],
+        password=datasource[4],
+        charset='utf8'
+    )
 
     """重写run"""
     def run(self) -> None:
@@ -32,15 +52,13 @@ class SocketService(QtCore.QThread):
             self.server.bind(self.address)
             self.server.listen(MAX_CONTENT)  # 最大排队数
             print("服务器启动成功....")
-            # 创建数据库连接池
-            self.dsf = DataSourceFactory.DataSourceFactory("E:\\PythonProject\\study\\pythonProject\\agc\server\\resource\\config\\datasource.conf")
             while True:
                 print("正在监听")
                 clientSocket, clientAddress = self.server.accept()
                 # 把客户端socket添加到列表中
                 self.clientList.append(clientSocket)
                 # 为这个客户端开启一个消息读取和发送的线程
-                clientThread = ClientSocketThread.ClientSocketThread(self.clientList, clientSocket, clientAddress, self.dsf)
+                clientThread = ClientSocketThread.ClientSocketThread(self.clientList, clientSocket, clientAddress, self.sqlConnPool)
                 clientThread.start()
         except OSError:
             pass

@@ -7,34 +7,58 @@
 # editBy：
 # version：1.0.0
 
-from common.util import TransmitUtil
 from common.result.Result import Result
+from common.result.ResultCodeEnum import ResultCodeEnum
+from common.util import TransmitUtil
+from common.util import UUIDUtil
+from common.util.TokenUtil import TokenUtil
+from dbutils.pooled_db import PooledDB
+import pymysql
 
 
 class ClientSocketApi:
-    def __init__(self, dsf):
-        print("接口初始化了")
-        self.dsf = dsf
+    def __init__(self, socket, sqlConnPool:PooledDB):
+        self.socket = socket
+        self.sqlConnPool = sqlConnPool
 
     """消息群发"""
     def notify(self):
         pass
 
     """用户登录"""
-    def login(self, params):
-        socket = params[0]
-        token = params[1]
+    def login(self, token):
         print("开始执行用户登录")
         print(token)
-        TransmitUtil.send(socket, Result.ok())
+        TransmitUtil.send(self.socket, Result.ok())
 
     """用户注册"""
-    def register(self, params):
-        socket = params[0]
-        token = params[1]
-        print(params)
-        print("开始注册用户")
-        TransmitUtil.send(socket, Result.ok())
+    def register(self, token):
+        try:
+            print(token)
+            userinfo = TokenUtil.getUserInfo(token)
+            print(userinfo)
+            print("开始注册用户")
+            # 取得一个cursor
+            conn = self.sqlConnPool.connection() # 获取连接
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            cursor.execute("select count(*) from tbl_user where username=%s and is_deleted=0", (userinfo[0]))
+            result = cursor.fetchall()[0]["count(*)"]
+            if result != 0:
+                TransmitUtil.send(self.socket, Result.build(ResultCodeEnum.REGISTER_USERNAME_ERROR.value[0])) # 用户名已存在
+            else:
+                id = UUIDUtil.getUUID()
+                count = cursor.execute("insert into tbl_user(id, username, password) values(%s, %s, %s)", (id, userinfo[0], userinfo[1]))
+                conn.commit() # 提交数据
+                if count == 1:
+                    TransmitUtil.send(self.socket, Result.ok())
+                else:
+                    TransmitUtil.send(self.socket, Result.fail())
+        finally:
+            # 把连接断开（实际上是还回连接池了）
+            if cursor != None:
+                cursor.close()
+            if conn != None:
+                conn.close()
 
     """用户名重复性检测"""
     def usernameCheck(self):
