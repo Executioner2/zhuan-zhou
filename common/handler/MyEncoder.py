@@ -13,4 +13,6 @@ class MyEncoder(json.JSONEncoder):
     def default(self, o):
         if isinstance(o, bytes):
             return str(o, encoding="utf-8")
+        elif isinstance(o, bytearray):
+            return str(o, encoding="utf-8")
         return json.JSONEncoder.default(self, o)

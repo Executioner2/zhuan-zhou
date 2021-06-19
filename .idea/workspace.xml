@@ -63,7 +63,7 @@
       <recent name="E:\PythonProject\study\pythonProject\agc" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.TokenUtil">
+  <component name="RunManager" selected="Python.ClientApplication">
     <configuration name="ClientApplication" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="agc" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -172,9 +172,9 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.ClientApplication" />
+        <item itemvalue="Python.ServerApplication" />
         <item itemvalue="Python.TokenUtil" />
         <item itemvalue="Python.MD5Util" />
-        <item itemvalue="Python.ServerApplication" />
         <item itemvalue="Python.Object2Json" />
       </list>
     </recent_temporary>
