@@ -20,6 +20,7 @@ from model.dto import LoginDto
 from model.enum_.HeadStyleEnum import HeadStyleEnum
 from ui import LoginWindow_ui
 from common.util import MD5Util
+from common.result.ResultCodeEnum import ResultCodeEnum
 from model.enum_.RegisterLeNameEnum import RegisterLeNameEnum
 
 
@@ -64,28 +65,37 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
         # 绑定注册提交按钮
         self.registerBtn.clicked.connect(self.on_registerBtn_click)
 
-    """注册请求"""
+    """注册请求""" # TODO
     def on_registerBtn_click(self):
         flag = self.on_register_blurSignal()
         if flag:
-            username = self.registerUsernameLE.text()
-            # 简单加个密并返回密文
-            password = MD5Util.saltMD5(self.registerPasswordLE.text())
-            # 封装成自定义token
-            token = TokenUtil.createToken(username, password)
-            print(username)
-            print(password)
-            print(token)
-            userinfo = TokenUtil.getUserInfo(token)
-            print(userinfo)
+            clientSocket = self.__getClientSocket()
+            if clientSocket == None:
+                # 返回为空，则连接服务器失败
+                msgHint = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical, "错误", "连接服务器失败！")
+                msgHint.exec_()
+            else:  # 连接成功，开始用户注册
+                username = self.registerUsernameLE.text()
+                # 简单加个密并返回密文
+                password = MD5Util.saltMD5(self.registerPasswordLE.text())
+                # 封装成自定义token
+                token = TokenUtil.createToken(username, password)
+                result = Result.ok(IndexTableEnum.REGISTER.value, token)
+                print("注册发送过去的对象：", result)
+                # 发送
+                TransmitUtil.send(clientSocket, result)
+                # 服务器返回结果
+                serverResult = TransmitUtil.receive(clientSocket)
+                print("服务器返回结果", serverResult)
+                if serverResult["code"] == ResultCodeEnum.SUCCESS.value[0]:
+                    msgBox = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Information, "注册成功", "用户注册成功")
+                    msgBox.exec_()
+                    # 跳转到登录页
+                    self.on_backBtn_clicked()
+                elif serverResult["code"] == ResultCodeEnum.REGISTER_USERNAME_ERROR.value[0]:
+                    msgBox = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Information, "注册成功", "用户名已被使用，请重新输入")
+                    msgBox.exec_()
 
-            # clientSocket = self.__getClientSocket()
-            # if clientSocket == None:
-            #     # 返回为空，则连接服务器失败
-            #     msgHint = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical, "错误", "连接服务器失败！")
-            #     msgHint.exec_()
-            # else:  # 连接成功，开始用户注册
-            #     pass
 
     """register LE失去焦点时"""
     def on_register_blurSignal(self, val = None):
@@ -225,7 +235,7 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
             # 服务器返回结果
             serverResult = TransmitUtil.receive(clientSocket)
             print("服务器返回的结果", serverResult)
-            if serverResult["code"] == 200: # 如果为200，则登录成功
+            if serverResult["code"] == ResultCodeEnum.SUCCESS.value[0]: # 如果为200，则登录成功
                 self.skipSignal.emit(self._loginDto)
                 self.close()
 
