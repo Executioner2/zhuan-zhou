@@ -3,8 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="824463d5-eacc-4b7d-bb38-0e74345ac0a3" name="Default Changelist" comment="agc">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/gui/LoginWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/gui/LoginWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/ui/qt_file/MainWindow_rc.qrc" beforeDir="false" afterPath="$PROJECT_DIR$/client/resource/qrc/MainWindow_rc.qrc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/ui/qt_file/QQ图片20210613151928.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/client/resource/qrc/QQ图片20210613151928.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/ui/qt_file/QQ图片20210613153054.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/client/resource/qrc/QQ图片20210613153054.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/ui/qt_file/QQ图片20210613153455.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/client/resource/qrc/QQ图片20210613153455.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/util/DataSourceUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/util/ConfigFileUtil.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/gui/MainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/gui/MainWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/handler/DataSourceFactory.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/handler/DataSourceFactory.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/thread_/ServerSocketThread.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/thread_/ServerSocketThread.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -65,7 +70,7 @@
       <recent name="E:\PythonProject\study\pythonProject\agc\common\util" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.ServerApplication">
+  <component name="RunManager" selected="Python.ClientApplication">
     <configuration name="ClientApplication" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="agc" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -87,7 +92,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="DataSourceFactory (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="MainWindow" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="agc" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -95,11 +100,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/server/src/handler" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/server/src/gui" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/server/src/handler/DataSourceFactory.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/server/src/gui/MainWindow.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -173,11 +178,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.ServerApplication" />
         <item itemvalue="Python.ClientApplication" />
+        <item itemvalue="Python.ServerApplication" />
+        <item itemvalue="Python.MainWindow" />
         <item itemvalue="Python.SqlPoolTest" />
         <item itemvalue="Python.UUIDUtil" />
-        <item itemvalue="Python.DataSourceFactory (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -463,7 +468,14 @@
       <option name="project" value="LOCAL" />
       <updated>1624102644692</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="agc">
+      <created>1624103486310</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1624103486310</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

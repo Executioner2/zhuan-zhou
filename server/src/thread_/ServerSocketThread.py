@@ -6,14 +6,15 @@
 # editDate：
 # editBy：
 # version：1.0.0
-
+import os
 import socket
+import sys
 
 import pymysql
 from PyQt5 import QtCore
 from dbutils.pooled_db import PooledDB
 
-from common.util import DataSourceUtil
+from common.util import ConfigFileUtil
 from server.src.thread_ import ClientSocketThread
 
 MAX_CONTENT = 100 # 排队个数
@@ -24,7 +25,8 @@ class SocketService(QtCore.QThread):
     server = None
     address = None
     dsf = None
-    datasource = DataSourceUtil.readConfig("E:\\PythonProject\\study\\pythonProject\\agc\server\\resource\\config\\datasource.conf")
+    rootPath = os.path.dirname(os.path.dirname(os.path.abspath(sys.argv[0])))
+    datasource = ConfigFileUtil.readDataSourceConfig(rootPath + "\\resource\\config\\datasource.conf")
     # 数据库连接池
     sqlConnPool = PooledDB(
         creator=pymysql,  # 使用链接数据库的模块

@@ -7,9 +7,10 @@
 # editBy：
 # version：1.0.0
 
+import re
+
 from PyQt5 import QtWidgets, QtGui
 
-import re
 from server.src.thread_ import ServerSocketThread
 from server.src.ui import MainWindow_ui
 

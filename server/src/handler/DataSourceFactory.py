@@ -12,7 +12,7 @@ import time
 
 import pymysql
 
-from common.util import DataSourceUtil
+from common.util import ConfigFileUtil
 import warnings
 
 warnings.warn("该类不建议使用，有更好的替代品", DeprecationWarning)
@@ -20,7 +20,7 @@ class DataSourceFactory:
     cursorList = [] # 数据库游标集合（j2ee的数据库连接池）
 
     def __init__(self, path=None, datasource=None):
-        self.datasource = DataSourceUtil.readConfig(path, datasource) # 连接源
+        self.datasource = ConfigFileUtil.readDataSourceConfig(path, datasource)  # 连接源
         self.conn = pymysql.connect(host=self.datasource[0], db=self.datasource[1], user=self.datasource[2],
                                     password=self.datasource[3])
         self.lock = threading.RLock()

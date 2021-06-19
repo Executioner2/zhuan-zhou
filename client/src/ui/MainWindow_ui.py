@@ -225,5 +225,4 @@ class Ui_MainWindow(object):
         self.textEdit.setPlaceholderText(_translate("MainWindow", "此处输入文字...  "))
         self.pushBtn.setText(_translate("MainWindow", "发送"))
 
-import ui.qt_file.MainWindow_rc
-
+import client.src.ui.MainWindow_rc
