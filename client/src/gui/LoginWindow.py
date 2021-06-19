@@ -32,6 +32,8 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
     def __init__(self):
         super(LoginWindow, self).__init__()
         self.setupUi(self)
+        self.registerWidget.hide()
+        self.configWidget.hide()
         self.setWindowTitle("登录")
         # 登录界面到聊天界面的传递对象
         self._loginDto = LoginDto.LoginDto()

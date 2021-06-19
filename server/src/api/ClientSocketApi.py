@@ -23,8 +23,7 @@ class ClientSocketApi:
         token = params[1]
         print("开始执行用户登录")
         print(token)
-        TransmitUtil.send(socket, Result.ok("", True))
-
+        TransmitUtil.send(socket, Result.ok())
 
     """用户注册"""
     def register(self, params):
