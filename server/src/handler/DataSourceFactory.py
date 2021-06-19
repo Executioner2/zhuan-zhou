@@ -39,6 +39,10 @@ class DataSourceFactory:
                                     password=self.datasource[3])
         self.lock = threading.RLock()
         self.initCursor()
+        # 启动守护线程
+        thread = threading.Thread(target=self.run)
+        thread.setDaemon(True)
+        thread.start()
 
     """初始化游标"""
     def initCursor(self):
@@ -94,6 +98,7 @@ class DataSourceFactory:
                     if item["flag"] and item["ttl"] <= self.getCurrentTimestamp():
                         item["cursor"].close()
                         self.cursorList.remove(item)
+                        print("空闲的cursor被清除掉了：", item)
             finally:
                 self.lock.release() # 释放锁
 
