@@ -68,7 +68,6 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
         self.registerBtn.clicked.connect(self.on_registerBtn_click)
         # 读取用户配置文件
         configInfo = ConfigFileUtil.readUserConfig(self.userConfigFilePath)
-        print(configInfo)
         tempRadio = self.radioBtnGroupWidget.findChild(QtWidgets.QRadioButton, configInfo[0])
         if tempRadio == self.customRB:
             tempTuple = configInfo[1].split(",")
