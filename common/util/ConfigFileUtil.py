@@ -30,10 +30,13 @@ def readUserConfig(path, config=None):
     conf = configparser.ConfigParser()
     config = "config01" if config == None else config
     conf.read(path)
-    host = conf.get(config, "host")
-    port = conf.get(config, "port")
-    db = conf.get(config, "db")
-    user = conf.get(config, "user")
-    password = conf.get(config, "password")
+    colorRB = conf.get(config, "color_rb")
+    headStyle = conf.get(config, "head_style")
+    serverIp = conf.get(config, "server_ip")
+    serverPort = conf.get(config, "server_port")
 
-    return host, port, db, user, password
+    return colorRB, headStyle, serverIp, serverPort
+
+"""写入用户配置文件"""
+def wirteUserConfig(path, config=None):
+    pass

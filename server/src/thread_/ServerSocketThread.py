@@ -26,7 +26,7 @@ class SocketService(QtCore.QThread):
     address = None
     dsf = None
     rootPath = os.path.dirname(os.path.dirname(os.path.abspath(sys.argv[0])))
-    datasource = ConfigFileUtil.readDataSourceConfig(rootPath + "\\resource\\config\\datasource.conf")
+    datasource = ConfigFileUtil.readDataSourceConfig(rootPath + "\\resource\\config\\datasource.ini")
     # 数据库连接池
     sqlConnPool = PooledDB(
         creator=pymysql,  # 使用链接数据库的模块
