@@ -31,14 +31,19 @@ class Result:
         else: # 如果不包含__dict__属性则直接赋值
             self.result["data"] = data
 
+    """自定义状态"""
+    @staticmethod
+    def build(code, url="", data=None):
+        return Result(url, code, data)
+
     """成功"""
     @staticmethod
-    def ok(url, data):
+    def ok(url="", data=None):
         return Result(url, ResultCodeEnum.SUCCESS.value[0], data)
 
     """失败"""
     @staticmethod
-    def fail(url):
+    def fail(url=""):
         return Result(url, ResultCodeEnum.FAIL.value[0])
 
     def __str__(self):

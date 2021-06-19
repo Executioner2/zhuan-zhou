@@ -27,8 +27,12 @@ class ClientSocketApi:
 
 
     """用户注册"""
-    def register(self):
-        pass
+    def register(self, params):
+        socket = params[0]
+        token = params[1]
+        print(params)
+        print("开始注册用户")
+        TransmitUtil.send(socket, Result.ok())
 
     """用户名重复性检测"""
     def usernameCheck(self):
