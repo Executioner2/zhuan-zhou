@@ -61,12 +61,23 @@ class TokenUtil:
                 else:
                     tokenList[index] = temp
         # 对加密后的base64编码再编码
-        return base64.b64encode(bytes(tokenList))
+        base = bytearray(base64.b64encode(bytes(tokenList)))
+        # 去掉后面补充的==，让它看起来不像是base64编码
+        while True:
+            if base[-1] == 61:
+                base.remove(base[-1])
+            else:
+                break
+        return base
 
     """对加密后的base64编码进行解密"""
     @staticmethod
     def __decode(token):
-        # 先对base64进行一次解码
+        # 先补充去掉的==
+        i = len(token) % 4
+        for index in range(i):
+            token.append(61)
+        # 然后对base64进行一次解码
         token = base64.b64decode(token)
         tokenList = list(token)
         bSalt = TokenUtil._salt
@@ -109,7 +120,7 @@ class TokenUtil:
 
 """测试"""
 if __name__ == '__main__':
-    token = TokenUtil.createToken("zhangsan", "123321")
+    token = TokenUtil.createToken("zhangsan", "12332bbbbaa1svabaag2121211")
     print(token)
     value = TokenUtil.getUserInfo(token)
     print(value)

@@ -19,11 +19,11 @@ class MyLineEdit(QtWidgets.QLineEdit):
 
     """重写获得焦点"""
     def focusInEvent(self, a0: QtGui.QFocusEvent) -> None:
-        print("获得焦点", self.objectName())
+        # print("获得焦点", self.objectName())
         QtWidgets.QLineEdit.focusInEvent(self, a0)
 
     """重写失去焦点"""
     def focusOutEvent(self, a0: QtGui.QFocusEvent) -> None:
-        print("失去焦点", self.objectName())
+        # print("失去焦点", self.objectName())
         self.blurSignal.emit(self.objectName())
         QtWidgets.QLineEdit.focusOutEvent(self, a0)

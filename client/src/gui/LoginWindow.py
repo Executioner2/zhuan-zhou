@@ -19,12 +19,14 @@ from common.util.TokenUtil import TokenUtil
 from model.dto import LoginDto
 from model.enum_.HeadStyleEnum import HeadStyleEnum
 from ui import LoginWindow_ui
+from common.util import MD5Util
 from model.enum_.RegisterLeNameEnum import RegisterLeNameEnum
 
 
 class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject):
     # 跳转信号
     skipSignal = QtCore.pyqtSignal(object)
+    clientSocket = None
 
     def __init__(self):
         super(LoginWindow, self).__init__()
@@ -59,33 +61,69 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
         self.registerUsernameLE.blurSignal.connect(self.on_register_blurSignal)
         self.registerPasswordLE.blurSignal.connect(self.on_register_blurSignal)
         self.registerCofirmPasswordLE.blurSignal.connect(self.on_register_blurSignal)
+        # 绑定注册提交按钮
+        self.registerBtn.clicked.connect(self.on_registerBtn_click)
+
+    """注册请求"""
+    def on_registerBtn_click(self):
+        flag = self.on_register_blurSignal()
+        if flag:
+            username = self.registerUsernameLE.text()
+            # 简单加个密并返回密文
+            password = MD5Util.saltMD5(self.registerPasswordLE.text())
+            # 封装成自定义token
+            token = TokenUtil.createToken(username, password)
+            print(username)
+            print(password)
+            print(token)
+            userinfo = TokenUtil.getUserInfo(token)
+            print(userinfo)
+
+            # clientSocket = self.__getClientSocket()
+            # if clientSocket == None:
+            #     # 返回为空，则连接服务器失败
+            #     msgHint = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical, "错误", "连接服务器失败！")
+            #     msgHint.exec_()
+            # else:  # 连接成功，开始用户注册
+            #     pass
 
     """register LE失去焦点时"""
-    def on_register_blurSignal(self, val):
-        if val == RegisterLeNameEnum.USERNAME.value:
+    def on_register_blurSignal(self, val = None):
+        if val in (self.registerUsernameLE.objectName(), None):
             if self.registerUsernameLE.text().strip() == "":
                 self.hint.setText("用户名不能为空")
                 self.hint.show()
-        elif val == RegisterLeNameEnum.PASSWORD.value:
+                return False
+            elif self.hint.text() == "用户名不能为空":
+                self.hint.hide()
+
+        if val in (self.registerPasswordLE.objectName(), None):
             pattern = re.compile(r"^[a-zA-Z]\w{5,17}$")
             result = pattern.match(self.registerPasswordLE.text())
             if self.registerPasswordLE.text().strip() == "":
                 self.hint.setText("密码不能为空")
                 self.hint.show()
+                return False
             elif not result:
                 self.hint.setText("密码太弱，请重新输入")
                 self.hint.show()
-            else:
+                return False
+            elif self.hint.text() in ("密码不能为空", "密码太弱，请重新输入"):
                 self.hint.hide()
-        elif val == RegisterLeNameEnum.CONFIRM_PASSWORD.value:
-            if self.registerPasswordLE.text().strip() == "":
+
+        if val in (self.registerCofirmPasswordLE.objectName(), None):
+            if self.registerCofirmPasswordLE.text().strip() == "":
                 self.hint.setText("确认密码不能为空")
                 self.hint.show()
+                return False
             elif self.registerPasswordLE.text().strip() != self.registerCofirmPasswordLE.text().strip():
                 self.hint.setText("两次密码不一致，请重新输入")
                 self.hint.show()
-            else:
+                return False
+            elif self.hint.text() in ("确认密码不能为空", "两次密码不一致，请重新输入"):
                 self.hint.hide()
+
+        return True
 
     """设置别称"""
     def on_crypCheck_clicked(self):
@@ -93,7 +131,6 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
         self.crypLE.setEnabled(flag)
         if flag and self.crypLE.text().strip() == "":
             self.crypLE.setText("匿名用户")
-
 
     """服务器port输入框编辑完毕"""
     def on_serverPortLE_editingFinished(self):
@@ -172,7 +209,7 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
             self._loginDto.cryp = "匿名用户" if self.crypLE.text().strip() else self.crypLE.text().strip()
 
         # 这里直接创建socket，然后用户登录成功后把socket传入ClientSocketThread中去
-        clientSocket = self.__createClientSocket()
+        clientSocket = self.__getClientSocket()
         if clientSocket == None:
             # 返回为空，则连接服务器失败
             msgHint = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical, "错误", "连接服务器失败！")
@@ -192,16 +229,19 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
                 self.skipSignal.emit(self._loginDto)
                 self.close()
 
-    """创建client socket"""
-    def __createClientSocket(self):
+    """获取（创建）client socket"""
+    def __getClientSocket(self):
         try:
-            serverIp = self.serverIpLE.text()
-            serverPort = int(self.serverPortLE.text())
-            clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            result = clientSocket.connect((serverIp, serverPort))
-            if result == None:
-                print("成功连接上服务器")
-                return clientSocket
+            if not self.clientSocket:
+                serverIp = self.serverIpLE.text()
+                serverPort = int(self.serverPortLE.text())
+                clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                result = clientSocket.connect((serverIp, serverPort))
+                if result == None:
+                    print("成功连接上服务器")
+                    self.clientSocket = clientSocket
+
+            return self.clientSocket
         except ConnectionRefusedError:
             return None
 
@@ -213,6 +253,7 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
         self.registerWidget.hide()
         # 显示配置widget
         self.configWidget.show()
+        self.setWindowTitle("配置")
 
     """切换到注册页"""
     def on_registerSkipBtn_clicked(self):
@@ -222,6 +263,7 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
         self.configWidget.hide()
         # 显示注册widget
         self.registerWidget.show()
+        self.setWindowTitle("用户注册")
 
     """切换到登录页"""
     def on_backBtn_clicked(self):
@@ -231,6 +273,13 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
         self.registerWidget.hide()
         # 显示登录widget
         self.loginWidget.show()
+        # 清空文本
+        self.registerUsernameLE.clear()
+        self.registerPasswordLE.clear()
+        self.registerCofirmPasswordLE.clear()
+        # 隐藏hint
+        self.hint.hide()
+        self.setWindowTitle("登录")
 
     """配置确认后切换到登录widget"""
     def on_confirmBtn_clicked(self):
@@ -243,5 +292,6 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
             self.configWidget.hide()
             # 显示登录widget
             self.loginWidget.show()
+            self.setWindowTitle("登录")
 
 

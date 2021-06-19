@@ -277,7 +277,7 @@ class Ui_Form(object):
         self.serverIpLE.setText(_translate("Form", "192.168.123.233"))
         self.label_4.setText(_translate("Form", "服务器端口："))
         self.serverPortLE.setText(_translate("Form", "10032"))
-        self.registerBtn.setText(_translate("Form", "注册"))
+        self.registerBtn.setText(_translate("Form", "提交"))
         self.backBtn.setText(_translate("Form", "返回"))
         self.label_17.setText(_translate("Form", "用户名"))
         self.label_18.setText(_translate("Form", "密码"))
