@@ -64,7 +64,6 @@ class SocketService(QtCore.QThread):
         finally:
             self.server.close()
             self.server = None
-            self.dsf.closeAll() # 关闭数据库
             print("服务器已经关闭")
 
     """初始化"""

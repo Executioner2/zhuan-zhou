@@ -10,27 +10,22 @@
 import re  # 正则表达式
 import socket
 
-from PyQt5 import QtWidgets, QtCore
+from PyQt5 import QtWidgets, QtCore, QtGui
 
 from common.result.IndexTableEnum import IndexTableEnum
 from common.result.Result import Result
+from common.result.ResultCodeEnum import ResultCodeEnum
 from common.util import TransmitUtil
 from common.util.TokenUtil import TokenUtil
 from model.dto import LoginDto
 from model.enum_.HeadStyleEnum import HeadStyleEnum
 from ui import LoginWindow_ui
-from common.util import MD5Util
-from common.result.ResultCodeEnum import ResultCodeEnum
-from model.enum_.RegisterLeNameEnum import RegisterLeNameEnum
 
 
 class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject):
     # 跳转信号
     skipSignal = QtCore.pyqtSignal(object)
     clientSocket = None
-
-    """重写退出"""
-
 
     def __init__(self):
         super(LoginWindow, self).__init__()
@@ -305,15 +300,15 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
 
     """配置确认后切换到登录widget"""
     def on_confirmBtn_clicked(self):
-        if not self.on_serverIpLE_editingFinished():
-            pass
-        elif not self.on_serverPortLE_editingFinished():
-            pass
-        else:
-            # 隐藏配置widget
-            self.configWidget.hide()
-            # 显示登录widget
-            self.loginWidget.show()
-            self.setWindowTitle("登录")
+        if not self.on_serverIpLE_editingFinished(): return
+        elif not self.on_serverPortLE_editingFinished(): return
+
+        # 保存配置到配置文件
+        
+        # 隐藏配置widget
+        self.configWidget.hide()
+        # 显示登录widget
+        self.loginWidget.show()
+        self.setWindowTitle("登录")
 
 

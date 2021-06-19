@@ -9,6 +9,7 @@
 
 from PyQt5 import QtWidgets, QtGui
 
+import re
 from server.src.thread_ import ServerSocketThread
 from server.src.ui import MainWindow_ui
 
@@ -40,6 +41,28 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow):
     """服务器开关"""
     def on_startServer_cliecked(self):
         if self.startServerBtn.text() == "启动服务器":
+            pattern = re.compile(
+                r'^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[0-9]{1,2})(\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[0-9]{1,2})){3}$')
+            result = pattern.match(self.serverIpLE.text())
+            if not result:
+                msgHint = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Warning, "警告", "请输入正确的ip地址格式")
+                msgHint.exec_()
+                return
+            pattern = re.compile(r'^\d+$')
+            port = self.serverPortLE.text()
+            result = pattern.match(port)
+            if result:
+                # 是数字
+                if int(port) < 0 or int(port) > 65535:
+                    msgHint = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Warning, "警告", "端口号必须是0-65535")
+                    msgHint.exec_()
+                    return
+            else:
+                # 不是数字
+                msgHint = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Warning, "警告", "端口号必须是整数")
+                msgHint.exec_()
+                return
+            # 执行到这儿表示上面没问题才开启服务器
             self.serverSignal.startupSignal.emit((self.serverIpLE.text(), int(self.serverPortLE.text())))
             self.serverIpLE.setEnabled(False)
             self.serverPortLE.setEnabled(False)

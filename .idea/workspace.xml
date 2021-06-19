@@ -4,9 +4,7 @@
     <list default="true" id="824463d5-eacc-4b7d-bb38-0e74345ac0a3" name="Default Changelist" comment="agc">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/gui/LoginWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/gui/LoginWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/result/ResultCodeEnum.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/result/ResultCodeEnum.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/util/TokenUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/util/TokenUtil.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/api/ClientSocketApi.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/api/ClientSocketApi.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/gui/MainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/gui/MainWindow.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/thread_/ServerSocketThread.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/thread_/ServerSocketThread.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -67,7 +65,7 @@
       <recent name="E:\PythonProject\study\pythonProject\agc\common\util" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.ClientApplication">
+  <component name="RunManager" selected="Python.ServerApplication">
     <configuration name="ClientApplication" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="agc" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -175,8 +173,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.ClientApplication" />
         <item itemvalue="Python.ServerApplication" />
+        <item itemvalue="Python.ClientApplication" />
         <item itemvalue="Python.SqlPoolTest" />
         <item itemvalue="Python.UUIDUtil" />
         <item itemvalue="Python.DataSourceFactory (1)" />
@@ -458,7 +456,14 @@
       <option name="project" value="LOCAL" />
       <updated>1624101225396</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="agc">
+      <created>1624102644692</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1624102644692</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
