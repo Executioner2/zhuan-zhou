@@ -95,7 +95,7 @@ class DataSourceFactory:
                 time.sleep(0.5)  # 每隔0.5秒执行一次
                 self.lock.acquire()  # 加锁
                 for item in self.cursorList:
-                    if item["flag"] and item["ttl"] <= self.getCurrentTimestamp():
+                    if item["flag"] and item["ttl"] != -1 and item["ttl"] <= self.getCurrentTimestamp():
                         item["cursor"].close()
                         self.cursorList.remove(item)
                         print("空闲的cursor被清除掉了：", item)
@@ -117,6 +117,6 @@ class DataSourceFactory:
 
 # 测试
 if __name__ == '__main__':
-    dsc = DataSourceFactory()
+    dsf = DataSourceFactory()
     print(time.time())
-    print(dsc.getCurrentTimestamp())
+    print(dsf.getCurrentTimestamp())

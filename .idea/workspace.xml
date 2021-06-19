@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="824463d5-eacc-4b7d-bb38-0e74345ac0a3" name="Default Changelist" comment="agc">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/api/ClientSocketApi.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/api/ClientSocketApi.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/handler/DataSourceFactory.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/handler/DataSourceFactory.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/thread_/ClientSocketThread.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/thread_/ClientSocketThread.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/thread_/ServerSocketThread.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/thread_/ServerSocketThread.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +66,7 @@
       <recent name="E:\PythonProject\study\pythonProject\agc\common\util" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.DataSourceFactory (1)">
+  <component name="RunManager" selected="Python.ServerApplication">
     <configuration name="ClientApplication" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="agc" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -212,11 +216,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.ServerApplication" />
         <item itemvalue="Python.DataSourceFactory (1)" />
         <item itemvalue="Python.DataSourceFactory" />
         <item itemvalue="Python.DataSourceConfig" />
         <item itemvalue="Python.DataSourceFactory" />
-        <item itemvalue="Python.ClientApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -474,7 +478,14 @@
       <option name="project" value="LOCAL" />
       <updated>1624092117224</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="agc">
+      <created>1624092320471</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1624092320471</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

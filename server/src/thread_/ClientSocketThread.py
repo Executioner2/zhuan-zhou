@@ -21,7 +21,7 @@ class ClientSocketThread(QtCore.QThread):
                     result = TransmitUtil.receive(self.clientSocket)
                     data = Json2ObjectUtil.jsonToObject(result["data"])
                     print(result["url"])
-                    fun = getattr(ClientSocketApi(), result["url"])
+                    fun = getattr(ClientSocketApi(self.dsf), result["url"])
                     params = (self.clientSocket, data)
                     fun(params) # 调用有参数的方法
                 except AttributeError:
@@ -37,9 +37,10 @@ class ClientSocketThread(QtCore.QThread):
 
 
     """初始化"""
-    def __init__(self, clientSocketList, clientSocket, clientAddress):
+    def __init__(self, clientSocketList, clientSocket, clientAddress, dsf):
         super(ClientSocketThread, self).__init__()
         self.clientSocketList = clientSocketList
         self.clientSocket = clientSocket
         self.clientAddress = clientAddress
+        self.dsf = dsf # 数据库连接工厂
 

@@ -8,10 +8,11 @@
 # version：1.0.0
 
 import socket
-import threading
+
+from PyQt5 import QtCore
+
 from server.src.thread_ import ClientSocketThread
-import time
-from PyQt5 import QtCore, QtWidgets
+from server.src.handler import DataSourceFactory
 
 MAX_CONTENT = 100 # 排队个数
 
@@ -20,6 +21,7 @@ class SocketService(QtCore.QThread):
     peopers = 0
     server = None
     address = None
+    dsf = None
 
     """重写run"""
     def run(self) -> None:
@@ -30,19 +32,22 @@ class SocketService(QtCore.QThread):
             self.server.bind(self.address)
             self.server.listen(MAX_CONTENT)  # 最大排队数
             print("服务器启动成功....")
+            # 创建数据库连接池
+            self.dsf = DataSourceFactory.DataSourceFactory("E:\\PythonProject\\study\\pythonProject\\agc\server\\resource\\config\\datasource.conf")
             while True:
                 print("正在监听")
                 clientSocket, clientAddress = self.server.accept()
                 # 把客户端socket添加到列表中
                 self.clientList.append(clientSocket)
                 # 为这个客户端开启一个消息读取和发送的线程
-                clientThread = ClientSocketThread.ClientSocketThread(self.clientList, clientSocket, clientAddress)
+                clientThread = ClientSocketThread.ClientSocketThread(self.clientList, clientSocket, clientAddress, self.dsf)
                 clientThread.start()
         except OSError:
             pass
         finally:
             self.server.close()
             self.server = None
+            self.dsf.closeAll() # 关闭数据库
             print("服务器已经关闭")
 
     """初始化"""

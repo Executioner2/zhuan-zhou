@@ -12,6 +12,9 @@ from common.result.Result import Result
 
 
 class ClientSocketApi:
+    def __init__(self, dsf):
+        print("接口初始化了")
+        self.dsf = dsf
 
     """消息群发"""
     def notify(self):
