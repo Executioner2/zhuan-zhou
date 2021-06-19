@@ -20,12 +20,14 @@ from common.util.TokenUtil import TokenUtil
 from model.dto import LoginDto
 from model.enum_.HeadStyleEnum import HeadStyleEnum
 from ui import LoginWindow_ui
-
+from common.util import ConfigFileUtil
+import os, sys
 
 class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject):
     # 跳转信号
     skipSignal = QtCore.pyqtSignal(object)
     clientSocket = None
+    userConfigFilePath = os.path.dirname(os.path.dirname(sys.argv[0])) + "/resource/config/user_config.ini"
 
     def __init__(self):
         super(LoginWindow, self).__init__()
@@ -64,6 +66,19 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
         self.registerCofirmPasswordLE.blurSignal.connect(self.on_register_blurSignal)
         # 绑定注册提交按钮
         self.registerBtn.clicked.connect(self.on_registerBtn_click)
+        # 读取用户配置文件
+        configInfo = ConfigFileUtil.readUserConfig(self.userConfigFilePath)
+        print(configInfo)
+        tempRadio = self.radioBtnGroupWidget.findChild(QtWidgets.QRadioButton, configInfo[0])
+        if tempRadio == self.customRB:
+            tempTuple = configInfo[1].split(",")
+            self.RSB.setValue(int(tempTuple[0]))
+            self.GSB.setValue(int(tempTuple[1]))
+            self.BSB.setValue(int(tempTuple[2]))
+            self.selectCustomHeadStyle(True)
+        tempRadio.setChecked(True)
+        self.serverIpLE.setText(configInfo[2])
+        self.serverPortLE.setText(configInfo[3])
 
     """注册请求"""
     def on_registerBtn_click(self):
@@ -304,11 +319,17 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
         elif not self.on_serverPortLE_editingFinished(): return
 
         # 保存配置到配置文件
-        
+        headStyle = None
+        for item in self.radioBtnGroupWidget.children():
+            if isinstance(item, QtWidgets.QRadioButton) and item.isChecked():
+                colorRB = item.objectName()
+                if colorRB == HeadStyleEnum.CUSTOM.value["name"]:
+                    headStyle = "{}, {}, {}".format(self.RSB.value(), self.GSB.value(), self.BSB.value())
+                break
+        ConfigFileUtil.wirteUserConfig(self.userConfigFilePath, colorRB, self.serverIpLE.text(), self.serverPortLE.text(), headStyle)
         # 隐藏配置widget
         self.configWidget.hide()
         # 显示登录widget
         self.loginWidget.show()
         self.setWindowTitle("登录")
-
 

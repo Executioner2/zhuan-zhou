@@ -38,5 +38,14 @@ def readUserConfig(path, config=None):
     return colorRB, headStyle, serverIp, serverPort
 
 """写入用户配置文件"""
-def wirteUserConfig(path, config=None):
-    pass
+def wirteUserConfig(path, colorRB, serverIp, serverPort, headStyle=None, config=None):
+    conf = configparser.RawConfigParser()
+    config = "config01" if config == None else config
+    conf.add_section(config)
+    conf.set(config, "color_rb", colorRB)
+    conf.set(config, "head_style", headStyle)
+    conf.set(config, "server_ip", serverIp)
+    conf.set(config, "server_port", serverPort)
+    # 保存到文件
+    with open(path, "w") as f:
+        conf.write(f)
