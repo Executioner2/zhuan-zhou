@@ -9,19 +9,18 @@
 
 import socket
 
-from PyQt5 import QtCore
-
-from server.src.thread_ import ClientSocketThread
-from server.src.handler import DataSourceFactory
-from dbutils.pooled_db import PooledDB
 import pymysql
+from PyQt5 import QtCore
+from dbutils.pooled_db import PooledDB
+
 from common.util import DataSourceUtil
+from server.src.thread_ import ClientSocketThread
 
 MAX_CONTENT = 100 # 排队个数
 
 class SocketService(QtCore.QThread):
     clientList = []
-    peopers = 0
+    people = 0
     server = None
     address = None
     dsf = None

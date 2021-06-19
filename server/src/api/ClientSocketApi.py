@@ -15,7 +15,6 @@ from common.util.TokenUtil import TokenUtil
 from dbutils.pooled_db import PooledDB
 import pymysql
 
-
 class ClientSocketApi:
     def __init__(self, socket, sqlConnPool:PooledDB):
         self.socket = socket
@@ -27,19 +26,31 @@ class ClientSocketApi:
 
     """用户登录"""
     def login(self, token):
-        print("开始执行用户登录")
-        print(token)
-        TransmitUtil.send(self.socket, Result.ok())
+        try:
+            print("开始执行用户登录")
+            userinfo = TokenUtil.getUserInfo(token)
+            # 获取连接
+            conn = self.sqlConnPool.connection()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            cursor.execute("select count(*) from tbl_user where username=%s and password=%s and is_deleted=0", (userinfo[0], userinfo[1]))
+            result = cursor.fetchall()[0]["count(*)"]
+            if result == 1:
+                TransmitUtil.send(self.socket, Result.ok())
+            else:
+                TransmitUtil.send(self.socket, Result.build(ResultCodeEnum.LOGIN_USER_FAIL.value[0]))
+        finally:
+            if cursor != None:
+                cursor.close()
+            if conn != None:
+                conn.close()
 
     """用户注册"""
     def register(self, token):
         try:
-            print(token)
-            userinfo = TokenUtil.getUserInfo(token)
-            print(userinfo)
             print("开始注册用户")
-            # 取得一个cursor
-            conn = self.sqlConnPool.connection() # 获取连接
+            userinfo = TokenUtil.getUserInfo(token)
+            # 获取连接
+            conn = self.sqlConnPool.connection()
             cursor = conn.cursor(pymysql.cursors.DictCursor)
             cursor.execute("select count(*) from tbl_user where username=%s and is_deleted=0", (userinfo[0]))
             result = cursor.fetchall()[0]["count(*)"]
@@ -59,7 +70,3 @@ class ClientSocketApi:
                 cursor.close()
             if conn != None:
                 conn.close()
-
-    """用户名重复性检测"""
-    def usernameCheck(self):
-        pass

@@ -9,7 +9,7 @@
 
 import base64
 import json
-import hashlib
+from common.util import MD5Util
 
 number = (48, 57)  # 数字字符ascii码范围
 upper = (65, 90)  # 大写字符ascii码范围
@@ -24,6 +24,7 @@ class TokenUtil:
 
     @staticmethod
     def createToken(username:str, password:str):
+        password = MD5Util.saltMD5(password) # 对密码进行MD5加盐加密
         mapStr = '{"username":"'+username+'", "password":"'+password+'"}'
         token = base64.b64encode(mapStr.encode(encoding='utf-8'))
         # 加密后

@@ -26,3 +26,10 @@ class ResultCodeEnum(Enum):
     LOGIN_DISABLED_ERROR = (512, "该用户已被禁用")
     REGISTER_USERNAME_ERROR = (514, "用户名已被使用")
     LOGIN_USER_FAIL = (517, "用户名或密码错误")
+
+    """根据code获取描述"""
+    @staticmethod
+    def getDescribeByCode(code:int) -> None:
+        for item in ResultCodeEnum:
+            if item.value[0] == code:
+                return item.value[1]

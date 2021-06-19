@@ -29,6 +29,9 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
     skipSignal = QtCore.pyqtSignal(object)
     clientSocket = None
 
+    """重写退出"""
+
+
     def __init__(self):
         super(LoginWindow, self).__init__()
         self.setupUi(self)
@@ -67,7 +70,7 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
         # 绑定注册提交按钮
         self.registerBtn.clicked.connect(self.on_registerBtn_click)
 
-    """注册请求""" # TODO
+    """注册请求"""
     def on_registerBtn_click(self):
         flag = self.on_register_blurSignal()
         if flag:
@@ -78,8 +81,7 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
                 msgHint.exec_()
             else:  # 连接成功，开始用户注册
                 username = self.registerUsernameLE.text()
-                # 简单加个密并返回密文
-                password = MD5Util.saltMD5(self.registerPasswordLE.text())
+                password = self.registerPasswordLE.text()
                 # 封装成自定义token
                 token = TokenUtil.createToken(username, password)
                 result = Result.ok(IndexTableEnum.REGISTER.value, token)
@@ -240,6 +242,9 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
             if serverResult["code"] == ResultCodeEnum.SUCCESS.value[0]: # 如果为200，则登录成功
                 self.skipSignal.emit(self._loginDto)
                 self.close()
+            else:
+                msgBox = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Warning, "警告", ResultCodeEnum.getDescribeByCode(serverResult["code"]))
+                msgBox.exec_()
 
     """获取（创建）client socket"""
     def __getClientSocket(self):
@@ -275,6 +280,11 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
         self.configWidget.hide()
         # 显示注册widget
         self.registerWidget.show()
+        # 清空用户名和密码
+        self.usernameLE.clear()
+        self.passwordLE.clear()
+        self.crypLE.clear()
+        self.crypCheck.setChecked(False)
         self.setWindowTitle("用户注册")
 
     """切换到登录页"""
