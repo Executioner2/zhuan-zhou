@@ -12,3 +12,4 @@ from PyQt5.QtCore import pyqtSignal, QObject
 class ClientSignal(QObject):
     loginSignal = pyqtSignal(object)
     loginResultSignal = pyqtSignal(bool)
+    skipSignal = pyqtSignal(object) # 跳转信号

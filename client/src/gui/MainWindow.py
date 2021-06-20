@@ -12,7 +12,7 @@ from model.enum_.MsgTypeEnum import MsgTypeEnum
 from common.util import MsgWidgetUtil
 from PyQt5 import QtWidgets, QtGui, QtCore
 from model.dto import LoginDto
-
+from client.src.signal import ClientSignal
 
 class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObject):
     mouseClick = QtCore.pyqtSignal(object)
@@ -49,14 +49,16 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
             a0.ignore()
 
     """初始化"""
-    def __init__(self):
+    def __init__(self, clientSignal:ClientSignal):
         super(MainWindow, self).__init__()
         self.setupUi(self)
+        self.clientSignal = clientSignal
         # 鼠标点击事件
         self.mouseClick.connect(self.on_mouseClick_clicked)
         # 绑定发送按钮（当发送按钮发送消息时追加消息）
         self.pushBtn.clicked.connect(self.sendMsg)
         self.textEdit.sendSignal.connect(self.sendMsg)
+        self.clientSignal.skipSignal.connect(self.recevieSkipSignal)
 
     """检测是否点击到了群组列表"""
     def on_mouseClick_clicked(self, a0: QtGui.QMouseEvent):

@@ -22,19 +22,19 @@ from model.enum_.HeadStyleEnum import HeadStyleEnum
 from ui import LoginWindow_ui
 from common.util import ConfigFileUtil
 import os, sys
+from client.src.signal import ClientSignal
 
 class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject):
-    # 跳转信号
-    skipSignal = QtCore.pyqtSignal(object)
     clientSocket = None
     userConfigFilePath = os.path.dirname(os.path.dirname(sys.argv[0])) + "/resource/config/user_config.ini"
 
-    def __init__(self):
+    def __init__(self, clientSignal:ClientSignal):
         super(LoginWindow, self).__init__()
         self.setupUi(self)
         self.registerWidget.hide()
         self.configWidget.hide()
         self.setWindowTitle("登录")
+        self.clientSignal = clientSignal # 信号类
         # 登录界面到聊天界面的传递对象
         self._loginDto = LoginDto.LoginDto()
         self._loginDto.headStyle = HeadStyleEnum.GREEN.value['style'] # 头像默认为绿色
@@ -249,7 +249,7 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
             serverResult = TransmitUtil.receive(clientSocket)
             print("服务器返回的结果", serverResult)
             if serverResult["code"] == ResultCodeEnum.SUCCESS.value[0]: # 如果为200，则登录成功
-                self.skipSignal.emit(self._loginDto)
+                self.clientSignal.skipSignal.emit(self._loginDto) # 跳转到聊天主窗口
                 self.close()
             else:
                 msgBox = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Warning, "警告", ResultCodeEnum.getDescribeByCode(serverResult["code"]))

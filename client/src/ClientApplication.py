@@ -10,14 +10,15 @@
 import sys
 from gui import MainWindow, LoginWindow
 from PyQt5 import QtWidgets
+from client.src.signal import ClientSignal
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
-    loginWindows = LoginWindow.LoginWindow()
-    mainWindow = MainWindow.MainWindow()
+    clientSignal = ClientSignal.ClientSignal() # 信号
+    loginWindows = LoginWindow.LoginWindow(clientSignal)
+    mainWindow = MainWindow.MainWindow(clientSignal)
 
     loginWindows.show()
-    loginWindows.skipSignal.connect(mainWindow.recevieSkipSignal)
 
     sys.exit(app.exec_())
 

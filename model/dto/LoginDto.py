@@ -16,7 +16,7 @@ class LoginDto:
         self.cryp = cryp
 
     def __str__(self):
-        return "token:{} serverIp:{} serverPort:{} headStyle:{} cryp:{}".format(self._token, self._serverIp, self._serverPort, self._headStyle, self._cryp)
+        return "token:{} serverIp:{} serverPort:{} headStyle:{} cryp:{}".format(self.token, self.serverIp, self.serverPort, self.headStyle, self.cryp)
 
     # @property
     # def cryp(self):
