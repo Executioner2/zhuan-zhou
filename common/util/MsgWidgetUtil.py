@@ -130,7 +130,7 @@ def setTextStyle(content, msg:str):
     注意：下列widget子组件的存储方式必须按title userHead content
     的顺序存储，不然会导致组件样式出现意想不到的问题
 """
-def simpleSetStyle(scrollWidget, verticalLayout, scrollArea, msgType:MsgTypeEnum, username = None, headColor = None, msg = "", checkedGroupIndex = None):
+def simpleSetStyle(scrollWidget, verticalLayout, scrollArea, msgType:MsgTypeEnum, username = None, headStyle = None, msg = "", checkedGroupIndex = None):
     # 取得scrollWidget原始宽度-5
     scrollWidth = scrollArea.width() - 5
     # 创建widget 父组件为scrollWidget (滚动窗口)
@@ -145,7 +145,7 @@ def simpleSetStyle(scrollWidget, verticalLayout, scrollArea, msgType:MsgTypeEnum
         # 设置title样式
         setTitleStyle(title, username, MsgTypeEnum.SEND)
         # 设置头像样式
-        setHeadStyle(userHead, headColor)
+        setHeadStyle(userHead, headStyle)
         # 设置消息内容样式
         setTextStyle(content, msg)
         title.move(scrollWidth - title.width() - 25, 10)
@@ -155,7 +155,7 @@ def simpleSetStyle(scrollWidget, verticalLayout, scrollArea, msgType:MsgTypeEnum
         # 设置title样式
         setTitleStyle(title, username, MsgTypeEnum.RECEIVE)
         # 设置头像样式
-        setHeadStyle(userHead, headColor)
+        setHeadStyle(userHead, headStyle)
         # 设置消息内容样式
         setTextStyle(content, msg)
         title.move(5, 10)

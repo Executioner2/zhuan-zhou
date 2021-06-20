@@ -15,18 +15,25 @@ from common.result.ResultCodeEnum import ResultCodeEnum
 from common.util import TransmitUtil
 from common.util import UUIDUtil
 from common.util.TokenUtil import TokenUtil
+from model.dto import MsgDto
 
 
 class ClientSocketApi:
     nickname = None
     headStyle = None
-    def __init__(self, socket, sqlConnPool:PooledDB):
+    def __init__(self, clientSocketList, socket, sqlConnPool:PooledDB):
+        self.clientSocketList = clientSocketList
         self.socket = socket
         self.sqlConnPool = sqlConnPool
 
     """消息群发"""
-    def notify(self):
-        pass
+    def notify(self, params):
+        print("开始转发消息")
+        msgDto = MsgDto.MsgDto(group=params.group, content=params.content, nickname=self.nickname, headStyle=self.headStyle)
+        for item in self.clientSocketList:
+            if item != self.socket: # 不给自己发
+                TransmitUtil.send(item, msgDto)
+
 
     """用户登录"""
     def login(self, loginDto):

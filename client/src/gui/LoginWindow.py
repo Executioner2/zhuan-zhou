@@ -250,7 +250,7 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
             print("服务器返回的结果", serverResult)
             if serverResult["code"] == ResultCodeEnum.SUCCESS.value[0]: # 如果为200，则登录成功
                 self._loginDto.nickname = serverResult["data"]
-                self.clientSignal.skipSignal.emit(self._loginDto) # 跳转到聊天主窗口
+                self.clientSignal.skipSignal.emit((self._loginDto, clientSocket)) # 跳转到聊天主窗口
                 self.close()
             else:
                 msgBox = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Warning, "警告", ResultCodeEnum.getDescribeByCode(serverResult["code"]))

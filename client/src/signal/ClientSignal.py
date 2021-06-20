@@ -13,3 +13,4 @@ class ClientSignal(QObject):
     loginSignal = pyqtSignal(object)
     loginResultSignal = pyqtSignal(bool)
     skipSignal = pyqtSignal(object) # 跳转信号
+    msgReceiveSignal = pyqtSignal(object) # 消息接收信号

@@ -20,7 +20,6 @@ class ClientSocketThread(QtCore.QThread):
                 try:
                     result = TransmitUtil.receive(self.clientSocket)
                     data = JsonObjectUtil.jsonToObject(result["data"])
-                    print(result["url"])
                     fun = getattr(self.clientSocketApi, result["url"])
                     fun(data) # 调用有参数的方法
                 except AttributeError:
@@ -42,5 +41,5 @@ class ClientSocketThread(QtCore.QThread):
         self.clientSocket = clientSocket
         self.clientAddress = clientAddress
         self.sqlConnPool = sqlConnPool # 数据库连接池
-        self.clientSocketApi = ClientSocketApi(self.clientSocket, self.sqlConnPool)
+        self.clientSocketApi = ClientSocketApi(self.clientSocketList, self.clientSocket, self.sqlConnPool)
 
