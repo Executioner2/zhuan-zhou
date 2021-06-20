@@ -77,10 +77,12 @@ def setShowStyle(widget, scrollWidget, layout, scrollArea, checkedGroupIndex = N
     scrollWidth = scrollArea.width() - 5
     widgetHeight = maxHeight + minHeight + 25
     widget.setFixedSize(scrollWidth, widgetHeight)
-    # 如果不是当前显示组则不显示
-    if checkedGroupIndex == None: return
     # 添加到layout中
     layout.addWidget(widget)
+    # 如果不是当前显示组则不显示
+    if checkedGroupIndex == None:
+        widget.hide()
+        return
     # 设置scrollWidget的最小尺寸
     scrollWidget.setMinimumSize(scrollWidth - 19, scrollWidget.minimumHeight() + widgetHeight + 6)
     # 滚动条自动滚动到最下方

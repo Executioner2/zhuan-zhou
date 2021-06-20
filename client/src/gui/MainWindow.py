@@ -141,7 +141,7 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
                                               MsgTypeEnum.RECEIVE, nickname, headStyle, msg, group)
         # 添加到集合中
         msgObj = {"widget":widget, "type":MsgTypeEnum.RECEIVE}
-        self.groupMsgWidgetList[self.checkedGroupIndex].append(msgObj)
+        self.groupMsgWidgetList[params.group].append(msgObj)
 
 
     """添加发送到聊天界面"""
