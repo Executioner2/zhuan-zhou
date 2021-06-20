@@ -22,8 +22,10 @@ class ClientReceiveThread(QtCore.QThread):
     """重写run"""
     def run(self) -> None:
         # 消息接收线程
+        print("进入到消息接收线程")
         try:
             while True:
+                print("开始接收消息")
                 result = TransmitUtil.receive(self.clientSocket)
                 data = JsonObjectUtil.jsonToObject(result["data"])
                 # 发送信号渲染到ui上

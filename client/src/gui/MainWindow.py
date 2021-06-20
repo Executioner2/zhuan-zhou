@@ -131,9 +131,10 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
     """添加接收消息到聊天界面"""
     def addReceiveMsgWidgets(self, params):
         msg = params.content
-        group = params.group
+        group = params.group if params.group == self.checkedGroupIndex else None
         nickname = params.nickname
         headStyle = params.headStyle
+        print(group)
 
         # 超简单设置文本效果
         widget = MsgWidgetUtil.simpleSetStyle(self.scrollWidget, self.verticalLayout, self.scrollArea,
