@@ -141,11 +141,11 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
             self.groupMsgWidgetList.append([]) # 不要用下面的*来创建，创建的是同一个list
         # 初始化数据框list的大小
         self.inputBoxList = [""] * self.groupVL.count()
+        # 读取聊天文件
+        self.readRecordFile()
         # 启动消息接收线程
         self.clientReceiveThread = ClientReceiveThread.ClientReceiveThread(self.clientSocket, self.clientSignal)
         self.clientReceiveThread.start()
-        # 读取聊天文件
-        self.readRecordFile()
 
     """通过socket发送消息"""
     def sendMsg(self):
