@@ -13,4 +13,4 @@ class IndexTableEnum(Enum):
     LOGIN = "login"
     REGISTER = "register"
     NOTIFY = "notify"
-    USERNAME_CHECK = "usernameCheck" # 用户名重复检测
+    SAVE_CHAT_FILE = "saveChatFile"
