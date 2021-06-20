@@ -89,7 +89,8 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
     def recevieSkipSignal(self, loginDto: LoginDto):
         self.show()
         self.headColor = loginDto.headStyle
-        self.username = loginDto.cryp if loginDto.cryp else loginDto.token
+        self.username = loginDto.nickname
+        self.setWindowTitle("CHAT  user:{}  serverIp:{}  serverPort:{}".format(self.username, loginDto.serverIp, loginDto.serverPort))
         # 获得groupVL中所有的widget（所有分组）
         for index in range(self.groupVL.count()):
             child = self.groupVL.itemAt(index).widget()

@@ -229,7 +229,7 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
         self._loginDto.serverPort = self.serverPortLE.text()
         # 判断是否开启别称，如果开启则设置别称
         if self.crypCheck.isChecked():
-            self._loginDto.cryp = "匿名用户" if self.crypLE.text().strip() else self.crypLE.text().strip()
+            self._loginDto.cryp = "匿名用户" if self.crypLE.text().strip() == "" else self.crypLE.text().strip()
 
         # 这里直接创建socket，然后用户登录成功后把socket传入ClientSocketThread中去
         clientSocket = self.__getClientSocket()
@@ -249,6 +249,7 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
             serverResult = TransmitUtil.receive(clientSocket)
             print("服务器返回的结果", serverResult)
             if serverResult["code"] == ResultCodeEnum.SUCCESS.value[0]: # 如果为200，则登录成功
+                self._loginDto.nickname = serverResult["data"]
                 self.clientSignal.skipSignal.emit(self._loginDto) # 跳转到聊天主窗口
                 self.close()
             else:

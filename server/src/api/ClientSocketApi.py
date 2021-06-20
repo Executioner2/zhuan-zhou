@@ -41,8 +41,8 @@ class ClientSocketApi:
             result = cursor.fetchall()
             if len(result) != 0:
                 self.headStyle = loginDto.headStyle
-                self.nickname = loginDto.cryp if not loginDto.cryp else result[0]["username"]
-                TransmitUtil.send(self.socket, Result.ok())
+                self.nickname = loginDto.cryp if loginDto.cryp else result[0]["username"]
+                TransmitUtil.send(self.socket, Result.ok(data=self.nickname))
             else:
                 TransmitUtil.send(self.socket, Result.build(ResultCodeEnum.LOGIN_USER_FAIL.value[0]))
         finally:
