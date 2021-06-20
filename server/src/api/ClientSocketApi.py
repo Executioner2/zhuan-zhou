@@ -7,15 +7,19 @@
 # editBy：
 # version：1.0.0
 
+import pymysql
+from dbutils.pooled_db import PooledDB
+
 from common.result.Result import Result
 from common.result.ResultCodeEnum import ResultCodeEnum
 from common.util import TransmitUtil
 from common.util import UUIDUtil
 from common.util.TokenUtil import TokenUtil
-from dbutils.pooled_db import PooledDB
-import pymysql
+
 
 class ClientSocketApi:
+    nickname = None
+    headStyle = None
     def __init__(self, socket, sqlConnPool:PooledDB):
         self.socket = socket
         self.sqlConnPool = sqlConnPool
@@ -25,16 +29,19 @@ class ClientSocketApi:
         pass
 
     """用户登录"""
-    def login(self, token):
+    def login(self, loginDto):
+        token = loginDto.token
         try:
             print("开始执行用户登录")
             userinfo = TokenUtil.getUserInfo(token)
             # 获取连接
             conn = self.sqlConnPool.connection()
             cursor = conn.cursor(pymysql.cursors.DictCursor)
-            cursor.execute("select count(*) from tbl_user where username=%s and password=%s and is_deleted=0", (userinfo[0], userinfo[1]))
-            result = cursor.fetchall()[0]["count(*)"]
-            if result == 1:
+            cursor.execute("select id, username from tbl_user where username=%s and password=%s and is_deleted=0", (userinfo[0], userinfo[1]))
+            result = cursor.fetchall()
+            if len(result) != 0:
+                self.headStyle = loginDto.headStyle
+                self.nickname = loginDto.cryp if not loginDto.cryp else result[0]["username"]
                 TransmitUtil.send(self.socket, Result.ok())
             else:
                 TransmitUtil.send(self.socket, Result.build(ResultCodeEnum.LOGIN_USER_FAIL.value[0]))

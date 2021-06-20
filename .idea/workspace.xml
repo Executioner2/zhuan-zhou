@@ -3,9 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="824463d5-eacc-4b7d-bb38-0e74345ac0a3" name="Default Changelist" comment="agc">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/resource/config/user_config.ini" beforeDir="false" afterPath="$PROJECT_DIR$/client/resource/config/user_config.ini" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/gui/LoginWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/gui/LoginWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/util/ConfigFileUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/util/ConfigFileUtil.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/util/Json2ObjectUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/util/JsonObjectUtil.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/dto/LoginDto.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/dto/LoginDto.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/api/ClientSocketApi.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/api/ClientSocketApi.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/thread_/ClientSocketThread.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/thread_/ClientSocketThread.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -174,8 +176,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.ClientApplication" />
-        <item itemvalue="Python.LoginWindow" />
         <item itemvalue="Python.ServerApplication" />
+        <item itemvalue="Python.LoginWindow" />
         <item itemvalue="Python.MainWindow" />
         <item itemvalue="Python.SqlPoolTest" />
       </list>
@@ -484,7 +486,21 @@
       <option name="project" value="LOCAL" />
       <updated>1624105411205</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="agc">
+      <created>1624107432296</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1624107432296</updated>
+    </task>
+    <task id="LOCAL-00044" summary="agc">
+      <created>1624107442736</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1624107442736</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

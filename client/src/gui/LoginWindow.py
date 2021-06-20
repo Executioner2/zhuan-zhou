@@ -239,9 +239,9 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
             msgHint.exec_()
         else: # 连接成功，开始用户登录
             # 封装用户名和密码，创建token
-            token = TokenUtil.createToken(self.usernameLE.text(), self.passwordLE.text())
+            self._loginDto.token = TokenUtil.createToken(self.usernameLE.text(), self.passwordLE.text())
             # 封装传输对象
-            result = Result.ok(IndexTableEnum.LOGIN.value, token)
+            result = Result.ok(IndexTableEnum.LOGIN.value,  self._loginDto)
             print("客户端传输过去的对象", result)
             # 发送
             TransmitUtil.send(clientSocket, result)

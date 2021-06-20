@@ -8,7 +8,7 @@
 # version：1.0.0
 
 from PyQt5 import QtCore
-from common.util import TransmitUtil, Json2ObjectUtil
+from common.util import TransmitUtil, JsonObjectUtil
 from server.src.api.ClientSocketApi import ClientSocketApi
 
 class ClientSocketThread(QtCore.QThread):
@@ -19,9 +19,9 @@ class ClientSocketThread(QtCore.QThread):
             while True:
                 try:
                     result = TransmitUtil.receive(self.clientSocket)
-                    data = Json2ObjectUtil.jsonToObject(result["data"])
+                    data = JsonObjectUtil.jsonToObject(result["data"])
                     print(result["url"])
-                    fun = getattr(ClientSocketApi(self.clientSocket, self.sqlConnPool), result["url"])
+                    fun = getattr(self.clientSocketApi, result["url"])
                     fun(data) # 调用有参数的方法
                 except AttributeError:
                     continue
@@ -42,4 +42,5 @@ class ClientSocketThread(QtCore.QThread):
         self.clientSocket = clientSocket
         self.clientAddress = clientAddress
         self.sqlConnPool = sqlConnPool # 数据库连接池
+        self.clientSocketApi = ClientSocketApi(self.clientSocket, self.sqlConnPool)
 
