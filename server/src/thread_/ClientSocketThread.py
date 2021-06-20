@@ -19,6 +19,7 @@ class ClientSocketThread(QtCore.QThread):
             while True:
                 try:
                     result = TransmitUtil.receive(self.clientSocket)
+                    if result == None: break
                     data = JsonObjectUtil.jsonToObject(result["data"])
                     fun = getattr(self.clientSocketApi, result["url"])
                     fun(data) # 调用有参数的方法
@@ -30,6 +31,7 @@ class ClientSocketThread(QtCore.QThread):
             pass
         finally:
             print("断开连接")
+            self.clientSocket.close()
             self.clientSocketList.remove(self.clientSocket)
             # TODO 发送退出群聊通知
 

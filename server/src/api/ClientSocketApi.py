@@ -30,7 +30,6 @@ class ClientSocketApi:
     def notify(self, params):
         print("开始转发消息")
         msgDto = MsgDto.MsgDto(group=params.group, content=params.content, nickname=self.nickname, headStyle=self.headStyle)
-        print(self.clientSocketList)
         for item in self.clientSocketList:
             if item != self.socket: # 不给自己发
                 TransmitUtil.send(item, Result.ok(data=msgDto))
