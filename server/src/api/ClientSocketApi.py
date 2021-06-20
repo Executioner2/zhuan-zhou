@@ -6,6 +6,9 @@
 # editDate：
 # editBy：
 # version：1.0.0
+import os
+import pickle
+import sys
 
 import pymysql
 from dbutils.pooled_db import PooledDB
@@ -16,22 +19,40 @@ from common.util import TransmitUtil
 from common.util import UUIDUtil
 from common.util.TokenUtil import TokenUtil
 from model.dto import MsgDto
-import datetime
 from model.enum_.MsgTypeEnum import MsgTypeEnum
+
+FILENAME = "records.data"
 
 class ClientSocketApi:
     nickname = None
+    username = None
     headStyle = None
     def __init__(self, clientSocketList, socket, sqlConnPool:PooledDB):
         self.clientSocketList = clientSocketList
         self.socket = socket
         self.sqlConnPool = sqlConnPool
 
+    """保存聊天文件"""
+    def saveChatFile(self, msgList):
+        print("开始保存聊天文件")
+        for index, item in enumerate(msgList):
+            msgDto = MsgDto.MsgDto(item["group"], item["content"], item["type"], item["datetime_"], item["nickname"], item["headStyle"])
+            msgList[index] = msgDto
+        # 保存聊天记录
+        folder = os.path.dirname(os.path.dirname(sys.argv[0])) + "/resource/user_file/" + self.username + "/"
+        flag = os.path.exists(folder)
+        if not flag: os.makedirs(folder)
+        path = folder + FILENAME
+        with open(path, "wb") as f:
+            pickle.dump(msgList, f)
+        # TODO 文件路径存入数据库
+
     """消息群发"""
-    def notify(self, params):
+    def notify(self, msgDto):
         print("开始转发消息")
-        msgDto = MsgDto.MsgDto(group=params.group, type=MsgTypeEnum.RECEIVE.value, content=params.content, nickname=self.nickname, headStyle=self.headStyle)
-        msgDto.datetime_ = datetime.datetime.now().replace(microsecond=0)
+        msgDto.type = MsgTypeEnum.RECEIVE.value
+        msgDto.nickname = self.nickname
+        msgDto.headStyle = self.headStyle
         for item in self.clientSocketList:
             if item != self.socket: # 不给自己发
                 TransmitUtil.send(item, Result.ok(data=msgDto))
@@ -51,6 +72,7 @@ class ClientSocketApi:
             if len(result) != 0:
                 self.headStyle = loginDto.headStyle
                 self.nickname = loginDto.cryp if loginDto.cryp else result[0]["username"]
+                self.username = result[0]["username"]
                 TransmitUtil.send(self.socket, Result.ok(data=(result[0]["username"], self.nickname)))
             else:
                 TransmitUtil.send(self.socket, Result.build(ResultCodeEnum.LOGIN_USER_FAIL.value[0]))

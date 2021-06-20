@@ -25,7 +25,8 @@ class ClientSocketThread(QtCore.QThread):
                     fun(data) # 调用有参数的方法
                 except AttributeError:
                     continue
-                except TypeError: # 出现此错误说明该方法没有参数，注：url的方法只能有一个参数
+                except TypeError as e: # 出现此错误说明该方法没有参数，注：url的方法只能有一个参数
+                    print(e)
                     fun() # 调用没参数的方法
         except ConnectionError:
             pass

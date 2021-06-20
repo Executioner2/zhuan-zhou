@@ -23,6 +23,7 @@ from model.dto import MsgDto
 import datetime
 import pickle
 
+FILENAME = "records.data"
 
 class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObject):
     mouseClick = QtCore.pyqtSignal(object)
@@ -57,13 +58,14 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
         if result == QtWidgets.QMessageBox.Yes:
             try:
                 # 保存聊天记录
-                filename = "records.data"
                 folder = os.path.dirname(os.path.dirname(sys.argv[0])) + "/resource/user_file/" + self.username + "/"
                 flag = os.path.exists(folder)
                 if not flag: os.makedirs(folder)
-                path = folder + filename
+                path = folder + FILENAME
                 with open(path, "wb") as f:
                     pickle.dump(self.msgList, f)
+                # 发送到服务端，在服务端也保存一份，并把文件路径存入数据库
+                TransmitUtil.send(self.clientSocket, Result.ok(IndexTableEnum.SAVE_CHAT_FILE.value, self.msgList))
                 a0.accept()
                 QtWidgets.QWidget.closeEvent(self, a0)
             finally:
@@ -150,14 +152,13 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
     """通过socket发送消息"""
     def sendMsg(self):
         msg = self.textEdit.toPlainText()
-        msgDto = MsgDto.MsgDto(self.checkedGroupIndex, msg, MsgTypeEnum.SEND.value)
+        msgDto = MsgDto.MsgDto(self.checkedGroupIndex, msg, MsgTypeEnum.SEND.value, datetime.datetime.now().replace(microsecond=0))
         # 先发送过去，发过去了再显示到聊天框中
         TransmitUtil.send(self.clientSocket, Result.ok(IndexTableEnum.NOTIFY.value, msgDto))
         # 封装参数
         msgDto.nickname = self.nickname
         msgDto.headStyle = self.headStyle
         msgDto.content = msg
-        msgDto.datetime_ = datetime.datetime.now().replace(microsecond=0)
         msgDto.group = self.checkedGroupIndex
         # 可视化
         self.addMsgWidgets(msgDto)

@@ -28,8 +28,17 @@ class Result:
     def __setData(self, data):
         if hasattr(data, "__dict__"): # 先判断对象是否包含__dict__属性，如果有则转为字典
             self.result["data"] = data.__dict__
-        else: # 如果不包含__dict__属性则直接赋值
-            self.result["data"] = data
+            return
+        elif isinstance(data, list):
+            for index, item in enumerate(data):
+                if hasattr(item, "__dict__"):
+                    data[index] = item.__dict__
+        elif isinstance(data, tuple):
+            for index, item in enumerate(data):
+                if hasattr(item, "__dict__"):
+                    data[index] = item.__dict__
+        # 不包含__dict__属性或是集合（集合上面已经处理了）直接赋值
+        self.result["data"] = data
 
     """自定义状态"""
     @staticmethod

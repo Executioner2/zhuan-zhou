@@ -10,13 +10,13 @@
 """消息传输类"""
 class MsgDto:
 
-    def __init__(self, group, content, type, nickname=None, headStyle=None, datetime_=None):
+    def __init__(self, group, content, type, datetime_, nickname=None, headStyle=None):
         self.group = group
         self.content = content
         self.type = type
         self.nickname = nickname
         self.headStyle = headStyle
-        self.datetime_ = datetime_
+        self.datetime_ = str(datetime_)
 
     def __str__(self):
         return str(self.__dict__)

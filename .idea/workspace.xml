@@ -2,7 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="824463d5-eacc-4b7d-bb38-0e74345ac0a3" name="Default Changelist" comment="agc">
-      <change beforePath="$PROJECT_DIR$/common/result/IndexTableEnum.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/result/IndexTableEnum.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/resource/user_file/a/records.data" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/agc.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/agc.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/resource/user_file/a/records.data" beforeDir="false" afterPath="$PROJECT_DIR$/client/resource/user_file/a/records.data" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/gui/MainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/gui/MainWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/handler/MyEncoder.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/handler/MyEncoder.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/result/Result.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/result/Result.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/dto/MsgDto.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/dto/MsgDto.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/api/ClientSocketApi.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/api/ClientSocketApi.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/thread_/ClientSocketThread.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/thread_/ClientSocketThread.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,7 +93,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="LoginWindow" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="ClientSocketApi" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="agc" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -92,11 +101,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/client/src/gui" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/server/src/api" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/client/src/gui/LoginWindow.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/server/src/api/ClientSocketApi.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -126,7 +135,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="MyEncoder" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="MsgDto" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="agc" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -134,11 +143,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/common/handler" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/model/dto" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/common/handler/MyEncoder.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/model/dto/MsgDto.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -172,9 +181,9 @@
       <list>
         <item itemvalue="Python.ClientApplication" />
         <item itemvalue="Python.ServerApplication" />
-        <item itemvalue="Python.MyEncoder" />
+        <item itemvalue="Python.ClientSocketApi" />
+        <item itemvalue="Python.MsgDto" />
         <item itemvalue="Python.MainWindow (1)" />
-        <item itemvalue="Python.LoginWindow" />
       </list>
     </recent_temporary>
   </component>
@@ -186,13 +195,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1623552947619</updated>
-    </task>
-    <task id="LOCAL-00006" summary="agc">
-      <created>1623583295329</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1623583295329</updated>
     </task>
     <task id="LOCAL-00007" summary="agc">
       <created>1623583571254</created>
@@ -530,7 +532,14 @@
       <option name="project" value="LOCAL" />
       <updated>1624184033492</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="agc">
+      <created>1624184554656</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1624184554656</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
