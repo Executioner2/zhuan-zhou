@@ -11,11 +11,17 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from client.src.handler import MyLineEdit
 
-
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
         Form.resize(471, 323)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(Form.sizePolicy().hasHeightForWidth())
+        Form.setSizePolicy(sizePolicy)
+        Form.setMinimumSize(QtCore.QSize(471, 323))
+        Form.setMaximumSize(QtCore.QSize(471, 323))
         self.loginWidget = QtWidgets.QWidget(Form)
         self.loginWidget.setGeometry(QtCore.QRect(0, 0, 471, 321))
         self.loginWidget.setStyleSheet("background-color: rgb(255, 255, 255);")
@@ -58,6 +64,11 @@ class Ui_Form(object):
         self.registerSkipBtn.setObjectName("registerSkipBtn")
         self.configWidget = QtWidgets.QWidget(Form)
         self.configWidget.setGeometry(QtCore.QRect(0, 0, 471, 321))
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.configWidget.sizePolicy().hasHeightForWidth())
+        self.configWidget.setSizePolicy(sizePolicy)
         self.configWidget.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.configWidget.setObjectName("configWidget")
         self.confirmBtn = QtWidgets.QPushButton(self.configWidget)
