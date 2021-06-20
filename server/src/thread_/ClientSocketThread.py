@@ -33,8 +33,6 @@ class ClientSocketThread(QtCore.QThread):
             print("断开连接")
             self.clientSocket.close()
             self.clientSocketList.remove(self.clientSocket)
-            # TODO 发送退出群聊通知
-
 
     """初始化"""
     def __init__(self, clientSocketList, clientSocket, clientAddress, sqlConnPool):

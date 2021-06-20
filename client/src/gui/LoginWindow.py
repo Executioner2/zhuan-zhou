@@ -241,7 +241,7 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
             # 封装用户名和密码，创建token
             self._loginDto.token = TokenUtil.createToken(self.usernameLE.text(), self.passwordLE.text())
             # 封装传输对象
-            result = Result.ok(IndexTableEnum.LOGIN.value,  self._loginDto)
+            result = Result.ok(IndexTableEnum.LOGIN.value, self._loginDto)
             print("客户端传输过去的对象", result)
             # 发送
             TransmitUtil.send(clientSocket, result)
@@ -249,7 +249,8 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
             serverResult = TransmitUtil.receive(clientSocket)
             print("服务器返回的结果", serverResult)
             if serverResult["code"] == ResultCodeEnum.SUCCESS.value[0]: # 如果为200，则登录成功
-                self._loginDto.nickname = serverResult["data"]
+                self._loginDto.username = serverResult["data"][0]
+                self._loginDto.nickname = serverResult["data"][1]
                 self.clientSignal.skipSignal.emit((self._loginDto, clientSocket)) # 跳转到聊天主窗口
                 self.close()
             else:

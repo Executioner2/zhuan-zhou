@@ -9,6 +9,7 @@
 
 class LoginDto:
     nickname = None
+    username = None
     def __init__(self, token=None, serverIp=None, serverPort=None, headStyle=None, cryp=None):
         self.token = token
         self.serverIp = serverIp

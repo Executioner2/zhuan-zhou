@@ -16,7 +16,8 @@ from common.util import TransmitUtil
 from common.util import UUIDUtil
 from common.util.TokenUtil import TokenUtil
 from model.dto import MsgDto
-
+import datetime
+from model.enum_.MsgTypeEnum import MsgTypeEnum
 
 class ClientSocketApi:
     nickname = None
@@ -29,7 +30,8 @@ class ClientSocketApi:
     """消息群发"""
     def notify(self, params):
         print("开始转发消息")
-        msgDto = MsgDto.MsgDto(group=params.group, content=params.content, nickname=self.nickname, headStyle=self.headStyle)
+        msgDto = MsgDto.MsgDto(group=params.group, type=MsgTypeEnum.RECEIVE.value, content=params.content, nickname=self.nickname, headStyle=self.headStyle)
+        msgDto.datetime_ = datetime.datetime.now().replace(microsecond=0)
         for item in self.clientSocketList:
             if item != self.socket: # 不给自己发
                 TransmitUtil.send(item, Result.ok(data=msgDto))
@@ -49,7 +51,7 @@ class ClientSocketApi:
             if len(result) != 0:
                 self.headStyle = loginDto.headStyle
                 self.nickname = loginDto.cryp if loginDto.cryp else result[0]["username"]
-                TransmitUtil.send(self.socket, Result.ok(data=self.nickname))
+                TransmitUtil.send(self.socket, Result.ok(data=(result[0]["username"], self.nickname)))
             else:
                 TransmitUtil.send(self.socket, Result.build(ResultCodeEnum.LOGIN_USER_FAIL.value[0]))
         finally:

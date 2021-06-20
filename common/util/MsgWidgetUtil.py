@@ -95,11 +95,12 @@ def setHeadStyle(head, color:str):
     head.setStyleSheet("background-color: {}; border-radius: 20px".format(color))
 
 """设置title样式"""
-def setTitleStyle(title, name:str, msgType:MsgTypeEnum):
-    if msgType.value == MsgTypeEnum.SEND.value:
-        title.setText("{} {}".format(datetime.datetime.now().replace(microsecond=0), name))
+def setTitleStyle(title, name:str, msgType:MsgTypeEnum, datetime_=None):
+    datetime_ = datetime.datetime.now().replace(microsecond=0) if not datetime_ else datetime_
+    if msgType == MsgTypeEnum.SEND.value:
+        title.setText("{} {}".format(datetime_, name))
     else:
-        title.setText("{} {}".format(name, datetime.datetime.now().replace(microsecond=0)))
+        title.setText("{} {}".format(name, datetime_))
     title.adjustSize()
 
 """设置文本样式"""
@@ -132,7 +133,7 @@ def setTextStyle(content, msg:str):
     注意：下列widget子组件的存储方式必须按title userHead content
     的顺序存储，不然会导致组件样式出现意想不到的问题
 """
-def simpleSetStyle(scrollWidget, verticalLayout, scrollArea, msgType:MsgTypeEnum, username = None, headStyle = None, msg = "", checkedGroupIndex = None):
+def simpleSetStyle(scrollWidget, verticalLayout, scrollArea, checkedGroupIndex, msgDto):
     # 取得scrollWidget原始宽度-5
     scrollWidth = scrollArea.width() - 5
     # 创建widget 父组件为scrollWidget (滚动窗口)
@@ -143,27 +144,23 @@ def simpleSetStyle(scrollWidget, verticalLayout, scrollArea, msgType:MsgTypeEnum
     userHead = QtWidgets.QLabel(widget)
     # 创建装消息内容的label 父组件为widget
     content = QtWidgets.QLabel(widget)
-    if msgType == MsgTypeEnum.SEND:
-        # 设置title样式
-        setTitleStyle(title, username, MsgTypeEnum.SEND)
-        # 设置头像样式
-        setHeadStyle(userHead, headStyle)
-        # 设置消息内容样式
-        setTextStyle(content, msg)
+    group = msgDto.group if msgDto.group == checkedGroupIndex else None
+    # 设置title样式
+    setTitleStyle(title, msgDto.nickname, msgDto.type, msgDto.datetime_)
+    # 设置头像样式
+    setHeadStyle(userHead, msgDto.headStyle)
+    # 设置消息内容样式
+    setTextStyle(content, msgDto.content)
+    # 设置坐标
+    if msgDto.type == MsgTypeEnum.SEND.value:
         title.move(scrollWidth - title.width() - 25, 10)
         userHead.move(scrollWidth - userHead.width() - 25, 35)
         content.move(scrollWidth - content.width() - userHead.width() - 30, 35)
-    elif msgType == MsgTypeEnum.RECEIVE:
-        # 设置title样式
-        setTitleStyle(title, username, MsgTypeEnum.RECEIVE)
-        # 设置头像样式
-        setHeadStyle(userHead, headStyle)
-        # 设置消息内容样式
-        setTextStyle(content, msg)
+    elif msgDto.type == MsgTypeEnum.RECEIVE.value:
         title.move(5, 10)
         userHead.move(5, 35)
         content.move(userHead.width() + 10, 35)
 
     # 设置聊天框显示效果
-    setShowStyle(widget, scrollWidget, verticalLayout, scrollArea, checkedGroupIndex)
+    setShowStyle(widget, scrollWidget, verticalLayout, scrollArea, group)
     return widget
