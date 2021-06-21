@@ -95,8 +95,10 @@ def setHeadStyle(head, color:str):
     head.setStyleSheet("background-color: {}; border-radius: 20px".format(color))
 
 """设置title样式"""
-def setTitleStyle(title, name:str, msgType:MsgTypeEnum, datetime_=None):
-    datetime_ = datetime.datetime.now().replace(microsecond=0) if not datetime_ else datetime_
+def setTitleStyle(title, name:str, msgType:MsgTypeEnum, datetime_:str):
+    # 显示去除毫秒微秒
+    index = datetime_.find(".")
+    if index != -1: datetime_ = datetime_[:index]
     if msgType == MsgTypeEnum.SEND.value:
         title.setText("{} {}".format(datetime_, name))
     else:

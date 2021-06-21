@@ -8,6 +8,7 @@
 # version：1.0.0
 import os
 import sys
+import time
 
 from PyQt5 import QtWidgets, QtGui, QtCore
 
@@ -152,7 +153,7 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
     """通过socket发送消息"""
     def sendMsg(self):
         msg = self.textEdit.toPlainText()
-        msgDto = MsgDto.MsgDto(self.checkedGroupIndex, msg, MsgTypeEnum.SEND.value, datetime.datetime.now().replace(microsecond=0))
+        msgDto = MsgDto.MsgDto(self.checkedGroupIndex, msg, MsgTypeEnum.SEND.value, datetime.datetime.now())
         # 先发送过去，发过去了再显示到聊天框中
         TransmitUtil.send(self.clientSocket, Result.ok(IndexTableEnum.NOTIFY.value, msgDto))
         # 封装参数
