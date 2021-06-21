@@ -20,11 +20,11 @@ from server.src.thread_ import ClientSocketThread
 MAX_CONTENT = 100 # 排队个数
 
 class SocketService(QtCore.QThread):
-    clientList = []
-    people = 0
+    clientList = [] # 客户端集合
+    msgList = [] # 消息集合
+    msgHistoryList = [] # 历史消息集合
     server = None
     address = None
-    dsf = None
     rootPath = os.path.dirname(os.path.dirname(os.path.abspath(sys.argv[0])))
     datasource = ConfigFileUtil.readDataSourceConfig(rootPath + "\\resource\\config\\datasource.ini")
     # 数据库连接池
@@ -59,7 +59,7 @@ class SocketService(QtCore.QThread):
                 # 把客户端socket添加到列表中
                 self.clientList.append(clientSocket)
                 # 为这个客户端开启一个消息读取和发送的线程
-                clientThread = ClientSocketThread.ClientSocketThread(self.clientList, clientSocket, clientAddress, self.sqlConnPool)
+                clientThread = ClientSocketThread.ClientSocketThread(self.clientList, clientSocket, clientAddress, self.sqlConnPool, self.msgList)
                 clientThread.start()
         except OSError:
             pass

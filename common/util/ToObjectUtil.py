@@ -20,6 +20,10 @@ class UpdateParams:
     def __str__(self):
         return str(self.__dict__)
 
+class Dict(dict):
+    __setattr__ = dict.__setitem__
+    __getattr__ = dict.__getitem__
+
 """json转对象"""
 def jsonToObject(jsonData):
     try:
@@ -30,3 +34,25 @@ def jsonToObject(jsonData):
         return jsonData
     except ValueError: # 如果ValueError那么就不转直接返回
         return jsonData
+
+"""dict转对象"""
+def dictToObject(d):
+    # 如果不是字典类型则返回
+    if isinstance(d, dict): return d
+    try:
+        val = Dict(d)
+        return val
+    except Exception as e:
+        print("字典转对象错误：", e)
+        return d
+
+from model.dto import MsgDto
+if __name__ == '__main__':
+    msg = MsgDto.MsgDto(1, 2, 3, 4)
+    print(msg)
+    print(type(msg))
+    d = msg.__dict__
+    print(d)
+    print(type(d))
+    obj = Dict(d)
+    print(obj.group)

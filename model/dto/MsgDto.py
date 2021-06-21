@@ -8,7 +8,7 @@
 # version：1.0.0
 
 """消息传输类"""
-class MsgDto:
+class MsgDto(dict):
 
     def __init__(self, group, content, type, datetime_, nickname=None, headStyle=None):
         self.group = group

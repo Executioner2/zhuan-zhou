@@ -6,9 +6,6 @@
 # editDate：
 # editBy：
 # version：1.0.0
-import os
-import pickle
-import sys
 
 import pymysql
 from dbutils.pooled_db import PooledDB
@@ -18,34 +15,20 @@ from common.result.ResultCodeEnum import ResultCodeEnum
 from common.util import TransmitUtil
 from common.util import UUIDUtil
 from common.util.Base64Util import Base64Util
-from model.dto import MsgDto
 from model.enum_.MsgTypeEnum import MsgTypeEnum
+import json
 
 FILENAME = "records.data"
 
 class ClientSocketApi:
     nickname = None
-    username = None
     headStyle = None
-    def __init__(self, clientSocketList, socket, sqlConnPool:PooledDB):
+    def __init__(self, clientSocketList, socket, sqlConnPool:PooledDB, username, msgList):
         self.clientSocketList = clientSocketList
         self.socket = socket
         self.sqlConnPool = sqlConnPool
-
-    """保存聊天文件"""
-    def saveChatFile(self, msgList):
-        print("开始保存聊天文件")
-        for index, item in enumerate(msgList):
-            msgDto = MsgDto.MsgDto(item["group"], item["content"], item["type"], item["datetime_"], item["nickname"], item["headStyle"])
-            msgList[index] = msgDto
-        # 保存聊天记录
-        folder = os.path.dirname(os.path.dirname(sys.argv[0])) + "/resource/user_file/" + self.username + "/"
-        flag = os.path.exists(folder)
-        if not flag: os.makedirs(folder)
-        path = folder + FILENAME
-        with open(path, "wb") as f:
-            pickle.dump(msgList, f)
-        # TODO 文件路径存入数据库
+        self.msgList = msgList # 服务器端接收到的消息集合
+        self.username = username
 
     """消息群发"""
     def notify(self, msgDto):
@@ -53,6 +36,9 @@ class ClientSocketApi:
         msgDto.type = MsgTypeEnum.RECEIVE.value
         msgDto.nickname = self.nickname
         msgDto.headStyle = self.headStyle
+        print(msgDto)
+        # print(json.)
+        self.msgList.append(msgDto) # 加入服务器端接收到的消息list
         for item in self.clientSocketList:
             if item != self.socket: # 不给自己发
                 TransmitUtil.send(item, Result.ok(data=msgDto))
@@ -76,6 +62,8 @@ class ClientSocketApi:
                 TransmitUtil.send(self.socket, Result.ok(data=(result[0]["username"], self.nickname)))
             else:
                 TransmitUtil.send(self.socket, Result.build(ResultCodeEnum.LOGIN_USER_FAIL.value[0]))
+        except Exception as e:
+            print(e)
         finally:
             if cursor != None:
                 cursor.close()
@@ -102,6 +90,8 @@ class ClientSocketApi:
                     TransmitUtil.send(self.socket, Result.ok())
                 else:
                     TransmitUtil.send(self.socket, Result.fail())
+        except Exception as e:
+            print(e)
         finally:
             # 把连接断开（实际上是还回连接池了）
             if cursor != None:

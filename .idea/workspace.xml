@@ -2,11 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="824463d5-eacc-4b7d-bb38-0e74345ac0a3" name="Default Changelist" comment="agc">
-      <change afterPath="$PROJECT_DIR$/client/resource/user_file/a/records.data" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/resource/user_file/a/records.data" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/resource/user_file/records.data" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/resource/user_file/a/records.data" beforeDir="false" afterPath="$PROJECT_DIR$/client/resource/user_file/a/records.data" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/gui/MainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/gui/MainWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/thread_/ClientReceiveThread.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/thread_/ClientReceiveThread.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/util/JsonObjectUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/util/ToObjectUtil.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/dto/MsgDto.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/dto/MsgDto.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/resource/user_file/a/records.data" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/api/ClientSocketApi.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/api/ClientSocketApi.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/thread_/ClientSocketThread.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/thread_/ClientSocketThread.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/thread_/ServerSocketThread.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/thread_/ServerSocketThread.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,27 +73,6 @@
     </key>
   </component>
   <component name="RunManager" selected="Python.ClientApplication">
-    <configuration name="Base64Util" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="agc" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/common/util" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/common/util/Base64Util.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="ClientApplication" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="agc" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -109,7 +94,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="ClientSocketApi" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="ClientSocketThread" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="agc" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -117,11 +102,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/server/src/api" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/server/src/thread_" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/server/src/api/ClientSocketApi.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/server/src/thread_/ClientSocketThread.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -172,13 +157,34 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="ToObjectUtil" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="agc" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/common/util" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="E:\PythonProject\study\pythonProject\agc\common\util\ToObjectUtil.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.ClientApplication" />
-        <item itemvalue="Python.MainWindow" />
         <item itemvalue="Python.ServerApplication" />
-        <item itemvalue="Python.Base64Util" />
-        <item itemvalue="Python.ClientSocketApi" />
+        <item itemvalue="Python.ClientApplication" />
+        <item itemvalue="Python.ToObjectUtil" />
+        <item itemvalue="Python.ClientSocketThread" />
+        <item itemvalue="Python.MainWindow" />
       </list>
     </recent_temporary>
   </component>
@@ -190,13 +196,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1623552947619</updated>
-    </task>
-    <task id="LOCAL-00012" summary="agc">
-      <created>1623764567024</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1623764567024</updated>
     </task>
     <task id="LOCAL-00013" summary="agc">
       <created>1623764865564</created>
@@ -534,7 +533,14 @@
       <option name="project" value="LOCAL" />
       <updated>1624276427570</updated>
     </task>
-    <option name="localTasksCounter" value="61" />
+    <task id="LOCAL-00061" summary="agc">
+      <created>1624278910717</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1624278910717</updated>
+    </task>
+    <option name="localTasksCounter" value="62" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

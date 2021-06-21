@@ -6,12 +6,22 @@
 # editDate：
 # editBy：
 # version：1.0.0
+import datetime
+import os
+import pickle
+import sys
 
+import pymysql
 from PyQt5 import QtCore
-from common.util import TransmitUtil, JsonObjectUtil
+
+from common.util import TransmitUtil, ToObjectUtil
+from common.util import UUIDUtil
 from server.src.api.ClientSocketApi import ClientSocketApi
 
+FILENAME = "records.data"
+
 class ClientSocketThread(QtCore.QThread):
+    username = ""
 
     """重写run方法"""
     def run(self) -> None:
@@ -20,7 +30,10 @@ class ClientSocketThread(QtCore.QThread):
                 try:
                     result = TransmitUtil.receive(self.clientSocket)
                     if result == None: break
-                    data = JsonObjectUtil.jsonToObject(result["data"])
+                    data = result["data"]
+                    print(data)
+                    print(type(data))
+                    data = ToObjectUtil.jsonToObject(data)
                     fun = getattr(self.clientSocketApi, result["url"])
                     fun(data) # 调用有参数的方法
                 except AttributeError:
@@ -31,17 +44,57 @@ class ClientSocketThread(QtCore.QThread):
         except ConnectionError:
             pass
         finally:
-            # TODO 保存聊天文件
-            print("客户端断开连接")
+            self.saveChatRecords()
             self.clientSocket.close()
             self.clientSocketList.remove(self.clientSocket)
+            print("客户端断开了连接")
 
     """初始化"""
-    def __init__(self, clientSocketList, clientSocket, clientAddress, sqlConnPool):
+    def __init__(self, clientSocketList, clientSocket, clientAddress, sqlConnPool, msgList):
         super(ClientSocketThread, self).__init__()
         self.clientSocketList = clientSocketList
         self.clientSocket = clientSocket
         self.clientAddress = clientAddress
         self.sqlConnPool = sqlConnPool # 数据库连接池
-        self.clientSocketApi = ClientSocketApi(self.clientSocketList, self.clientSocket, self.sqlConnPool)
+        self.clientSocketApi = ClientSocketApi(self.clientSocketList, self.clientSocket, self.sqlConnPool, self.username, msgList)
+        self.msgList = msgList # 服务器端接收到的消息集合
+        self.connectTime = str(datetime.datetime.now()) # 客户端连接开始时间
 
+    """保存聊天记录"""
+    def saveChatRecords(self):
+        try:
+            # 客户端断开连接时间
+            disconnectTime = str(datetime.datetime.now())
+            folder = os.path.dirname(os.path.dirname(sys.argv[0])) + "/resource/user_file/" + self.username + "/"
+            if not os.path.exists(folder): os.makedirs(folder)
+            path = folder + FILENAME
+            # 只保存客户端连接期间的聊天记录
+            print(self.msgList)
+            with open(path, "ab") as f:
+                for item in self.msgList:
+                    if self.connectTime <= item.datetime_ and item.datetime_ <= disconnectTime:
+                        pickle.dump(item, f)
+            # 保存到数据库聊天文件
+            conn = self.sqlConnPool.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            cursor.execute("select id from tbl_user where username=%s and is_deleted=0", (self.username))
+            userId = cursor.fetchall()[0]["id"]
+            cursor.execute("select id from tbl_chatting_records where user_id=%s", (userId))
+            result = cursor.fetchall()
+            if len(result) == 0:  # 创建
+                id = UUIDUtil.getUUID()
+                cursor.execute("insert into tbl_chatting_records(id, user_id, file_path) values(%s, %s, %s)",
+                               (id, userId, path))
+                conn.commit()
+            else:  # 更新
+                id = result[0]["id"]
+                cursor.execute("update tbl_chatting_records set file_path=%s where id=%s", (path, id))
+                conn.commit()
+        except Exception as e:
+            print(e)
+        finally:
+            # 把连接断开（实际上是还回连接池了）
+            if cursor != None:
+                cursor.close()
+            if conn != None:
+                conn.close()

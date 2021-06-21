@@ -10,7 +10,7 @@
 from PyQt5 import QtCore
 from client.src.signal import ClientSignal
 from common.util import TransmitUtil
-from common.util import JsonObjectUtil
+from common.util import ToObjectUtil
 
 class ClientReceiveThread(QtCore.QThread):
 
@@ -27,7 +27,7 @@ class ClientReceiveThread(QtCore.QThread):
             while True:
                 print("开始接收消息")
                 result = TransmitUtil.receive(self.clientSocket)
-                data = JsonObjectUtil.jsonToObject(result["data"])
+                data = ToObjectUtil.jsonToObject(result["data"])
                 # 发送信号渲染到ui上
                 self.clientSignal.msgReceiveSignal.emit(data)
         except Exception:

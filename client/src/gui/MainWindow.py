@@ -60,8 +60,7 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
             try:
                 # 保存聊天记录
                 folder = os.path.dirname(os.path.dirname(sys.argv[0])) + "/resource/user_file/" + self.username + "/"
-                flag = os.path.exists(folder)
-                if not flag: os.makedirs(folder)
+                if not os.path.exists(folder): os.makedirs(folder)
                 path = folder + FILENAME
                 with open(path, "ab") as f:
                     for item in self.msgList: # 保存list中的元素，方便读取
