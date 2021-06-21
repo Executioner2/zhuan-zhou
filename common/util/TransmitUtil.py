@@ -12,26 +12,28 @@ from socket import socket
 
 from common.handler.MyEncoder import MyEncoder
 from common.result import Result
+from common.util.Base64Util import Base64Util
 
 """发送数据"""
 def send(socket:socket, result:Result):
-    jsonStr = json.dumps(result.result, cls=MyEncoder)
-    jsonStr += "\0"
-    socket.send(jsonStr.encode())
+    data = json.dumps(result.result, cls=MyEncoder)
+    ciphertext = Base64Util.encipher(data) # 加密数据
+    socket.send(ciphertext)
 
 
 """接收数据"""
 def receive(socket:socket):
     try:
         # 字节数组
-        recvAll = bytearray()
+        ciphertext = bytearray()
         while True:
-            recvAll.extend(socket.recv(1024*1024)) # 默认1MB 缓冲区大小单位为字节
-            if recvAll[-1] == 0: # 末尾为0则读取完毕，则跳出循环
-                recvAll.remove(recvAll[-1]) # 移除最后的'/0' 不然转json会报错
-                break
+            ciphertext.extend(socket.recv(1024*1024)) # 默认1MB 缓冲区大小单位为字节
+            # 末尾为\0则读取完毕，则跳出循环
+            if ciphertext[-1] == 0: break
 
-        jsonStr = recvAll.decode()
-        return json.loads(jsonStr)
-    except IndexError:
-        pass
+        data = Base64Util.decipher(ciphertext)  # 解密密文
+        return data
+    except IndexError as e:
+        print(e)
+    except Exception as e:
+        print(e)

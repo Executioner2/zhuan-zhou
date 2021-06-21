@@ -17,7 +17,7 @@ from common.result.Result import Result
 from common.result.ResultCodeEnum import ResultCodeEnum
 from common.util import TransmitUtil
 from common.util import UUIDUtil
-from common.util.TokenUtil import TokenUtil
+from common.util.Base64Util import Base64Util
 from model.dto import MsgDto
 from model.enum_.MsgTypeEnum import MsgTypeEnum
 
@@ -63,7 +63,7 @@ class ClientSocketApi:
         token = loginDto.token
         try:
             print("开始执行用户登录")
-            userinfo = TokenUtil.getUserInfo(token)
+            userinfo = Base64Util.getUserInfo(token)
             # 获取连接
             conn = self.sqlConnPool.connection()
             cursor = conn.cursor(pymysql.cursors.DictCursor)
@@ -86,7 +86,7 @@ class ClientSocketApi:
     def register(self, token):
         try:
             print("开始注册用户")
-            userinfo = TokenUtil.getUserInfo(token)
+            userinfo = Base64Util.getUserInfo(token)
             # 获取连接
             conn = self.sqlConnPool.connection()
             cursor = conn.cursor(pymysql.cursors.DictCursor)

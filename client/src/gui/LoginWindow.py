@@ -16,7 +16,7 @@ from common.result.IndexTableEnum import IndexTableEnum
 from common.result.Result import Result
 from common.result.ResultCodeEnum import ResultCodeEnum
 from common.util import TransmitUtil
-from common.util.TokenUtil import TokenUtil
+from common.util.Base64Util import Base64Util
 from model.dto import LoginDto
 from model.enum_.HeadStyleEnum import HeadStyleEnum
 from ui import LoginWindow_ui
@@ -92,7 +92,7 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
                 username = self.registerUsernameLE.text()
                 password = self.registerPasswordLE.text()
                 # 封装成自定义token
-                token = TokenUtil.createToken(username, password)
+                token = Base64Util.createToken(username, password)
                 result = Result.ok(IndexTableEnum.REGISTER.value, token)
                 print("注册发送过去的对象：", result)
                 # 发送
@@ -239,7 +239,7 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
             msgHint.exec_()
         else: # 连接成功，开始用户登录
             # 封装用户名和密码，创建token
-            self._loginDto.token = TokenUtil.createToken(self.usernameLE.text(), self.passwordLE.text())
+            self._loginDto.token = Base64Util.createToken(self.usernameLE.text(), self.passwordLE.text())
             # 封装传输对象
             result = Result.ok(IndexTableEnum.LOGIN.value, self._loginDto)
             print("客户端传输过去的对象", result)
