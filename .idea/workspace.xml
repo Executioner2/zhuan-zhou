@@ -2,9 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="824463d5-eacc-4b7d-bb38-0e74345ac0a3" name="Default Changelist" comment="agc">
+      <change afterPath="$PROJECT_DIR$/client/resource/user_file/a/records.data" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/resource/user_file/a/records.data" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/gui/MainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/gui/MainWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/util/MsgWidgetUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/util/MsgWidgetUtil.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/thread_/ClientSocketThread.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/thread_/ClientSocketThread.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +66,7 @@
       <recent name="E:\PythonProject\study\pythonProject\agc\model" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.MainWindow">
+  <component name="RunManager" selected="Python.ClientApplication">
     <configuration name="Base64Util" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="agc" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -172,10 +174,10 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.MainWindow" />
-        <item itemvalue="Python.Base64Util" />
         <item itemvalue="Python.ClientApplication" />
+        <item itemvalue="Python.MainWindow" />
         <item itemvalue="Python.ServerApplication" />
+        <item itemvalue="Python.Base64Util" />
         <item itemvalue="Python.ClientSocketApi" />
       </list>
     </recent_temporary>
@@ -188,20 +190,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1623552947619</updated>
-    </task>
-    <task id="LOCAL-00010" summary="agc">
-      <created>1623753769172</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1623753769172</updated>
-    </task>
-    <task id="LOCAL-00011" summary="agc">
-      <created>1623758001875</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1623758001875</updated>
     </task>
     <task id="LOCAL-00012" summary="agc">
       <created>1623764567024</created>
@@ -532,7 +520,21 @@
       <option name="project" value="LOCAL" />
       <updated>1624275195832</updated>
     </task>
-    <option name="localTasksCounter" value="59" />
+    <task id="LOCAL-00059" summary="agc">
+      <created>1624276114060</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1624276114060</updated>
+    </task>
+    <task id="LOCAL-00060" summary="agc">
+      <created>1624276427570</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1624276427570</updated>
+    </task>
+    <option name="localTasksCounter" value="61" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

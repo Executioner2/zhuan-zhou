@@ -8,7 +8,6 @@
 # version：1.0.0
 import os
 import sys
-import time
 
 from PyQt5 import QtWidgets, QtGui, QtCore
 
@@ -38,6 +37,7 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
     inputBoxList = [] # 输入框的内容
     clientSocket = None # socket
     msgList = [] # 消息集合，方便存聊天记录
+    msgHistoryList = [] # 历史消息集合
 
     """重写鼠标点击信号"""
     def mouseReleaseEvent(self, a0: QtGui.QMouseEvent) -> None:
@@ -63,10 +63,11 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
                 flag = os.path.exists(folder)
                 if not flag: os.makedirs(folder)
                 path = folder + FILENAME
-                with open(path, "wb") as f:
-                    pickle.dump(self.msgList, f)
-                # 发送到服务端，在服务端也保存一份，并把文件路径存入数据库
-                TransmitUtil.send(self.clientSocket, Result.ok(IndexTableEnum.SAVE_CHAT_FILE.value, self.msgList))
+                with open(path, "ab") as f:
+                    for item in self.msgList: # 保存list中的元素，方便读取
+                        pickle.dump(item, f)
+                # 发送到服务端，在服务端也保存一份，并把文件路径存入数据库（不再发送给服务端了，由服务端从自己的消息集合中提取保存）
+                # TransmitUtil.send(self.clientSocket, Result.ok(IndexTableEnum.SAVE_CHAT_FILE.value, self.msgList))
                 a0.accept()
                 QtWidgets.QWidget.closeEvent(self, a0)
             finally:
@@ -93,12 +94,15 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
         filePath = os.path.dirname(os.path.dirname(sys.argv[0])) + "/resource/user_file/" + self.username + "/records.data"
         # 如果不存则返回
         if not os.path.exists(filePath): return
-        with open(filePath, "rb") as f:
-            tempList = pickle.load(f)
+        try:
+            with open(filePath, "rb") as f:
+                while True:
+                    self.msgHistoryList.append(pickle.load(f))
+        except EOFError: # 抛出此异常表示文件没有数据可读了，所以pass过去
+            pass
         # 添加widget
-        for item in tempList:
+        for item in self.msgHistoryList:
             self.addMsgWidgets(item)
-        self.msgList = tempList
 
     """检测是否点击到了群组列表"""
     def on_mouseClick_clicked(self, a0: QtGui.QMouseEvent):

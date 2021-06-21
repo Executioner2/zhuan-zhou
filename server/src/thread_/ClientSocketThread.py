@@ -31,7 +31,8 @@ class ClientSocketThread(QtCore.QThread):
         except ConnectionError:
             pass
         finally:
-            print("断开连接")
+            # TODO 保存聊天文件
+            print("客户端断开连接")
             self.clientSocket.close()
             self.clientSocketList.remove(self.clientSocket)
 
