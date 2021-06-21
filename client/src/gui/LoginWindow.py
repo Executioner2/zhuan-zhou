@@ -101,12 +101,12 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
                 serverResult = TransmitUtil.receive(clientSocket)
                 print("服务器返回结果", serverResult)
                 if serverResult["code"] == ResultCodeEnum.SUCCESS.value[0]:
-                    msgBox = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Information, "注册成功", "用户注册成功")
+                    msgBox = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Information, "提示", "用户注册成功")
                     msgBox.exec_()
                     # 跳转到登录页
                     self.on_backBtn_clicked()
                 elif serverResult["code"] == ResultCodeEnum.REGISTER_USERNAME_ERROR.value[0]:
-                    msgBox = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Information, "注册成功", "用户名已被使用，请重新输入")
+                    msgBox = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Information, "提示", "用户名已被使用，请重新输入")
                     msgBox.exec_()
 
 
