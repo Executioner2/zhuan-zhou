@@ -3,12 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="824463d5-eacc-4b7d-bb38-0e74345ac0a3" name="Default Changelist" comment="agc">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/resource/user_file/a/records.data" beforeDir="false" afterPath="$PROJECT_DIR$/client/resource/user_file/a/records.data" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/thread_/ClientReceiveThread.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/thread_/ClientReceiveThread.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/util/ToObjectUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/util/ToObjectUtil.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/resource/user_file/records.data" beforeDir="false" afterPath="$PROJECT_DIR$/server/resource/user_file/records.data" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/api/ClientSocketApi.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/api/ClientSocketApi.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/thread_/ClientSocketThread.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/thread_/ClientSocketThread.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/gui/MainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/gui/MainWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/result/IndexTableEnum.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/result/IndexTableEnum.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -178,9 +174,9 @@
       <list>
         <item itemvalue="Python.ClientApplication" />
         <item itemvalue="Python.ServerApplication" />
+        <item itemvalue="Python.MainWindow" />
         <item itemvalue="Python.ToObjectUtil" />
         <item itemvalue="Python.ClientSocketThread" />
-        <item itemvalue="Python.MainWindow" />
       </list>
     </recent_temporary>
   </component>

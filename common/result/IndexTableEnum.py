@@ -13,4 +13,3 @@ class IndexTableEnum(Enum):
     LOGIN = "login"
     REGISTER = "register"
     NOTIFY = "notify"
-    SAVE_CHAT_FILE = "saveChatFile"

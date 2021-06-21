@@ -8,6 +8,7 @@
 # version：1.0.0
 import os
 import sys
+import time
 
 from PyQt5 import QtWidgets, QtGui, QtCore
 
@@ -65,8 +66,6 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
                 with open(path, "ab") as f:
                     for item in self.msgList: # 保存list中的元素，方便读取
                         pickle.dump(item, f)
-                # 发送到服务端，在服务端也保存一份，并把文件路径存入数据库（不再发送给服务端了，由服务端从自己的消息集合中提取保存）
-                # TransmitUtil.send(self.clientSocket, Result.ok(IndexTableEnum.SAVE_CHAT_FILE.value, self.msgList))
                 a0.accept()
                 QtWidgets.QWidget.closeEvent(self, a0)
             finally:
@@ -93,15 +92,22 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
         filePath = os.path.dirname(os.path.dirname(sys.argv[0])) + "/resource/user_file/" + self.username + "/records.data"
         # 如果不存则返回
         if not os.path.exists(filePath): return
+        begin = int(round(time.time() * 1000))
         try:
             with open(filePath, "rb") as f:
                 while True:
                     self.msgHistoryList.append(pickle.load(f))
         except EOFError: # 抛出此异常表示文件没有数据可读了，所以pass过去
             pass
-        # 添加widget
+        end = int(round(time.time() * 1000))
+        print("读取文件耗时：", end - begin)
+        begin1 = int(round(time.time() * 1000))
+        # 添加widget TODO 渲染优化
         for item in self.msgHistoryList:
             self.addMsgWidgets(item)
+        end1 = int(round(time.time() * 1000))
+        print("渲染耗时：", end1 - begin1)
+        print("总体耗时：", end1 - begin)
 
     """检测是否点击到了群组列表"""
     def on_mouseClick_clicked(self, a0: QtGui.QMouseEvent):
