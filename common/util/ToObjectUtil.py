@@ -7,8 +7,6 @@
 # editBy：
 # version：1.0.0
 
-import json
-
 class UpdateParams:
     def __init__(self, **kwargs):
         self.__dict__.update(kwargs)
@@ -38,21 +36,10 @@ def jsonToObject(jsonData):
 """dict转对象"""
 def dictToObject(d):
     # 如果不是字典类型则返回
-    if isinstance(d, dict): return d
+    if not isinstance(d, dict): return d
     try:
         val = Dict(d)
         return val
     except Exception as e:
         print("字典转对象错误：", e)
         return d
-
-from model.dto import MsgDto
-if __name__ == '__main__':
-    msg = MsgDto.MsgDto(1, 2, 3, 4)
-    print(msg)
-    print(type(msg))
-    d = msg.__dict__
-    print(d)
-    print(type(d))
-    obj = Dict(d)
-    print(obj.group)

@@ -27,7 +27,7 @@ class ClientReceiveThread(QtCore.QThread):
             while True:
                 print("开始接收消息")
                 result = TransmitUtil.receive(self.clientSocket)
-                data = ToObjectUtil.jsonToObject(result["data"])
+                data = ToObjectUtil.dictToObject(result["data"])
                 # 发送信号渲染到ui上
                 self.clientSignal.msgReceiveSignal.emit(data)
         except Exception:

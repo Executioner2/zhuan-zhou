@@ -16,19 +16,18 @@ from common.util import TransmitUtil
 from common.util import UUIDUtil
 from common.util.Base64Util import Base64Util
 from model.enum_.MsgTypeEnum import MsgTypeEnum
-import json
+from server.src.thread_ import ClientSocketThread
 
 FILENAME = "records.data"
 
 class ClientSocketApi:
     nickname = None
     headStyle = None
-    def __init__(self, clientSocketList, socket, sqlConnPool:PooledDB, username, msgList):
+    def __init__(self, clientSocketList, socket, sqlConnPool:PooledDB, msgList):
         self.clientSocketList = clientSocketList
         self.socket = socket
         self.sqlConnPool = sqlConnPool
         self.msgList = msgList # 服务器端接收到的消息集合
-        self.username = username
 
     """消息群发"""
     def notify(self, msgDto):
@@ -36,8 +35,6 @@ class ClientSocketApi:
         msgDto.type = MsgTypeEnum.RECEIVE.value
         msgDto.nickname = self.nickname
         msgDto.headStyle = self.headStyle
-        print(msgDto)
-        # print(json.)
         self.msgList.append(msgDto) # 加入服务器端接收到的消息list
         for item in self.clientSocketList:
             if item != self.socket: # 不给自己发
@@ -47,6 +44,8 @@ class ClientSocketApi:
     """用户登录"""
     def login(self, loginDto):
         token = loginDto.token
+        conn = None
+        cursor = None
         try:
             print("开始执行用户登录")
             userinfo = Base64Util.getUserInfo(token)
@@ -58,7 +57,7 @@ class ClientSocketApi:
             if len(result) != 0:
                 self.headStyle = loginDto.headStyle
                 self.nickname = loginDto.cryp if loginDto.cryp else result[0]["username"]
-                self.username = result[0]["username"]
+                ClientSocketThread.USERNAME = result[0]["username"]
                 TransmitUtil.send(self.socket, Result.ok(data=(result[0]["username"], self.nickname)))
             else:
                 TransmitUtil.send(self.socket, Result.build(ResultCodeEnum.LOGIN_USER_FAIL.value[0]))
@@ -72,6 +71,8 @@ class ClientSocketApi:
 
     """用户注册"""
     def register(self, token):
+        conn = None
+        cursor = None
         try:
             print("开始注册用户")
             userinfo = Base64Util.getUserInfo(token)

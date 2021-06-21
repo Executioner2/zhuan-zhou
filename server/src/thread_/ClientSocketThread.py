@@ -17,11 +17,12 @@ from PyQt5 import QtCore
 from common.util import TransmitUtil, ToObjectUtil
 from common.util import UUIDUtil
 from server.src.api.ClientSocketApi import ClientSocketApi
+from model.dto import MsgDto
 
 FILENAME = "records.data"
+USERNAME = ""
 
 class ClientSocketThread(QtCore.QThread):
-    username = ""
 
     """重写run方法"""
     def run(self) -> None:
@@ -31,9 +32,7 @@ class ClientSocketThread(QtCore.QThread):
                     result = TransmitUtil.receive(self.clientSocket)
                     if result == None: break
                     data = result["data"]
-                    print(data)
-                    print(type(data))
-                    data = ToObjectUtil.jsonToObject(data)
+                    data = ToObjectUtil.dictToObject(data)
                     fun = getattr(self.clientSocketApi, result["url"])
                     fun(data) # 调用有参数的方法
                 except AttributeError:
@@ -56,28 +55,30 @@ class ClientSocketThread(QtCore.QThread):
         self.clientSocket = clientSocket
         self.clientAddress = clientAddress
         self.sqlConnPool = sqlConnPool # 数据库连接池
-        self.clientSocketApi = ClientSocketApi(self.clientSocketList, self.clientSocket, self.sqlConnPool, self.username, msgList)
+        self.clientSocketApi = ClientSocketApi(self.clientSocketList, self.clientSocket, self.sqlConnPool, msgList)
         self.msgList = msgList # 服务器端接收到的消息集合
         self.connectTime = str(datetime.datetime.now()) # 客户端连接开始时间
 
     """保存聊天记录"""
     def saveChatRecords(self):
+        conn = None
+        cursor = None
         try:
             # 客户端断开连接时间
             disconnectTime = str(datetime.datetime.now())
-            folder = os.path.dirname(os.path.dirname(sys.argv[0])) + "/resource/user_file/" + self.username + "/"
+            folder = os.path.dirname(os.path.dirname(sys.argv[0])) + "/resource/user_file/" + USERNAME + "/"
             if not os.path.exists(folder): os.makedirs(folder)
             path = folder + FILENAME
             # 只保存客户端连接期间的聊天记录
-            print(self.msgList)
             with open(path, "ab") as f:
                 for item in self.msgList:
-                    if self.connectTime <= item.datetime_ and item.datetime_ <= disconnectTime:
-                        pickle.dump(item, f)
+                    msgDto = MsgDto.MsgDto(item.group, item.content, item.type, item.datetime_, item.nickname, item.headStyle)
+                    if self.connectTime <= msgDto.datetime_ and msgDto.datetime_ <= disconnectTime:
+                        pickle.dump(msgDto, f)
             # 保存到数据库聊天文件
-            conn = self.sqlConnPool.connect()
+            conn = self.sqlConnPool.connection()
             cursor = conn.cursor(pymysql.cursors.DictCursor)
-            cursor.execute("select id from tbl_user where username=%s and is_deleted=0", (self.username))
+            cursor.execute("select id from tbl_user where username=%s and is_deleted=0", (USERNAME))
             userId = cursor.fetchall()[0]["id"]
             cursor.execute("select id from tbl_chatting_records where user_id=%s", (userId))
             result = cursor.fetchall()
