@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="824463d5-eacc-4b7d-bb38-0e74345ac0a3" name="Default Changelist" comment="agc">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/gui/LoginWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/gui/LoginWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/util/TokenUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/util/Base64Util.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/util/TransmitUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/util/TransmitUtil.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/api/ClientSocketApi.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/api/ClientSocketApi.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/util/Base64Util.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/util/Base64Util.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,7 +62,7 @@
       <recent name="E:\PythonProject\study\pythonProject\agc\model" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.ServerApplication">
+  <component name="RunManager" selected="Python.Base64Util">
     <configuration name="Base64Util" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="agc" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -174,9 +170,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.Base64Util" />
         <item itemvalue="Python.ClientApplication" />
         <item itemvalue="Python.ServerApplication" />
-        <item itemvalue="Python.Base64Util" />
         <item itemvalue="Python.ClientSocketApi" />
         <item itemvalue="Python.MsgDto" />
       </list>
@@ -190,13 +186,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1623552947619</updated>
-    </task>
-    <task id="LOCAL-00008" summary="agc">
-      <created>1623583857068</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1623583857068</updated>
     </task>
     <task id="LOCAL-00009" summary="agc">
       <created>1623585383505</created>
@@ -534,7 +523,14 @@
       <option name="project" value="LOCAL" />
       <updated>1624195164708</updated>
     </task>
-    <option name="localTasksCounter" value="57" />
+    <task id="LOCAL-00057" summary="agc">
+      <created>1624275101526</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1624275101526</updated>
+    </task>
+    <option name="localTasksCounter" value="58" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -576,13 +572,6 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/common/util/TransmitUtil.py</url>
-          <line>28</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-      </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">

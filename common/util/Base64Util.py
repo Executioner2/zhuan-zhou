@@ -136,8 +136,6 @@ class Base64Util:
     """数据解密"""
     @staticmethod
     def decipher(ciphertext):
-        print(ciphertext)
-        print(type(ciphertext))
         ciphertext.remove(ciphertext[-1]) # 移除最后一个作为结束符的\0
         # 先对ciphertext进行解密
         data = Base64Util.__decode(ciphertext)
@@ -147,6 +145,7 @@ class Base64Util:
 
 """测试"""
 if __name__ == '__main__':
+    print(0 == b'\0')
     token = Base64Util.createToken("zhangsan", "12332bbbbaa1svabaag2121211")
     print(bytes(token))
     value = Base64Util.getUserInfo(token)
