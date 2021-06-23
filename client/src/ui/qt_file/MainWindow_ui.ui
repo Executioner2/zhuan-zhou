@@ -106,7 +106,7 @@
                   <string/>
                  </property>
                  <property name="pixmap">
-                  <pixmap resource="MainWindow_rc.qrc">:/image/group_1</pixmap>
+                  <pixmap resource="../../../resource/qrc/MainWindow_rc.qrc">:/image/group_1</pixmap>
                  </property>
                  <property name="scaledContents">
                   <bool>true</bool>
@@ -218,7 +218,7 @@
                   <string/>
                  </property>
                  <property name="pixmap">
-                  <pixmap resource="MainWindow_rc.qrc">:/image/group_2</pixmap>
+                  <pixmap resource="../../../resource/qrc/MainWindow_rc.qrc">:/image/group_2</pixmap>
                  </property>
                  <property name="scaledContents">
                   <bool>true</bool>
@@ -321,7 +321,7 @@
                   <string/>
                  </property>
                  <property name="pixmap">
-                  <pixmap resource="MainWindow_rc.qrc">:/image/group_3</pixmap>
+                  <pixmap resource="../../../resource/qrc/MainWindow_rc.qrc">:/image/group_3</pixmap>
                  </property>
                  <property name="scaledContents">
                   <bool>true</bool>
@@ -416,6 +416,25 @@
              <property name="sizeConstraint">
               <enum>QLayout::SetFixedSize</enum>
              </property>
+             <item>
+              <widget class="QLabel" name="msgHistoryLabel">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>16</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>查看历史消息</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
             </layout>
            </widget>
           </widget>
@@ -478,6 +497,7 @@ p, li { white-space: pre-wrap; }
   </widget>
  </widget>
  <resources>
+  <include location="../../../resource/qrc/MainWindow_rc.qrc"/>
   <include location="MainWindow_rc.qrc"/>
  </resources>
  <connections/>

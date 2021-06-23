@@ -9,39 +9,47 @@
 
 import datetime
 from PyQt5 import QtWidgets, QtGui
+from PyQt5.QtWidgets import QWidget
 from model.enum_.MsgTypeEnum import MsgTypeEnum
 
 """完全重绘"""
 def redraw(layout, scrollWidget, msgWidgetList, scrollArea, textEdit, inputText):
     # 隐藏layout中所有widget
     for index in range(layout.count()):
-        layout.itemAt(index).widget().hide()
-    # 重置scrollWidget的最小尺寸
-    scrollWidget.setMinimumSize(0, 0)
+        item = layout.itemAt(index)
+        if not item: break # 如果QWidgetItem为空则说明没有widget了
+        obj = item.widget()
+        if obj.objectName() != "msgHistoryLabel":
+            layout.removeWidget(obj)
+        else:
+            msgHistoryLabel = obj
     # 取得滚动窗口的宽度
     scrollWidth = scrollArea.width() - 5
+    # 重置scrollWidget的最小尺寸
+    scrollWidget.setMinimumSize(scrollWidth - 19, 0)
     # 循环显示layout中指定的widget
     widgetHeight = 0
     for item in msgWidgetList:
         heightList = []
         widget = item['widget']
-        widget.show()
+        layout.addWidget(widget)
         for kids in widget.children():
             heightList.append(kids.height())
         maxHeight = max(heightList)
         minHeight = min(heightList)
         widgetHeight += maxHeight + minHeight + 25 + 6
     # 修改scrollWidget尺寸
-    scrollWidget.setMinimumSize(scrollWidth - 19, scrollWidget.minimumHeight() + widgetHeight + 6)
+    if scrollWidget.minimumHeight() == 0: scrollWidget.setMinimumHeight(14)
+    scrollWidget.setMinimumHeight(scrollWidget.minimumHeight() + widgetHeight + 6)
     # 刷新
-    refresh(scrollArea, scrollWidget, msgWidgetList)
+    refresh(scrollArea, scrollWidget, msgHistoryLabel, msgWidgetList)
     # 重设输入框文本
     textEdit.setPlainText(inputText)
     # 光标移动至最后
     textEdit.moveCursor(QtGui.QTextCursor.End)
 
 """刷新（重新设置坐标）"""
-def refresh(scrollArea, scrollWidget, msgWidgetList):
+def refresh(scrollArea, scrollWidget, msgHistoryLabel, msgWidgetList):
     # 取得scrollWidget原始宽度-5
     scrollWidth = scrollArea.width() - 5
     for item in msgWidgetList:
@@ -65,6 +73,7 @@ def refresh(scrollArea, scrollWidget, msgWidgetList):
     # 滚动条自动滚动到最下方
     scrollBar = scrollArea.verticalScrollBar()
     scrollBar.setValue(scrollWidget.minimumHeight())
+    msgHistoryLabel.setFixedWidth(scrollWidth)
 
 """设置显示效果（widget大小位置以及scroll大小）"""
 def setShowStyle(widget, scrollWidget, layout, scrollArea, checkedGroupIndex = None):
@@ -84,6 +93,7 @@ def setShowStyle(widget, scrollWidget, layout, scrollArea, checkedGroupIndex = N
         widget.hide()
         return
     # 设置scrollWidget的最小尺寸
+    if scrollWidget.minimumHeight() == 0: scrollWidget.setMinimumHeight(14)
     scrollWidget.setMinimumSize(scrollWidth - 19, scrollWidget.minimumHeight() + widgetHeight + 6)
     # 滚动条自动滚动到最下方
     scrollBar = scrollArea.verticalScrollBar()

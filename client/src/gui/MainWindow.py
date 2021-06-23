@@ -27,29 +27,23 @@ import pickle
 FILENAME = "records.data"
 
 class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObject):
-    mouseClick = QtCore.pyqtSignal(object)
     username = None # 用户名，用来登录的那个，唯一的
     headStyle = None # 头像颜色
     nickname = None # 昵称
     groupMsgWidgetList = [] # 群组消息widget集合，用于存放msgWidget集合
-    groupPositionList = [] # 群组坐标集合
     groupVLList = [] # 群组对象集合
     checkedGroupIndex = 0 # 选中的群组的下标，默认第一个分组
     inputBoxList = [] # 输入框的内容
     clientSocket = None # socket
-    msgList = [] # 消息集合，方便存聊天记录
+    groupMsgList = [] # 消息集合，方便存聊天记录
     msgHistoryList = [] # 历史消息集合
-
-    """重写鼠标点击信号"""
-    def mouseReleaseEvent(self, a0: QtGui.QMouseEvent) -> None:
-        self.mouseClick.emit(a0)
 
     """重写窗口缩放事件"""
     def resizeEvent(self, a0: QtGui.QResizeEvent) -> None:
         # 重新设置sendWidget的坐标
         if len(self.groupMsgWidgetList) > 0:
             msgWidgetList = self.groupMsgWidgetList[self.checkedGroupIndex]
-            MsgWidgetUtil.refresh(self.scrollArea, self.scrollWidget, msgWidgetList)
+            MsgWidgetUtil.refresh(self.scrollArea, self.scrollWidget, self.msgHistoryLabel, msgWidgetList)
 
     """重写关闭确认"""
     def closeEvent(self, a0: QtGui.QCloseEvent) -> None:
@@ -60,12 +54,13 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
         if result == QtWidgets.QMessageBox.Yes:
             try:
                 # 保存聊天记录
-                folder = os.path.dirname(os.path.dirname(sys.argv[0])) + "/resource/user_file/" + self.username + "/"
+                folder = os.path.dirname(os.path.dirname(sys.argv[0])) + "/resource/user_file/" + self.username + "/records/"
                 if not os.path.exists(folder): os.makedirs(folder)
-                path = folder + FILENAME
-                with open(path, "ab") as f:
-                    for item in self.msgList: # 保存list中的元素，方便读取
-                        pickle.dump(item, f)
+                for index in range(len(self.groupMsgList)):
+                    path = folder + str(index) + ".data"
+                    with open(path, "ab") as f:
+                        for item in self.groupMsgList[index]: # 保存list中的元素，方便读取
+                            pickle.dump(item, f)
                 a0.accept()
                 QtWidgets.QWidget.closeEvent(self, a0)
             finally:
@@ -79,13 +74,20 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
         super(MainWindow, self).__init__()
         self.setupUi(self)
         self.clientSignal = clientSignal
-        # 鼠标点击事件
-        self.mouseClick.connect(self.on_mouseClick_clicked)
         # 绑定发送按钮（当发送按钮发送消息时追加消息）
         self.pushBtn.clicked.connect(self.sendMsg)
         self.textEdit.sendSignal.connect(self.sendMsg)
         self.clientSignal.skipSignal.connect(self.recevieSkipSignal)
         self.clientSignal.msgReceiveSignal.connect(self.addMsgWidgets)
+        # 鼠标点击事件
+        self.msgHistoryLabel.mouseReleaseSignal.connect(self.checkMsgHistory)
+        self.group1.mouseReleaseSignal.connect(self.on_mouseClick_clicked)
+        self.group2.mouseReleaseSignal.connect(self.on_mouseClick_clicked)
+        self.group3.mouseReleaseSignal.connect(self.on_mouseClick_clicked)
+
+    """查看历史消息"""
+    def checkMsgHistory(self):
+        pass
 
     """读取聊天记录"""
     def readRecordFile(self):
@@ -93,46 +95,45 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
         # 如果不存则返回
         if not os.path.exists(filePath): return
         begin = int(round(time.time() * 1000))
+        i = 0
         try:
             with open(filePath, "rb") as f:
                 while True:
                     self.msgHistoryList.append(pickle.load(f))
-        except EOFError: # 抛出此异常表示文件没有数据可读了，所以pass过去
+                    i += 1
+        except EOFError as e: # 抛出此异常表示文件没有数据可读了，所以pass过去
+            print(e, "数量：", i)
             pass
         end = int(round(time.time() * 1000))
         print("读取文件耗时：", end - begin)
         begin1 = int(round(time.time() * 1000))
         # 添加widget TODO 渲染优化
+        print("历史消息总数量：", len(self.msgHistoryList))
         for item in self.msgHistoryList:
-            self.addMsgWidgets(item)
+            self.addMsgWidgets(item, True)
         end1 = int(round(time.time() * 1000))
         print("渲染耗时：", end1 - begin1)
         print("总体耗时：", end1 - begin)
 
-    """检测是否点击到了群组列表"""
-    def on_mouseClick_clicked(self, a0: QtGui.QMouseEvent):
-        flag = False
-        for index, item in enumerate(self.groupPositionList):
-            if a0.x() >= item[0] and a0.x() <= item[1] and a0.y() >= item[2] and a0.y() <= item[3]:
-                if self.checkedGroupIndex == index:
-                    # 如果当前点击了已经选中的群组就直接返回
-                    return
-                else:
-                    # 如果不是当前选中的分组，那么把当前的分组中的输入消息记录存入inputBoxList中
-                    self.inputBoxList[self.checkedGroupIndex] = self.textEdit.toPlainText()
-                    flag = True
-                    # 遍历设置所有群组无背景色
-                    for temp in self.groupVLList:
-                        temp.setStyleSheet("")
-                    # 设置当前选中的群组的背景色
-                    self.groupVLList[index].setStyleSheet("background-color: rgb(186, 186, 186)")
-                    self.checkedGroupIndex = index # 设置当前选中的群组的下标
-                    break
-        # 选中的是群组才重绘
-        if flag:
+    """点击了某个群组"""
+    def on_mouseClick_clicked(self, widget:QtWidgets.QWidget):
+        index = int(widget.objectName()[-1]) - 1 # 取得组号
+        if self.checkedGroupIndex == index:
+            # 当前点击了已经选中的群组就直接返回
+            return
+        else:
+            # 不是当前选中的分组，把当前的分组中的输入消息记录存入inputBoxList中
+            self.inputBoxList[self.checkedGroupIndex] = self.textEdit.toPlainText()
+            # 遍历设置所有群组无背景色
+            for temp in self.groupVLList:
+                temp.setStyleSheet("")
+            # 设置当前选中的群组的背景色
+            self.groupVLList[index].setStyleSheet("background-color: rgb(186, 186, 186)")
+            self.checkedGroupIndex = index # 设置当前选中的群组的下标
             # 重绘聊天区域
-            MsgWidgetUtil.redraw(self.verticalLayout, self.scrollWidget, self.groupMsgWidgetList[self.checkedGroupIndex],
-                             self.scrollArea, self.textEdit, self.inputBoxList[self.checkedGroupIndex])
+            MsgWidgetUtil.redraw(self.verticalLayout, self.scrollWidget,
+                                 self.groupMsgWidgetList[self.checkedGroupIndex],
+                                 self.scrollArea, self.textEdit, self.inputBoxList[self.checkedGroupIndex])
 
     """接收到登录页跳转信号"""
     def recevieSkipSignal(self, params):
@@ -147,14 +148,13 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
         for index in range(self.groupVL.count()):
             child = self.groupVL.itemAt(index).widget()
             self.groupVLList.append(child) # 把群组存入群组集合
-            tempTuple = (child.x(), child.width() + child.x(), child.y(),
-                         child.height() + child.y())  # (left_x, right_x, top_y, bottom_y)
-            self.groupPositionList.append(tempTuple)
             self.groupMsgWidgetList.append([]) # 不要用下面的*来创建，创建的是同一个list
+            self.groupMsgList.append([])
         # 初始化数据框list的大小
         self.inputBoxList = [""] * self.groupVL.count()
         # 读取聊天文件
         self.readRecordFile()
+        self.msgHistoryLabel.setFixedSize(self.scrollArea.width() - 5, 14) # 设置历史消息label的大小，要在ui.show()后设置才有效
         # 启动消息接收线程
         self.clientReceiveThread = ClientReceiveThread.ClientReceiveThread(self.clientSocket, self.clientSignal)
         self.clientReceiveThread.start()
@@ -174,14 +174,15 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
         self.addMsgWidgets(msgDto)
 
     """添加widget"""
-    def addMsgWidgets(self, msgDto):
+    def addMsgWidgets(self, msgDto, isHistory=None):
         # 超简单设置文本效果
         widget = MsgWidgetUtil.simpleSetStyle(self.scrollWidget, self.verticalLayout, self.scrollArea, self.checkedGroupIndex, msgDto)
 
         # 添加到集合中
         msgObj = {"widget": widget, "type": MsgTypeEnum.SEND}
         self.groupMsgWidgetList[msgDto.group].append(msgObj)
-        self.msgList.append(msgDto)
-        if msgDto.type == MsgTypeEnum.SEND.value:
-            # 如果是发送则清空textEdit的内容
-            self.textEdit.clear()
+        if isHistory != True:
+            self.groupMsgList[msgDto.group].append(msgDto)
+            if msgDto.type == MsgTypeEnum.SEND.value:
+                # 如果是发送则清空textEdit的内容
+                self.textEdit.clear()

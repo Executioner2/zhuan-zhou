@@ -9,8 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from handler import MyTextEdit
-
+from client.src.handler import MyTextEdit, MyLabel, MyWidget
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -35,7 +34,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_4.addWidget(self.label)
         self.groupVL = QtWidgets.QVBoxLayout()
         self.groupVL.setObjectName("groupVL")
-        self.group1 = QtWidgets.QWidget(self.widget)
+        self.group1 = MyWidget.MyWidget(self.widget)
         self.group1.setMinimumSize(QtCore.QSize(0, 51))
         self.group1.setStyleSheet("background-color: rgb(186, 186, 186);")
         self.group1.setObjectName("group1")
@@ -72,7 +71,7 @@ class Ui_MainWindow(object):
         self.label_13.setObjectName("label_13")
         self.horizontalLayout_6.addWidget(self.label_13)
         self.groupVL.addWidget(self.group1)
-        self.group2 = QtWidgets.QWidget(self.widget)
+        self.group2 = MyWidget.MyWidget(self.widget)
         self.group2.setEnabled(True)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
@@ -115,7 +114,7 @@ class Ui_MainWindow(object):
         self.label_9.setObjectName("label_9")
         self.horizontalLayout_4.addWidget(self.label_9)
         self.groupVL.addWidget(self.group2)
-        self.group3 = QtWidgets.QWidget(self.widget)
+        self.group3 = MyWidget.MyWidget(self.widget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -180,9 +179,13 @@ class Ui_MainWindow(object):
         self.verticalLayout.setSizeConstraint(QtWidgets.QLayout.SetFixedSize)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setObjectName("verticalLayout")
+        self.msgHistoryLabel = MyLabel.MyLabel(self.verticalLayoutWidget)
+        self.msgHistoryLabel.setEnabled(True)
+        self.msgHistoryLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.msgHistoryLabel.setObjectName("msgHistoryLabel")
+        self.verticalLayout.addWidget(self.msgHistoryLabel)
         self.scrollArea.setWidget(self.scrollWidget)
         self.chatLayout.addWidget(self.scrollArea)
-        # self.textEdit = QtWidgets.QTextEdit(self.centralwidget)
         self.textEdit = MyTextEdit.MyTextEdit(self.centralwidget)
         self.textEdit.setEnabled(True)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
@@ -217,6 +220,7 @@ class Ui_MainWindow(object):
         self.label_13.setText(_translate("MainWindow", "<$ÿĀ>(〃°ω°〃)<$ÿĀ>"))
         self.label_9.setText(_translate("MainWindow", "六世同堂"))
         self.label_11.setText(_translate("MainWindow", "百亿项目组"))
+        self.msgHistoryLabel.setText(_translate("MainWindow", "查看历史消息"))
         self.textEdit.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -225,4 +229,4 @@ class Ui_MainWindow(object):
         self.textEdit.setPlaceholderText(_translate("MainWindow", "此处输入文字...  "))
         self.pushBtn.setText(_translate("MainWindow", "发送"))
 
-import client.src.ui.MainWindow_rc
+from client.src.ui import MainWindow_rc
