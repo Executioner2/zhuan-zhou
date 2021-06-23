@@ -13,23 +13,16 @@ from model.enum_.MsgTypeEnum import MsgTypeEnum
 
 """添加历史消息"""
 def addMsgHistory(layout:QtWidgets.QVBoxLayout, scrollWidget:QtWidgets.QWidget, scrollArea:QtWidgets.QScrollArea, msgHistoryList, msgWidgetList, isWidget=False) -> None:
-    # 清空layout
-    for index in range(layout.count()):
-        item = layout.itemAt(index)
-        if not item: break # 如果QWidgetItem为空则说明没有widget了
-        obj = item.widget()
-        if obj.objectName() != "msgHistoryLabel":
-            layout.removeWidget(obj)
-
     # 追加历史消息
     msgHistoryWidgetList = []
-    if not isWidget: # 如果有历史消息widget，就不再创建widget
+    if not isWidget: # 如果没有历史消息widget，就创建widget
         for item in msgHistoryList:
             msgHistoryWidgetList.append(simpleSetStyle(scrollWidget, layout, scrollArea, item, show=False))
     else:
         msgHistoryWidgetList = msgHistoryList
     temp = msgHistoryWidgetList.copy()
     temp.extend(msgWidgetList)
+    # 完全重绘
     redraw(layout, scrollWidget, temp, scrollArea, isEnd=False)
 
     if not isWidget: return msgHistoryWidgetList
@@ -38,14 +31,18 @@ def addMsgHistory(layout:QtWidgets.QVBoxLayout, scrollWidget:QtWidgets.QWidget, 
 """完全重绘"""
 def redraw(layout, scrollWidget, msgWidgetList, scrollArea, textEdit=None, inputText=None, isEnd=True):
     # 清空layout中所有widget
-    for index in range(layout.count()):
+    index = 0
+    while index < layout.count():
         item = layout.itemAt(index)
-        if not item: break # 如果QWidgetItem为空则说明没有widget了
+        if not item: break  # 如果QWidgetItem为空则说明没有widget了
         obj = item.widget()
         if obj.objectName() != "msgHistoryLabel":
             layout.removeWidget(obj)
+            continue
         else:
             msgHistoryLabel = obj
+        index += 1
+
     # 取得滚动窗口的宽度
     scrollWidth = scrollArea.width() - 5
     # 重置scrollWidget的最小尺寸
@@ -55,6 +52,7 @@ def redraw(layout, scrollWidget, msgWidgetList, scrollArea, textEdit=None, input
     for item in msgWidgetList:
         heightList = []
         widget = item['widget'] if isinstance(item, dict) else item
+
         layout.addWidget(widget)
         for kids in widget.children():
             heightList.append(kids.height())
@@ -65,21 +63,20 @@ def redraw(layout, scrollWidget, msgWidgetList, scrollArea, textEdit=None, input
     if scrollWidget.minimumHeight() == 0: scrollWidget.setMinimumHeight(14)
     scrollWidget.setMinimumHeight(scrollWidget.minimumHeight() + widgetHeight + 6)
     # 刷新
-    refresh(scrollArea, scrollWidget, msgHistoryLabel, msgWidgetList)
+    refresh(scrollArea, scrollWidget, msgHistoryLabel, msgWidgetList, isEnd)
     # 重设输入框文本
-    if not (textEdit and inputText):
+    if textEdit and inputText:
         textEdit.setPlainText(inputText)
-    # 光标移动至最后
-    if isEnd:
+        # 光标移动至最后
         textEdit.moveCursor(QtGui.QTextCursor.End)
 
 
 """刷新（重新设置坐标）"""
-def refresh(scrollArea, scrollWidget, msgHistoryLabel, msgWidgetList):
+def refresh(scrollArea, scrollWidget, msgHistoryLabel, msgWidgetList, isEnd=True):
     # 取得scrollWidget原始宽度-5
     scrollWidth = scrollArea.width() - 5
     for item in msgWidgetList:
-        if item["type"] == MsgTypeEnum.SEND:
+        if item["type"] == MsgTypeEnum.SEND.value:
             widget = item["widget"]
             kinds = widget.children()
             # 按照title userHead content的顺序取子项
@@ -97,13 +94,14 @@ def refresh(scrollArea, scrollWidget, msgHistoryLabel, msgWidgetList):
     # 更新滚动widget最小宽度
     scrollWidget.setMinimumWidth(scrollWidth - 19)
     # 滚动条自动滚动到最下方
-    scrollBar = scrollArea.verticalScrollBar()
-    scrollBar.setValue(scrollWidget.minimumHeight())
-    msgHistoryLabel.setFixedWidth(scrollWidth)
+    if isEnd:
+        scrollBar = scrollArea.verticalScrollBar()
+        scrollBar.setValue(scrollWidget.minimumHeight())
+        msgHistoryLabel.setFixedWidth(scrollWidth)
 
 
 """设置显示效果（widget大小位置以及scroll大小）"""
-def setShowStyle(widget, scrollWidget, layout, scrollArea, checkedGroupIndex = None):
+def setShowStyle(widget, scrollWidget, layout, scrollArea, checkedGroupIndex = None, show=True):
     itemList = widget.children()
     heightList = []
     for item in itemList:
@@ -113,6 +111,7 @@ def setShowStyle(widget, scrollWidget, layout, scrollArea, checkedGroupIndex = N
     scrollWidth = scrollArea.width() - 5
     widgetHeight = maxHeight + minHeight + 25
     widget.setFixedSize(scrollWidth, widgetHeight)
+    if not show: return # 如果show为False则不显示
     # 添加到layout中
     layout.addWidget(widget)
     # 如果不是当前显示组则不显示
@@ -205,6 +204,7 @@ def simpleSetStyle(scrollWidget, verticalLayout, scrollArea, msgDto, checkedGrou
         content.move(userHead.width() + 10, 35)
 
     # 设置聊天框显示效果
-    if show: # show为True表示设置添加到layout中，否则不添加
-        setShowStyle(widget, scrollWidget, verticalLayout, scrollArea, group)
-    return widget
+    setShowStyle(widget, scrollWidget, verticalLayout, scrollArea, group, show)
+    # 包装一下
+    msgObj = {"widget": widget, "type": MsgTypeEnum.SEND.value}
+    return msgObj

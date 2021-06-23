@@ -4,8 +4,9 @@
     <list default="true" id="824463d5-eacc-4b7d-bb38-0e74345ac0a3" name="Default Changelist" comment="agc">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/resource/user_file/a/records/0.data" beforeDir="false" afterPath="$PROJECT_DIR$/client/resource/user_file/a/records/0.data" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/resource/user_file/a/records/1.data" beforeDir="false" afterPath="$PROJECT_DIR$/client/resource/user_file/a/records/1.data" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/resource/user_file/a/records/2.data" beforeDir="false" afterPath="$PROJECT_DIR$/client/resource/user_file/a/records/2.data" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/gui/MainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/gui/MainWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/handler/MyLabel.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/handler/MyLabel.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/util/MsgWidgetUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/util/MsgWidgetUtil.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/resource/user_file/a/records.data" beforeDir="false" afterPath="$PROJECT_DIR$/server/resource/user_file/a/records.data" afterDir="false" />
     </list>
@@ -67,7 +68,7 @@
       <recent name="E:\PythonProject\study\pythonProject\agc\model" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.MainWindow">
+  <component name="RunManager" selected="Python.ClientApplication">
     <configuration name="ClientApplication" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="agc" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -191,13 +192,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1623552947619</updated>
-    </task>
-    <task id="LOCAL-00016" summary="agc">
-      <created>1623852430901</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1623852430901</updated>
     </task>
     <task id="LOCAL-00017" summary="agc">
       <created>1623853356274</created>
@@ -535,7 +529,14 @@
       <option name="project" value="LOCAL" />
       <updated>1624436465347</updated>
     </task>
-    <option name="localTasksCounter" value="65" />
+    <task id="LOCAL-00065" summary="agc">
+      <created>1624444140420</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1624444140420</updated>
+    </task>
+    <option name="localTasksCounter" value="66" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

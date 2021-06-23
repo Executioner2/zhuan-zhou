@@ -126,9 +126,8 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
                 with open(path, "rb") as f:
                     while True:
                         self.groupMsgHistoryList[index].append(pickle.load(f))
-            except EOFError as e: # 抛出此异常表示文件没有数据可读了，所以pass过去
+            except EOFError: # 抛出此异常表示文件没有数据可读了，所以pass过去
                 pass
-            print(self.groupMsgHistoryList)
         end = int(round(time.time() * 1000))
         print("读取文件耗时：", end - begin)
 
@@ -200,10 +199,9 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
     """添加widget"""
     def addMsgWidgets(self, msgDto, isHistory=None):
         # 超简单设置文本效果
-        widget = MsgWidgetUtil.simpleSetStyle(self.scrollWidget, self.verticalLayout, self.scrollArea, msgDto, self.checkedGroupIndex)
+        msgObj = MsgWidgetUtil.simpleSetStyle(self.scrollWidget, self.verticalLayout, self.scrollArea, msgDto, self.checkedGroupIndex)
 
         # 添加到集合中
-        msgObj = {"widget": widget, "type": MsgTypeEnum.SEND}
         self.groupMsgWidgetList[msgDto.group].append(msgObj)
         if isHistory != True:
             self.groupMsgList[msgDto.group].append(msgDto)
