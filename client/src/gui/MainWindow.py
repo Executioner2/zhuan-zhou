@@ -26,7 +26,7 @@ import datetime
 import pickle
 
 SELECT_STYLE = "background-color: rgb(186, 186, 186)" # 选中时的样式
-COUNT = -20 # 切片长度为20
+COUNT = 20 # 历史消息每次加载数量为20
 
 class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObject):
     username = None # 用户名，用来登录的那个，唯一的
@@ -91,29 +91,24 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
 
     """查看历史消息"""
     def checkMsgHistory(self):
-        begin = self.msgSectionList[self.checkedGroupIndex]
-        end = begin + COUNT if begin else COUNT
-        print("({}, {})".format(end, begin))
-        tempWidgetList = self.groupMsgHistoryWidgetList[self.checkedGroupIndex][end:begin]
-        print("历史消息总大小：", len(self.groupMsgHistoryWidgetList[self.checkedGroupIndex]))
-        print("tempWidgetList：", tempWidgetList)
-        if len(tempWidgetList) > 0:
+        length = self.msgSectionList[self.checkedGroupIndex]
+        tempWidgetList = self.groupMsgHistoryWidgetList[self.checkedGroupIndex][0:length]
+        if len(tempWidgetList) > length:
             MsgWidgetUtil.addMsgHistory(self.verticalLayout, self.scrollWidget, self.scrollArea, tempWidgetList,
                                         self.groupMsgWidgetList[self.checkedGroupIndex], True)
-            self.msgSectionList[self.checkedGroupIndex] = end
+            self.msgSectionList[self.checkedGroupIndex] = length + COUNT
             return
 
-        print("总大小：", len(self.groupMsgHistoryList[self.checkedGroupIndex]))
-        tempList = self.groupMsgHistoryList[self.checkedGroupIndex][end:begin]
-        print("tempList：", tempList)
-        if len(tempList) == 0:
-            msgBox = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Information, "提示", "没有该群组的历史消息记录")
-            msgBox.exec_()
-        else:
+        tempList = self.groupMsgHistoryList[self.checkedGroupIndex][-length:None]
+        if length - COUNT < len(self.groupMsgHistoryList[self.checkedGroupIndex]):
             resultList = MsgWidgetUtil.addMsgHistory(self.verticalLayout, self.scrollWidget, self.scrollArea, tempList,
-                                        self.groupMsgWidgetList[self.checkedGroupIndex])
-            self.groupMsgHistoryWidgetList[self.checkedGroupIndex].extend(resultList)
-            self.msgSectionList[self.checkedGroupIndex] = end
+                                                     self.groupMsgWidgetList[self.checkedGroupIndex])
+            resultList.extend(self.groupMsgHistoryWidgetList[self.checkedGroupIndex])
+            self.groupMsgHistoryWidgetList[self.checkedGroupIndex] = resultList
+            self.msgSectionList[self.checkedGroupIndex] = length + COUNT
+        else:
+            msgBox = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Information, "提示", "没有更多的历史消息记录了")
+            msgBox.exec_()
 
 
     """读取聊天记录"""
@@ -124,7 +119,6 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
             path = folder + str(index) + ".data"
             # 如果不存则下一个
             if not os.path.exists(path): continue
-            temp = []
             try:
                 with open(path, "rb") as f:
                     while True:
@@ -148,7 +142,7 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
                 # 设置所有群组无背景色
                 temp.setStyleSheet("")
                 # 设置切片全为None
-                self.msgSectionList[index] = None
+                self.msgSectionList[index] = COUNT
 
             # 设置当前选中的群组的背景色
             self.groupVLList[groupIndex].setStyleSheet(SELECT_STYLE)
@@ -174,7 +168,7 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
             self.groupMsgWidgetList.append([]) # 不要用下面的*来创建，创建的是同一个list
             self.groupMsgList.append([])
             self.groupMsgHistoryWidgetList.append([])
-            self.msgSectionList.append(None)
+            self.msgSectionList.append(COUNT)
             self.groupMsgHistoryList.append([])
         # 初始化数据框list的大小
         self.inputBoxList = [""] * self.groupVL.count()

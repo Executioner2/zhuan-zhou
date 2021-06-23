@@ -12,7 +12,7 @@ from PyQt5 import QtWidgets, QtGui
 from model.enum_.MsgTypeEnum import MsgTypeEnum
 
 """添加历史消息"""
-def addMsgHistory(layout:QtWidgets.QVBoxLayout, scrollWidget:QtWidgets.QWidget, scrollArea:QtWidgets.QScrollArea, msgHistoryList, msgWidgetList, isWidget=False) -> None:
+def addMsgHistory(layout:QtWidgets.QVBoxLayout, scrollWidget:QtWidgets.QWidget, scrollArea:QtWidgets.QScrollArea, msgHistoryList, msgWidgetList:list, isWidget=False) -> []:
     # 追加历史消息
     msgHistoryWidgetList = []
     if not isWidget: # 如果没有历史消息widget，就创建widget
@@ -20,16 +20,16 @@ def addMsgHistory(layout:QtWidgets.QVBoxLayout, scrollWidget:QtWidgets.QWidget, 
             msgHistoryWidgetList.append(simpleSetStyle(scrollWidget, layout, scrollArea, item, show=False))
     else:
         msgHistoryWidgetList = msgHistoryList
+    # 完全重绘
     temp = msgHistoryWidgetList.copy()
     temp.extend(msgWidgetList)
-    # 完全重绘
-    redraw(layout, scrollWidget, temp, scrollArea, isEnd=False)
+    redraw(layout, scrollWidget, temp, scrollArea, isHistory=True)
 
     if not isWidget: return msgHistoryWidgetList
 
 
 """完全重绘"""
-def redraw(layout, scrollWidget, msgWidgetList, scrollArea, textEdit=None, inputText=None, isEnd=True):
+def redraw(layout, scrollWidget, msgWidgetList, scrollArea, textEdit=None, inputText=None, isHistory=False):
     # 清空layout中所有widget
     msgHistoryLabel = layout.itemAt(0).widget()
     while layout.count() > 1:
@@ -58,7 +58,7 @@ def redraw(layout, scrollWidget, msgWidgetList, scrollArea, textEdit=None, input
     if scrollWidget.minimumHeight() == 0: scrollWidget.setMinimumHeight(14)
     scrollWidget.setMinimumHeight(scrollWidget.minimumHeight() + widgetHeight + 6)
     # 刷新
-    refresh(scrollArea, scrollWidget, msgHistoryLabel, msgWidgetList, isEnd)
+    refresh(scrollArea, scrollWidget, msgHistoryLabel, msgWidgetList, isHistory)
     # 重设输入框文本
     if textEdit and inputText:
         textEdit.setPlainText(inputText)
@@ -67,7 +67,7 @@ def redraw(layout, scrollWidget, msgWidgetList, scrollArea, textEdit=None, input
 
 
 """刷新（重新设置坐标）"""
-def refresh(scrollArea, scrollWidget, msgHistoryLabel, msgWidgetList, isEnd=True):
+def refresh(scrollArea, scrollWidget, msgHistoryLabel, msgWidgetList, isHistory=False):
     # 取得scrollWidget原始宽度-5
     scrollWidth = scrollArea.width() - 5
     for item in msgWidgetList:
@@ -89,7 +89,7 @@ def refresh(scrollArea, scrollWidget, msgHistoryLabel, msgWidgetList, isEnd=True
     # 更新滚动widget最小宽度
     scrollWidget.setMinimumWidth(scrollWidth - 19)
     # 滚动条自动滚动到最下方
-    if isEnd:
+    if not isHistory:
         scrollBar = scrollArea.verticalScrollBar()
         scrollBar.setValue(scrollWidget.minimumHeight())
         msgHistoryLabel.setFixedWidth(scrollWidth)
