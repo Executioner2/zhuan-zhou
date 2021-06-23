@@ -7,14 +7,37 @@
 # editBy：
 # version：1.0.0
 
-import datetime
 from PyQt5 import QtWidgets, QtGui
-from PyQt5.QtWidgets import QWidget
+
 from model.enum_.MsgTypeEnum import MsgTypeEnum
 
+"""添加历史消息"""
+def addMsgHistory(layout:QtWidgets.QVBoxLayout, scrollWidget:QtWidgets.QWidget, scrollArea:QtWidgets.QScrollArea, msgHistoryList, msgWidgetList, isWidget=False) -> None:
+    # 清空layout
+    for index in range(layout.count()):
+        item = layout.itemAt(index)
+        if not item: break # 如果QWidgetItem为空则说明没有widget了
+        obj = item.widget()
+        if obj.objectName() != "msgHistoryLabel":
+            layout.removeWidget(obj)
+
+    # 追加历史消息
+    msgHistoryWidgetList = []
+    if not isWidget: # 如果有历史消息widget，就不再创建widget
+        for item in msgHistoryList:
+            msgHistoryWidgetList.append(simpleSetStyle(scrollWidget, layout, scrollArea, item, show=False))
+    else:
+        msgHistoryWidgetList = msgHistoryList
+    temp = msgHistoryWidgetList.copy()
+    temp.extend(msgWidgetList)
+    redraw(layout, scrollWidget, temp, scrollArea, isEnd=False)
+
+    if not isWidget: return msgHistoryWidgetList
+
+
 """完全重绘"""
-def redraw(layout, scrollWidget, msgWidgetList, scrollArea, textEdit, inputText):
-    # 隐藏layout中所有widget
+def redraw(layout, scrollWidget, msgWidgetList, scrollArea, textEdit=None, inputText=None, isEnd=True):
+    # 清空layout中所有widget
     for index in range(layout.count()):
         item = layout.itemAt(index)
         if not item: break # 如果QWidgetItem为空则说明没有widget了
@@ -31,7 +54,7 @@ def redraw(layout, scrollWidget, msgWidgetList, scrollArea, textEdit, inputText)
     widgetHeight = 0
     for item in msgWidgetList:
         heightList = []
-        widget = item['widget']
+        widget = item['widget'] if isinstance(item, dict) else item
         layout.addWidget(widget)
         for kids in widget.children():
             heightList.append(kids.height())
@@ -44,9 +67,12 @@ def redraw(layout, scrollWidget, msgWidgetList, scrollArea, textEdit, inputText)
     # 刷新
     refresh(scrollArea, scrollWidget, msgHistoryLabel, msgWidgetList)
     # 重设输入框文本
-    textEdit.setPlainText(inputText)
+    if not (textEdit and inputText):
+        textEdit.setPlainText(inputText)
     # 光标移动至最后
-    textEdit.moveCursor(QtGui.QTextCursor.End)
+    if isEnd:
+        textEdit.moveCursor(QtGui.QTextCursor.End)
+
 
 """刷新（重新设置坐标）"""
 def refresh(scrollArea, scrollWidget, msgHistoryLabel, msgWidgetList):
@@ -75,6 +101,7 @@ def refresh(scrollArea, scrollWidget, msgHistoryLabel, msgWidgetList):
     scrollBar.setValue(scrollWidget.minimumHeight())
     msgHistoryLabel.setFixedWidth(scrollWidth)
 
+
 """设置显示效果（widget大小位置以及scroll大小）"""
 def setShowStyle(widget, scrollWidget, layout, scrollArea, checkedGroupIndex = None):
     itemList = widget.children()
@@ -99,10 +126,12 @@ def setShowStyle(widget, scrollWidget, layout, scrollArea, checkedGroupIndex = N
     scrollBar = scrollArea.verticalScrollBar()
     scrollBar.setValue(scrollWidget.minimumHeight())
 
+
 """设置头像样式"""
 def setHeadStyle(head, color:str):
     head.setFixedSize(41, 41)
     head.setStyleSheet("background-color: {}; border-radius: 20px".format(color))
+
 
 """设置title样式"""
 def setTitleStyle(title, name:str, msgType:MsgTypeEnum, datetime_:str):
@@ -114,6 +143,7 @@ def setTitleStyle(title, name:str, msgType:MsgTypeEnum, datetime_:str):
     else:
         title.setText("{} {}".format(name, datetime_))
     title.adjustSize()
+
 
 """设置文本样式"""
 def setTextStyle(content, msg:str):
@@ -140,12 +170,13 @@ def setTextStyle(content, msg:str):
     # 设置样式表
     content.setStyleSheet("background-color: rgb(255, 255, 255); border-radius: 10px; padding: 10px; border: 2px solid gainsboro;")
 
+
 """简单设置样式"""
 """
     注意：下列widget子组件的存储方式必须按title userHead content
     的顺序存储，不然会导致组件样式出现意想不到的问题
 """
-def simpleSetStyle(scrollWidget, verticalLayout, scrollArea, checkedGroupIndex, msgDto):
+def simpleSetStyle(scrollWidget, verticalLayout, scrollArea, msgDto, checkedGroupIndex=None, show=True):
     # 取得scrollWidget原始宽度-5
     scrollWidth = scrollArea.width() - 5
     # 创建widget 父组件为scrollWidget (滚动窗口)
@@ -156,7 +187,7 @@ def simpleSetStyle(scrollWidget, verticalLayout, scrollArea, checkedGroupIndex, 
     userHead = QtWidgets.QLabel(widget)
     # 创建装消息内容的label 父组件为widget
     content = QtWidgets.QLabel(widget)
-    group = msgDto.group if msgDto.group == checkedGroupIndex else None
+    group = msgDto.group if not checkedGroupIndex or msgDto.group == checkedGroupIndex else None
     # 设置title样式
     setTitleStyle(title, msgDto.nickname, msgDto.type, msgDto.datetime_)
     # 设置头像样式
@@ -174,5 +205,6 @@ def simpleSetStyle(scrollWidget, verticalLayout, scrollArea, checkedGroupIndex, 
         content.move(userHead.width() + 10, 35)
 
     # 设置聊天框显示效果
-    setShowStyle(widget, scrollWidget, verticalLayout, scrollArea, group)
+    if show: # show为True表示设置添加到layout中，否则不添加
+        setShowStyle(widget, scrollWidget, verticalLayout, scrollArea, group)
     return widget

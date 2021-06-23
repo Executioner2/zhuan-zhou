@@ -2,16 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="824463d5-eacc-4b7d-bb38-0e74345ac0a3" name="Default Changelist" comment="agc">
-      <change afterPath="$PROJECT_DIR$/client/resource/user_file/a/records/0.data" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/resource/user_file/a/records/1.data" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/resource/user_file/a/records/2.data" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/handler/MyLabel.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/handler/MyWidget.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/resource/user_file/a/records.data" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/resource/user_file/a/records/0.data" beforeDir="false" afterPath="$PROJECT_DIR$/client/resource/user_file/a/records/0.data" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/gui/MainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/gui/MainWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/ui/MainWindow_ui.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/ui/MainWindow_ui.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/ui/qt_file/MainWindow_ui.ui" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/ui/qt_file/MainWindow_ui.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/handler/MyLabel.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/handler/MyLabel.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/util/MsgWidgetUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/util/MsgWidgetUtil.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/resource/user_file/a/records.data" beforeDir="false" afterPath="$PROJECT_DIR$/server/resource/user_file/a/records.data" afterDir="false" />
     </list>
@@ -73,7 +67,7 @@
       <recent name="E:\PythonProject\study\pythonProject\agc\model" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.ClientApplication">
+  <component name="RunManager" selected="Python.MainWindow">
     <configuration name="ClientApplication" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="agc" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -197,13 +191,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1623552947619</updated>
-    </task>
-    <task id="LOCAL-00015" summary="agc">
-      <created>1623851682780</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1623851682780</updated>
     </task>
     <task id="LOCAL-00016" summary="agc">
       <created>1623852430901</created>
@@ -541,7 +528,14 @@
       <option name="project" value="LOCAL" />
       <updated>1624285813452</updated>
     </task>
-    <option name="localTasksCounter" value="64" />
+    <task id="LOCAL-00064" summary="agc">
+      <created>1624436465347</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1624436465347</updated>
+    </task>
+    <option name="localTasksCounter" value="65" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

@@ -17,4 +17,5 @@ class MyLabel(QtWidgets.QLabel):
 
     """重写鼠标点击事件"""
     def mouseReleaseEvent(self, ev: QtGui.QMouseEvent) -> None:
+        print("点击了")
         self.mouseReleaseSignal.emit()

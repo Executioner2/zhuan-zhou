@@ -6,6 +6,7 @@
 # editDate：
 # editBy：
 # version：1.0.0
+import copy
 import os
 import sys
 import time
@@ -24,19 +25,22 @@ from model.dto import MsgDto
 import datetime
 import pickle
 
-FILENAME = "records.data"
+SELECT_STYLE = "background-color: rgb(186, 186, 186)" # 选中时的样式
+COUNT = -20 # 切片长度为20
 
 class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObject):
     username = None # 用户名，用来登录的那个，唯一的
     headStyle = None # 头像颜色
     nickname = None # 昵称
+    clientSocket = None  # socket
+    checkedGroupIndex = 0  # 选中的群组的下标，默认第一个分组
+    inputBoxList = []  # 输入框的内容
+    groupVLList = []  # 群组对象集合
     groupMsgWidgetList = [] # 群组消息widget集合，用于存放msgWidget集合
-    groupVLList = [] # 群组对象集合
-    checkedGroupIndex = 0 # 选中的群组的下标，默认第一个分组
-    inputBoxList = [] # 输入框的内容
-    clientSocket = None # socket
     groupMsgList = [] # 消息集合，方便存聊天记录
-    msgHistoryList = [] # 历史消息集合
+    groupMsgHistoryList = []  # 历史消息集合
+    groupMsgHistoryWidgetList = [] # 历史消息widget集合
+    msgSectionList = [] # 消息切片
 
     """重写窗口缩放事件"""
     def resizeEvent(self, a0: QtGui.QResizeEvent) -> None:
@@ -87,49 +91,66 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
 
     """查看历史消息"""
     def checkMsgHistory(self):
-        pass
+        begin = self.msgSectionList[self.checkedGroupIndex]
+        end = begin + COUNT if begin else COUNT
+        tempWidgetList = self.groupMsgHistoryWidgetList[self.checkedGroupIndex][end:begin]
+        if len(tempWidgetList) > 0:
+            begin = begin - len(tempWidgetList) if begin else -len(tempWidgetList)
+            MsgWidgetUtil.addMsgHistory(self.verticalLayout, self.scrollWidget, self.scrollArea, tempWidgetList,
+                                        self.groupMsgWidgetList[self.checkedGroupIndex], True)
+            self.msgSectionList[self.checkedGroupIndex] = begin
+            return
+
+        tempList = self.groupMsgHistoryList[self.checkedGroupIndex][end:begin]
+        if len(tempList) == 0:
+            msgBox = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Information, "提示", "没有该群组的历史消息记录")
+            msgBox.exec_()
+        else:
+            begin = begin - len(tempWidgetList) if begin else -len(tempWidgetList)
+            resultList = MsgWidgetUtil.addMsgHistory(self.verticalLayout, self.scrollWidget, self.scrollArea, tempList,
+                                        self.groupMsgWidgetList[self.checkedGroupIndex])
+            self.groupMsgHistoryWidgetList[self.checkedGroupIndex].extend(resultList)
+            self.msgSectionList[self.checkedGroupIndex] = begin
+
 
     """读取聊天记录"""
     def readRecordFile(self):
-        filePath = os.path.dirname(os.path.dirname(sys.argv[0])) + "/resource/user_file/" + self.username + "/records.data"
-        # 如果不存则返回
-        if not os.path.exists(filePath): return
+        folder = os.path.dirname(os.path.dirname(sys.argv[0])) + "/resource/user_file/" + self.username + "/records/"
         begin = int(round(time.time() * 1000))
-        i = 0
-        try:
-            with open(filePath, "rb") as f:
-                while True:
-                    self.msgHistoryList.append(pickle.load(f))
-                    i += 1
-        except EOFError as e: # 抛出此异常表示文件没有数据可读了，所以pass过去
-            print(e, "数量：", i)
-            pass
+        for index in range(len(self.groupMsgList)):
+            path = folder + str(index) + ".data"
+            # 如果不存则下一个
+            if not os.path.exists(path): continue
+            temp = []
+            try:
+                with open(path, "rb") as f:
+                    while True:
+                        self.groupMsgHistoryList[index].append(pickle.load(f))
+            except EOFError as e: # 抛出此异常表示文件没有数据可读了，所以pass过去
+                pass
+            print(self.groupMsgHistoryList)
         end = int(round(time.time() * 1000))
         print("读取文件耗时：", end - begin)
-        begin1 = int(round(time.time() * 1000))
-        # 添加widget TODO 渲染优化
-        print("历史消息总数量：", len(self.msgHistoryList))
-        for item in self.msgHistoryList:
-            self.addMsgWidgets(item, True)
-        end1 = int(round(time.time() * 1000))
-        print("渲染耗时：", end1 - begin1)
-        print("总体耗时：", end1 - begin)
 
     """点击了某个群组"""
     def on_mouseClick_clicked(self, widget:QtWidgets.QWidget):
-        index = int(widget.objectName()[-1]) - 1 # 取得组号
-        if self.checkedGroupIndex == index:
+        groupIndex = int(widget.objectName()[-1]) - 1 # 取得组号
+        if self.checkedGroupIndex == groupIndex:
             # 当前点击了已经选中的群组就直接返回
             return
         else:
             # 不是当前选中的分组，把当前的分组中的输入消息记录存入inputBoxList中
             self.inputBoxList[self.checkedGroupIndex] = self.textEdit.toPlainText()
-            # 遍历设置所有群组无背景色
-            for temp in self.groupVLList:
+            # 遍历
+            for index, temp in enumerate(self.groupVLList):
+                # 设置所有群组无背景色
                 temp.setStyleSheet("")
+                # 设置切片全为None
+                self.msgSectionList[index] = None
+
             # 设置当前选中的群组的背景色
-            self.groupVLList[index].setStyleSheet("background-color: rgb(186, 186, 186)")
-            self.checkedGroupIndex = index # 设置当前选中的群组的下标
+            self.groupVLList[groupIndex].setStyleSheet(SELECT_STYLE)
+            self.checkedGroupIndex = groupIndex # 设置当前选中的群组的下标
             # 重绘聊天区域
             MsgWidgetUtil.redraw(self.verticalLayout, self.scrollWidget,
                                  self.groupMsgWidgetList[self.checkedGroupIndex],
@@ -150,6 +171,9 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
             self.groupVLList.append(child) # 把群组存入群组集合
             self.groupMsgWidgetList.append([]) # 不要用下面的*来创建，创建的是同一个list
             self.groupMsgList.append([])
+            self.groupMsgHistoryWidgetList.append([])
+            self.msgSectionList.append(None)
+            self.groupMsgHistoryList.append([])
         # 初始化数据框list的大小
         self.inputBoxList = [""] * self.groupVL.count()
         # 读取聊天文件
@@ -176,7 +200,7 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
     """添加widget"""
     def addMsgWidgets(self, msgDto, isHistory=None):
         # 超简单设置文本效果
-        widget = MsgWidgetUtil.simpleSetStyle(self.scrollWidget, self.verticalLayout, self.scrollArea, self.checkedGroupIndex, msgDto)
+        widget = MsgWidgetUtil.simpleSetStyle(self.scrollWidget, self.verticalLayout, self.scrollArea, msgDto, self.checkedGroupIndex)
 
         # 添加到集合中
         msgObj = {"widget": widget, "type": MsgTypeEnum.SEND}
@@ -186,3 +210,10 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
             if msgDto.type == MsgTypeEnum.SEND.value:
                 # 如果是发送则清空textEdit的内容
                 self.textEdit.clear()
+
+if __name__ == '__main__':
+    a = [1, 2, 3, 4, 5, 6, 7, 8]
+    c = [None, None, None]
+    n1 = -2
+    b = a[-4:-2]
+    print(b)
