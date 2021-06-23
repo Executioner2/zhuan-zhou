@@ -31,18 +31,13 @@ def addMsgHistory(layout:QtWidgets.QVBoxLayout, scrollWidget:QtWidgets.QWidget, 
 """完全重绘"""
 def redraw(layout, scrollWidget, msgWidgetList, scrollArea, textEdit=None, inputText=None, isEnd=True):
     # 清空layout中所有widget
-    index = 0
-    while index < layout.count():
-        item = layout.itemAt(index)
+    msgHistoryLabel = layout.itemAt(0).widget()
+    while layout.count() > 1:
+        item = layout.itemAt(1)
         if not item: break  # 如果QWidgetItem为空则说明没有widget了
-        obj = item.widget()
-        if obj.objectName() != "msgHistoryLabel":
-            layout.removeWidget(obj)
-            continue
-        else:
-            msgHistoryLabel = obj
-        index += 1
-
+        item = item.widget()
+        item.hide()
+        layout.removeWidget(item)
     # 取得滚动窗口的宽度
     scrollWidth = scrollArea.width() - 5
     # 重置scrollWidget的最小尺寸
@@ -52,7 +47,7 @@ def redraw(layout, scrollWidget, msgWidgetList, scrollArea, textEdit=None, input
     for item in msgWidgetList:
         heightList = []
         widget = item['widget'] if isinstance(item, dict) else item
-
+        widget.show()
         layout.addWidget(widget)
         for kids in widget.children():
             heightList.append(kids.height())
