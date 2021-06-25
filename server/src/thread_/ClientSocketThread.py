@@ -97,8 +97,7 @@ class ClientSocketThread(QtCore.QThread):
             path = folder + FILENAME
             # 只保存客户端连接期间的聊天记录
             with open(path, "ab") as f:
-                for item in self.msgList:
-                    msgDto = MsgDto.MsgDto(item.group, item.content, item.type, item.datetime_, item.nickname, item.headStyle)
+                for msgDto in self.msgList:
                     if self.connectTime <= msgDto.datetime_ and msgDto.datetime_ <= disconnectTime:
                         pickle.dump(msgDto, f)
             # 保存到数据库聊天文件

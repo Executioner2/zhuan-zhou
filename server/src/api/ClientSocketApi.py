@@ -18,6 +18,7 @@ from common.util.Base64Util import Base64Util
 from model.enum_.MsgTypeEnum import MsgTypeEnum
 from server.src.thread_ import ClientSocketThread
 from server.src.signal import ServerSignal
+from model.dto import MsgDto
 
 FILENAME = "records.data"
 
@@ -32,11 +33,10 @@ class ClientSocketApi:
         self.serverSignal = serverSignal
 
     """消息群发"""
-    def notify(self, msgDto):
+    def notify(self, params):
         print("开始转发消息")
-        msgDto.type = MsgTypeEnum.RECEIVE.value
-        msgDto.nickname = self.nickname
-        msgDto.headStyle = self.headStyle
+        msgDto = MsgDto.MsgDto(params.group, params.content, MsgTypeEnum.RECEIVE.value,
+                               params.datetime_, self.nickname, self.headStyle)
         self.msgList.append(msgDto) # 加入服务器端接收到的消息list
         for item in self.clientSocketList:
             if item != self.socket: # 不给自己发

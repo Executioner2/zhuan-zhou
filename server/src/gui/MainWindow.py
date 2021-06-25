@@ -6,8 +6,11 @@
 # editDate：
 # editBy：
 # version：1.0.0
-
+import datetime
+import os
+import pickle
 import re
+import sys
 
 from PyQt5 import QtWidgets, QtGui
 
@@ -17,8 +20,11 @@ from server.src.ui import MainWindow_ui
 from model.dto import ServerDataRecordDto
 from model.enum_.GroupNameEnum import GroupNameEnum
 
+FILENAME = "records.data"
 
 class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow):
+    msgList = [] # 消息记录集合
+
 
     """重写关闭确认"""
     def closeEvent(self, a0: QtGui.QCloseEvent) -> None:
@@ -27,7 +33,14 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow):
             QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No,
             QtWidgets.QMessageBox.No)
         if result == QtWidgets.QMessageBox.Yes:
-            # TODO 保存聊天记录
+            # 保存聊天记录
+            today = str(datetime.date.today())
+            folder = os.path.dirname(os.path.dirname(sys.argv[0])) + "/resource/records/" + today + "/"
+            if not os.path.exists(folder): os.makedirs(folder)
+            path = folder + FILENAME
+            for item in self.msgList:
+                with open(path, "ab") as f:
+                        pickle.dump(item, f)
             a0.accept()
             QtWidgets.QWidget.closeEvent(self, a0)
         else:
@@ -41,7 +54,7 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow):
         self.serverSignal = serverSignal
         self.startServerBtn.clicked.connect(self.on_startServer_cliecked)
         # 启动socket服务线程
-        self.socketService = ServerSocketThread.SocketService(serverSignal, self.dataRecord)
+        self.socketService = ServerSocketThread.SocketService(serverSignal, self.dataRecord, self.msgList)
         # 更新数据记录
         self.serverSignal.updateDataRecordSignal.connect(self.updateDataRecord)
         # 添加条件记录预览
@@ -51,14 +64,14 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow):
 
     """可视化消息记录"""
     def insertMsgRecord(self, msgDto):
-        content = msgDto["content"]
-        nickname = msgDto["nickname"]
-        datetime_ = msgDto["datetime_"]
+        content = msgDto.content
+        nickname = msgDto.nickname
+        datetime_ = msgDto.datetime_
         # 显示去除毫秒微秒
         index = datetime_.find(".")
         if index != -1: datetime_ = datetime_[:index]
 
-        objName = GroupNameEnum.getObjNameByNo(msgDto["group"])
+        objName = GroupNameEnum.getObjNameByNo(msgDto.group)
         listWidget = self.findChild(QtWidgets.QListWidget, objName)
         # 空白行
         spaceItem = QtWidgets.QListWidgetItem(listWidget)

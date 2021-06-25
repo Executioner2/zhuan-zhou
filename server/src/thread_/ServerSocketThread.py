@@ -23,7 +23,6 @@ MAX_CONTENT = 100 # 排队个数
 
 class SocketService(QtCore.QThread):
     clientList = [] # 客户端集合
-    msgList = [] # 消息集合
     msgHistoryList = [] # 历史消息集合
     server = None
     address = None
@@ -83,12 +82,13 @@ class SocketService(QtCore.QThread):
             print("服务器已经关闭")
 
     """初始化"""
-    def __init__(self, serverSignal, dataRecord):
+    def __init__(self, serverSignal, dataRecord, msgList):
         super(SocketService, self).__init__()
         self.serverSignal = serverSignal
         self.dataRecord = dataRecord # 记录数据
         self.serverSignal.startupSignal.connect(self.startup)
         self.serverSignal.shutdownSignal.connect(self.shutdown)
+        self.msgList = msgList
 
     """启动服务器"""
     def startup(self, address):
