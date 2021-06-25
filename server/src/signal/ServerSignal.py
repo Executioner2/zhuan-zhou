@@ -14,4 +14,6 @@ class ServerSignal(QObject):
     shutdownSignal = pyqtSignal() # 服务器关闭信号
     updateDataRecordSignal = pyqtSignal(object) # 更新数据记录信号
     insertMsgRecordSignal = pyqtSignal(object) # 插入聊天记录到listWidget中
+    insertClientInfoSignal = pyqtSignal(object) # 添加客户端信息
+    removeClientInfoSignal = pyqtSignal(object) # 移除客户端信息
 

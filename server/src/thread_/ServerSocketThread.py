@@ -22,7 +22,7 @@ from server.src.thread_ import ClientSocketThread
 MAX_CONTENT = 100 # 排队个数
 
 class SocketService(QtCore.QThread):
-    clientList = [] # 客户端集合
+    clientList = [] # 客户端socket集合
     msgHistoryList = [] # 历史消息集合
     server = None
     address = None
@@ -60,9 +60,11 @@ class SocketService(QtCore.QThread):
                 clientSocket, clientAddress = self.server.accept()
                 # 把客户端socket添加到列表中
                 self.clientList.append(clientSocket)
+                self.clientAddressList.append(clientAddress)
                 # 为这个客户端开启一个消息读取和发送的线程
-                clientThread = ClientSocketThread.ClientSocketThread(self.clientList, clientSocket, clientAddress, self.sqlConnPool, self.msgList, self.dataRecord, lock, self.serverSignal)
+                clientThread = ClientSocketThread.ClientSocketThread(self.clientList, clientSocket, self.sqlConnPool, self.msgList, self.dataRecord, lock, self.serverSignal, clientAddress)
                 clientThread.start()
+                self.serverSignal.insertClientInfoSignal.emit(clientAddress)
                 try:
                     lock.acquire() # 加锁占有资源
                     self.dataRecord.nowPeoples += 1
@@ -82,13 +84,14 @@ class SocketService(QtCore.QThread):
             print("服务器已经关闭")
 
     """初始化"""
-    def __init__(self, serverSignal, dataRecord, msgList):
+    def __init__(self, serverSignal, dataRecord, msgList, clientAddressList:list):
         super(SocketService, self).__init__()
         self.serverSignal = serverSignal
         self.dataRecord = dataRecord # 记录数据
         self.serverSignal.startupSignal.connect(self.startup)
         self.serverSignal.shutdownSignal.connect(self.shutdown)
         self.msgList = msgList
+        self.clientAddressList = clientAddressList
 
     """启动服务器"""
     def startup(self, address):

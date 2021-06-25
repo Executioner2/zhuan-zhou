@@ -56,26 +56,22 @@ class ClientSocketThread(QtCore.QThread):
         except ConnectionError:
             pass
         finally:
-            try:
-                self.lock.acquire()
-                self.dataRecord.nowPeoples -= 1
-                # 发送更新数据记录的信号
-                self.serverSignal.updateDataRecordSignal.emit(self.dataRecord)
-            except Exception as e:
-                print(e)
-            finally:
-                self.lock.release()
+            self.lock.acquire()
+            self.dataRecord.nowPeoples -= 1
+            # 发送更新数据记录的信号
+            self.serverSignal.updateDataRecordSignal.emit(self.dataRecord)
+            self.lock.release()
             self.saveChatRecords()
             self.clientSocket.close()
             self.clientSocketList.remove(self.clientSocket)
+            self.serverSignal.removeClientInfoSignal.emit(self.clientAddress)
             print("客户端断开了连接")
 
     """初始化"""
-    def __init__(self, clientSocketList, clientSocket, clientAddress, sqlConnPool, msgList, dataRecord, lock:threading.Lock, serverSignal:ServerSignal.ServerSignal):
+    def __init__(self, clientSocketList, clientSocket, sqlConnPool, msgList, dataRecord, lock:threading.Lock, serverSignal:ServerSignal.ServerSignal, clientAddress):
         super(ClientSocketThread, self).__init__()
         self.clientSocketList = clientSocketList
         self.clientSocket = clientSocket
-        self.clientAddress = clientAddress
         self.sqlConnPool = sqlConnPool # 数据库连接池
         self.clientSocketApi = ClientSocketApi(self.clientSocketList, self.clientSocket, self.sqlConnPool, msgList, serverSignal)
         self.msgList = msgList # 服务器端接收到的消息集合
@@ -83,6 +79,7 @@ class ClientSocketThread(QtCore.QThread):
         self.lock = lock # dataRecord对象的锁
         self.serverSignal = serverSignal
         self.connectTime = str(datetime.datetime.now()) # 客户端连接开始时间
+        self.clientAddress = clientAddress
 
     """保存聊天记录"""
     def saveChatRecords(self):

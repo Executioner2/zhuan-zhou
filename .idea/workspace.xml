@@ -2,19 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="824463d5-eacc-4b7d-bb38-0e74345ac0a3" name="Default Changelist" comment="agc">
-      <change afterPath="$PROJECT_DIR$/server/resource/data_record/serverRecord.data" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/resource/user_file/a/records/0.data" beforeDir="false" afterPath="$PROJECT_DIR$/client/resource/user_file/a/records/0.data" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/enum_/GroupNameEnum.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/enum_/GroupNameEnum.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/resource/records/2021-06-25/records.data" beforeDir="false" afterPath="$PROJECT_DIR$/server/resource/records/2021-06-25/records.data" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/resource/user_file/a/records.data" beforeDir="false" afterPath="$PROJECT_DIR$/server/resource/user_file/a/records.data" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/resource/data_record/serverRecord.data" beforeDir="false" afterPath="$PROJECT_DIR$/server/resource/data_record/serverRecord.data" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/gui/MainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/gui/MainWindow.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/signal/ServerSignal.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/signal/ServerSignal.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/thread_/ClientSocketThread.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/thread_/ClientSocketThread.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/thread_/ServerSocketThread.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/thread_/ServerSocketThread.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/ui/MainWindow_ui.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/ui/MainWindow_ui.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/ui/qt_file/MainWindow_ui.ui" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/ui/qt_file/MainWindow_ui.ui" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -198,13 +191,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1623552947619</updated>
-    </task>
-    <task id="LOCAL-00024" summary="agc">
-      <created>1623936741162</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1623936741162</updated>
     </task>
     <task id="LOCAL-00025" summary="agc">
       <created>1623937261934</created>
@@ -542,7 +528,14 @@
       <option name="project" value="LOCAL" />
       <updated>1624621818069</updated>
     </task>
-    <option name="localTasksCounter" value="73" />
+    <task id="LOCAL-00073" summary="agc">
+      <created>1624623763802</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1624623763802</updated>
+    </task>
+    <option name="localTasksCounter" value="74" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

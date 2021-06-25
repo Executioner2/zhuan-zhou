@@ -25,6 +25,7 @@ SERVICE_DATA_FILE = "/resource/data_record/serverRecord.data"
 
 class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow):
     msgList = [] # 消息记录集合
+    clientAddressList = [] # 客户端地址集合
 
     """重写关闭确认"""
     def closeEvent(self, a0: QtGui.QCloseEvent) -> None:
@@ -61,17 +62,31 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow):
         self.serverSignal = serverSignal
         self.startServerBtn.clicked.connect(self.on_startServer_cliecked)
         # 启动socket服务线程
-        self.socketService = ServerSocketThread.SocketService(serverSignal, self.dataRecord, self.msgList)
+        self.socketService = ServerSocketThread.SocketService(serverSignal, self.dataRecord, self.msgList, self.clientAddressList)
         # 更新数据记录
         self.serverSignal.updateDataRecordSignal.connect(self.updateDataRecord)
         # 添加条件记录预览
         self.serverSignal.insertMsgRecordSignal.connect(self.insertMsgRecord)
         # 加载聊天记录
         self.checkRecordFile.clicked.connect(self.on_checkRecordFile_click)
+        # 添加客户端信息到列表
+        self.serverSignal.insertClientInfoSignal.connect(self.inserClientInfo)
         # 移除指定项
-        # self.clientListWidget.removeItemWidget(self.clientListWidget.takeItem(i))
+        self.serverSignal.removeClientInfoSignal.connect(self.removeClientInfo)
         # 读取数据记录
         self.readDataRecordFile()
+
+    """移除列表中的客户端信息"""
+    def removeClientInfo(self, address):
+        index = self.clientAddressList.index(address) + 1
+        self.clientAddressList.remove(address)
+        self.clientListWidget.removeItemWidget(self.clientListWidget.takeItem(index))
+
+    """添加客户端信息到列表"""
+    def inserClientInfo(self, address):
+        item = QtWidgets.QListWidgetItem(self.clientListWidget)
+        text = "客户端IP：{}     客户端端口：{}".format(address[0], str(address[1]))
+        item.setText(text)
 
     """加载聊天记录"""
     def on_checkRecordFile_click(self):
