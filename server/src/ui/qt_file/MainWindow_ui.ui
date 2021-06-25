@@ -46,7 +46,7 @@
            <widget class="QListWidget" name="chatRecordWidget_1">
             <item>
              <property name="text">
-              <string>聊天记录：</string>
+              <string>聊天记录预览：</string>
              </property>
             </item>
            </widget>
@@ -62,7 +62,23 @@
            <widget class="QListWidget" name="chatRecordWidget_2">
             <item>
              <property name="text">
-              <string>聊天记录：</string>
+              <string>聊天记录预览：</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="chatTab_3">
+         <attribute name="title">
+          <string>三组</string>
+         </attribute>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <widget class="QListWidget" name="chatRecordWidget_3">
+            <item>
+             <property name="text">
+              <string>聊天记录预览：</string>
              </property>
             </item>
            </widget>
@@ -72,7 +88,10 @@
        </widget>
       </item>
       <item row="0" column="1">
-       <layout class="QVBoxLayout" name="verticalLayout_3">
+       <layout class="QVBoxLayout" name="verticalLayout_3" stretch="1,1,1,4">
+        <property name="bottomMargin">
+         <number>15</number>
+        </property>
         <item>
          <layout class="QGridLayout" name="gridLayout_2" rowstretch="0,0" columnstretch="0,0,0,0,0">
           <property name="sizeConstraint">
@@ -211,63 +230,121 @@
            </widget>
           </item>
           <item alignment="Qt::AlignHCenter">
-           <widget class="QPushButton" name="checkRecord">
+           <widget class="QPushButton" name="checkRecordFile">
             <property name="text">
-             <string>查看聊天记录</string>
+             <string>聊天记录文件</string>
             </property>
            </widget>
           </item>
          </layout>
         </item>
         <item>
-         <widget class="QTabWidget" name="tabWidget_3">
-          <property name="currentIndex">
-           <number>0</number>
-          </property>
-          <widget class="QWidget" name="clientTab_1">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
+         <layout class="QGridLayout" name="gridLayout_4">
+          <item row="0" column="4">
+           <widget class="QLabel" name="maxMsgNumber">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>0条</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QLabel" name="nowPeoples">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>0人</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="4">
+           <widget class="QLabel" name="nowMsgNumber">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>0条</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QLabel" name="maxPeoples">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>0人</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <spacer name="horizontalSpacer_4">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Expanding</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLabel" name="label_5">
+            <property name="text">
+             <string>当前人数：</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>峰值人数：</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="3">
+           <widget class="QLabel" name="label_9">
+            <property name="text">
+             <string>当前转发量：</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <widget class="QLabel" name="label_7">
+            <property name="text">
+             <string>峰值转发量：</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QListWidget" name="clientListWidget">
+          <item>
+           <property name="text">
+            <string>客户端列表：</string>
            </property>
-           <attribute name="title">
-            <string>一组</string>
-           </attribute>
-           <layout class="QVBoxLayout" name="verticalLayout_8">
-            <item>
-             <widget class="QListWidget" name="clientListWidget_1">
-              <item>
-               <property name="text">
-                <string>客户端列表--当前人数（0）人</string>
-               </property>
-              </item>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-          <widget class="QWidget" name="clientTab_2">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <attribute name="title">
-            <string>二组</string>
-           </attribute>
-           <layout class="QVBoxLayout" name="verticalLayout_9">
-            <item>
-             <widget class="QListWidget" name="clientListWidget_2">
-              <item>
-               <property name="text">
-                <string>客户端列表--当前人数（0）人</string>
-               </property>
-              </item>
-             </widget>
-            </item>
-           </layout>
-          </widget>
+          </item>
          </widget>
         </item>
        </layout>

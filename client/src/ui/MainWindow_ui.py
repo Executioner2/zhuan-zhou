@@ -11,6 +11,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from client.src.handler import MyTextEdit, MyLabel, MyWidget
 
+
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -36,6 +37,7 @@ class Ui_MainWindow(object):
         self.groupVL.setObjectName("groupVL")
         self.group1 = MyWidget.MyWidget(self.widget)
         self.group1.setMinimumSize(QtCore.QSize(0, 51))
+        self.group1.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.group1.setStyleSheet("background-color: rgb(186, 186, 186);")
         self.group1.setObjectName("group1")
         self.layoutWidget_4 = QtWidgets.QWidget(self.group1)
@@ -80,6 +82,7 @@ class Ui_MainWindow(object):
         self.group2.setSizePolicy(sizePolicy)
         self.group2.setMinimumSize(QtCore.QSize(115, 51))
         self.group2.setMaximumSize(QtCore.QSize(200, 51))
+        self.group2.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.group2.setObjectName("group2")
         self.layoutWidget_2 = QtWidgets.QWidget(self.group2)
         self.layoutWidget_2.setGeometry(QtCore.QRect(0, 0, 185, 53))
@@ -121,6 +124,7 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.group3.sizePolicy().hasHeightForWidth())
         self.group3.setSizePolicy(sizePolicy)
         self.group3.setMinimumSize(QtCore.QSize(185, 51))
+        self.group3.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.group3.setObjectName("group3")
         self.layoutWidget_3 = QtWidgets.QWidget(self.group3)
         self.layoutWidget_3.setGeometry(QtCore.QRect(0, 0, 185, 53))
@@ -181,6 +185,8 @@ class Ui_MainWindow(object):
         self.verticalLayout.setObjectName("verticalLayout")
         self.msgHistoryLabel = MyLabel.MyLabel(self.verticalLayoutWidget)
         self.msgHistoryLabel.setEnabled(True)
+        self.msgHistoryLabel.setMaximumSize(QtCore.QSize(16777215, 16))
+        self.msgHistoryLabel.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.msgHistoryLabel.setAlignment(QtCore.Qt.AlignCenter)
         self.msgHistoryLabel.setObjectName("msgHistoryLabel")
         self.verticalLayout.addWidget(self.msgHistoryLabel)

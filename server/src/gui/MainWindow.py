@@ -33,6 +33,7 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow):
     def __init__(self, serverSignal):
         super(MainWindow, self).__init__()
         self.setupUi(self)
+        self.setWindowTitle("小又丑服务端")
         self.serverSignal = serverSignal
         self.startServerBtn.clicked.connect(self.on_startServer_cliecked)
         # 启动socket服务线程
