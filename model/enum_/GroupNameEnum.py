@@ -18,7 +18,5 @@ class GroupNameEnum(Enum):
     @staticmethod
     def getObjNameByNo(no:int):
         for item in GroupNameEnum:
-            print(no)
-            print(item)
             if item.value["no"] == no:
                 return item.value["objName"]

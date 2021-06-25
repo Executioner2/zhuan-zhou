@@ -69,7 +69,7 @@ class SocketService(QtCore.QThread):
                     if self.dataRecord.nowPeoples > self.dataRecord.maxPeoples:
                         self.dataRecord.maxPeoples = self.dataRecord.nowPeoples
                     # 发送更新数据记录的信号
-                    self.serverSignal.updateDataRecordSignal.emit()
+                    self.serverSignal.updateDataRecordSignal.emit(self.dataRecord)
                 except Exception as e:
                     print(e)
                 finally:

@@ -21,10 +21,10 @@ from model.dto import ServerDataRecordDto
 from model.enum_.GroupNameEnum import GroupNameEnum
 
 FILENAME = "records.data"
+SERVICE_DATA_FILE = "/resource/data_record/serverRecord.data"
 
 class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow):
     msgList = [] # 消息记录集合
-
 
     """重写关闭确认"""
     def closeEvent(self, a0: QtGui.QCloseEvent) -> None:
@@ -33,6 +33,13 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow):
             QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No,
             QtWidgets.QMessageBox.No)
         if result == QtWidgets.QMessageBox.Yes:
+            # 保存历史数据记录
+            folder = os.path.dirname(os.path.dirname(sys.argv[0])) + "/resource/data_record/"
+            if not os.path.exists(folder): os.makedirs(folder)
+            path = folder + "serverRecord.data"
+            with open(path, "wb") as f:
+                pickle.dump(self.dataRecord, f)
+
             # 保存聊天记录
             today = str(datetime.date.today())
             folder = os.path.dirname(os.path.dirname(sys.argv[0])) + "/resource/records/" + today + "/"
@@ -59,8 +66,26 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow):
         self.serverSignal.updateDataRecordSignal.connect(self.updateDataRecord)
         # 添加条件记录预览
         self.serverSignal.insertMsgRecordSignal.connect(self.insertMsgRecord)
+        # 加载聊天记录
+        self.checkRecordFile.clicked.connect(self.on_checkRecordFile_click)
         # 移除指定项
         # self.clientListWidget.removeItemWidget(self.clientListWidget.takeItem(i))
+        # 读取数据记录
+        self.readDataRecordFile()
+
+    """加载聊天记录"""
+    def on_checkRecordFile_click(self):
+        fileName, fileType = QtWidgets.QFileDialog.getOpenFileName(self, "选取聊天记录文件", "../resource/records", "Data File(*.data);")
+        tempList = []
+        try:
+            with open(fileName, "rb") as f:
+                while True:
+                    tempList.append(pickle.load(f))
+        except EOFError:
+            pass
+        for item in tempList:
+            self.insertMsgRecord(item)
+
 
     """可视化消息记录"""
     def insertMsgRecord(self, msgDto):
@@ -89,15 +114,22 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow):
     """读取数据记录文件"""
     def readDataRecordFile(self):
         dataRecord = ServerDataRecordDto.ServerDataRecordDto()
-        # TODO 读取记录文件，并把读取的数据给dataRecord对象
+        filename = os.path.dirname(os.path.dirname(sys.argv[0])) + SERVICE_DATA_FILE
+        # 读取记录文件，并把读取的数据给dataRecord对象
+        if os.path.exists(filename):
+            with open(filename, "rb") as f:
+                temp = pickle.load(f)
+            dataRecord.maxFlows = temp.maxFlows
+            dataRecord.maxPeoples = temp.maxPeoples
+        self.updateDataRecord(dataRecord)
         return dataRecord
 
     """更新数据记录到ui上"""
-    def updateDataRecord(self):
-        self.nowPeoples.setText(str(self.dataRecord.nowPeoples) + "人")
-        self.maxPeoples.setText(str(self.dataRecord.maxPeoples) + "人")
-        self.nowFlows.setText(str(self.dataRecord.nowFlows) + "条")
-        self.maxFlows.setText(str(self.dataRecord.maxFlows) + "条")
+    def updateDataRecord(self, data):
+        self.nowPeoples.setText(str(data.nowPeoples) + "人")
+        self.maxPeoples.setText(str(data.maxPeoples) + "人")
+        self.nowFlows.setText(str(data.nowFlows) + "条")
+        self.maxFlows.setText(str(data.maxFlows) + "条")
 
     """服务器开关"""
     def on_startServer_cliecked(self):

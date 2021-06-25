@@ -10,6 +10,7 @@ import datetime
 import os
 import pickle
 import sys
+import threading
 
 import pymysql
 from PyQt5 import QtCore
@@ -17,8 +18,6 @@ from PyQt5 import QtCore
 from common.util import TransmitUtil, ToObjectUtil
 from common.util import UUIDUtil
 from server.src.api.ClientSocketApi import ClientSocketApi
-from model.dto import MsgDto
-import threading
 from server.src.signal import ServerSignal
 
 FILENAME = "records.data"
@@ -49,7 +48,7 @@ class ClientSocketThread(QtCore.QThread):
                     if self.dataRecord.maxFlows < self.dataRecord.nowFlows:
                         self.dataRecord.maxFlows = self.dataRecord.nowFlows
                     # 发送更新数据记录的信号
-                    self.serverSignal.updateDataRecordSignal.emit()
+                    self.serverSignal.updateDataRecordSignal.emit(self.dataRecord)
                 except Exception as e:
                     print(e)
                 finally:
@@ -61,7 +60,7 @@ class ClientSocketThread(QtCore.QThread):
                 self.lock.acquire()
                 self.dataRecord.nowPeoples -= 1
                 # 发送更新数据记录的信号
-                self.serverSignal.updateDataRecordSignal.emit()
+                self.serverSignal.updateDataRecordSignal.emit(self.dataRecord)
             except Exception as e:
                 print(e)
             finally:

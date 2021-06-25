@@ -205,7 +205,7 @@ class Ui_MainWindow(object):
         self.label_3.setText(_translate("MainWindow", "服务器IP"))
         self.serverIpLE.setText(_translate("MainWindow", "192.168.123.233"))
         self.startServerBtn.setText(_translate("MainWindow", "启动服务器"))
-        self.checkRecordFile.setText(_translate("MainWindow", "聊天记录文件"))
+        self.checkRecordFile.setText(_translate("MainWindow", "加载聊天记录"))
         self.maxFlows.setText(_translate("MainWindow", "0条"))
         self.nowPeoples.setText(_translate("MainWindow", "0人"))
         self.nowFlows.setText(_translate("MainWindow", "0条"))
