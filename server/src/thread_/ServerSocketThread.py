@@ -14,6 +14,8 @@ import pymysql
 from PyQt5 import QtCore
 from dbutils.pooled_db import PooledDB
 
+import threading
+
 from common.util import ConfigFileUtil
 from server.src.thread_ import ClientSocketThread
 
@@ -52,6 +54,7 @@ class SocketService(QtCore.QThread):
             self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.server.bind(self.address)
             self.server.listen(MAX_CONTENT)  # 最大排队数
+            lock = threading.Lock() # 互斥锁对象
             print("服务器启动成功....")
             while True:
                 print("正在监听")
@@ -59,8 +62,19 @@ class SocketService(QtCore.QThread):
                 # 把客户端socket添加到列表中
                 self.clientList.append(clientSocket)
                 # 为这个客户端开启一个消息读取和发送的线程
-                clientThread = ClientSocketThread.ClientSocketThread(self.clientList, clientSocket, clientAddress, self.sqlConnPool, self.msgList)
+                clientThread = ClientSocketThread.ClientSocketThread(self.clientList, clientSocket, clientAddress, self.sqlConnPool, self.msgList, self.dataRecord, lock, self.serverSignal)
                 clientThread.start()
+                try:
+                    lock.acquire() # 加锁占有资源
+                    self.dataRecord.nowPeoples += 1
+                    if self.dataRecord.nowPeoples > self.dataRecord.maxPeoples:
+                        self.dataRecord.maxPeoples = self.dataRecord.nowPeoples
+                    # 发送更新数据记录的信号
+                    self.serverSignal.updateDataRecordSignal.emit()
+                except Exception as e:
+                    print(e)
+                finally:
+                    lock.release()  # 释放锁
         except OSError:
             pass
         finally:
@@ -69,9 +83,10 @@ class SocketService(QtCore.QThread):
             print("服务器已经关闭")
 
     """初始化"""
-    def __init__(self, serverSignal):
+    def __init__(self, serverSignal, dataRecord):
         super(SocketService, self).__init__()
         self.serverSignal = serverSignal
+        self.dataRecord = dataRecord # 记录数据
         self.serverSignal.startupSignal.connect(self.startup)
         self.serverSignal.shutdownSignal.connect(self.shutdown)
 

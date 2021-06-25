@@ -18,6 +18,8 @@ from common.util import TransmitUtil, ToObjectUtil
 from common.util import UUIDUtil
 from server.src.api.ClientSocketApi import ClientSocketApi
 from model.dto import MsgDto
+import threading
+from server.src.signal import ServerSignal
 
 FILENAME = "records.data"
 USERNAME = ""
@@ -40,23 +42,47 @@ class ClientSocketThread(QtCore.QThread):
                 except TypeError as e: # 出现此错误说明该方法没有参数，注：url的方法只能有一个参数
                     print(e)
                     fun() # 调用没参数的方法
+                # 流量自增
+                try:
+                    self.lock.acquire()
+                    self.dataRecord.nowFlows += 1
+                    if self.dataRecord.maxFlows < self.dataRecord.nowFlows:
+                        self.dataRecord.maxFlows = self.dataRecord.nowFlows
+                    # 发送更新数据记录的信号
+                    self.serverSignal.updateDataRecordSignal.emit()
+                except Exception as e:
+                    print(e)
+                finally:
+                    self.lock.release()
         except ConnectionError:
             pass
         finally:
+            try:
+                self.lock.acquire()
+                self.dataRecord.nowPeoples -= 1
+                # 发送更新数据记录的信号
+                self.serverSignal.updateDataRecordSignal.emit()
+            except Exception as e:
+                print(e)
+            finally:
+                self.lock.release()
             self.saveChatRecords()
             self.clientSocket.close()
             self.clientSocketList.remove(self.clientSocket)
             print("客户端断开了连接")
 
     """初始化"""
-    def __init__(self, clientSocketList, clientSocket, clientAddress, sqlConnPool, msgList):
+    def __init__(self, clientSocketList, clientSocket, clientAddress, sqlConnPool, msgList, dataRecord, lock:threading.Lock, serverSignal:ServerSignal.ServerSignal):
         super(ClientSocketThread, self).__init__()
         self.clientSocketList = clientSocketList
         self.clientSocket = clientSocket
         self.clientAddress = clientAddress
         self.sqlConnPool = sqlConnPool # 数据库连接池
-        self.clientSocketApi = ClientSocketApi(self.clientSocketList, self.clientSocket, self.sqlConnPool, msgList)
+        self.clientSocketApi = ClientSocketApi(self.clientSocketList, self.clientSocket, self.sqlConnPool, msgList, serverSignal)
         self.msgList = msgList # 服务器端接收到的消息集合
+        self.dataRecord = dataRecord # 数据记录
+        self.lock = lock # dataRecord对象的锁
+        self.serverSignal = serverSignal
         self.connectTime = str(datetime.datetime.now()) # 客户端连接开始时间
 
     """保存聊天记录"""

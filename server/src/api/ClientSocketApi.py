@@ -17,17 +17,19 @@ from common.util import UUIDUtil
 from common.util.Base64Util import Base64Util
 from model.enum_.MsgTypeEnum import MsgTypeEnum
 from server.src.thread_ import ClientSocketThread
+from server.src.signal import ServerSignal
 
 FILENAME = "records.data"
 
 class ClientSocketApi:
     nickname = None
     headStyle = None
-    def __init__(self, clientSocketList, socket, sqlConnPool:PooledDB, msgList):
+    def __init__(self, clientSocketList, socket, sqlConnPool:PooledDB, msgList, serverSignal:ServerSignal.ServerSignal):
         self.clientSocketList = clientSocketList
         self.socket = socket
         self.sqlConnPool = sqlConnPool
         self.msgList = msgList # 服务器端接收到的消息集合
+        self.serverSignal = serverSignal
 
     """消息群发"""
     def notify(self, msgDto):
@@ -39,7 +41,7 @@ class ClientSocketApi:
         for item in self.clientSocketList:
             if item != self.socket: # 不给自己发
                 TransmitUtil.send(item, Result.ok(data=msgDto))
-
+        self.serverSignal.insertMsgRecordSignal.emit(msgDto)
 
     """用户登录"""
     def login(self, loginDto):

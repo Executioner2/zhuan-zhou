@@ -22,5 +22,5 @@ class HeadStyleEnum(Enum):
     @staticmethod
     def getStyleByName(name:str) -> None:
         for item in HeadStyleEnum:
-            if item.value['name'] == name:
-                return item.value['style']
+            if item.value["name"] == name:
+                return item.value["style"]

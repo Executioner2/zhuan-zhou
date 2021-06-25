@@ -18,3 +18,11 @@ class MyLabel(QtWidgets.QLabel):
     """重写鼠标点击事件"""
     def mouseReleaseEvent(self, ev: QtGui.QMouseEvent) -> None:
         self.mouseReleaseSignal.emit()
+
+    """鼠标进入"""
+    def enterEvent(self, a0: QtCore.QEvent) -> None:
+        self.setStyleSheet("color: rgb(49, 188, 255)")
+
+    """鼠标离开"""
+    def leaveEvent(self, a0: QtCore.QEvent) -> None:
+        self.setStyleSheet("")

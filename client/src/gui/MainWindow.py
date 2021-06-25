@@ -88,6 +88,8 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
         self.group1.mouseReleaseSignal.connect(self.on_mouseClick_clicked)
         self.group2.mouseReleaseSignal.connect(self.on_mouseClick_clicked)
         self.group3.mouseReleaseSignal.connect(self.on_mouseClick_clicked)
+        # 设置鼠标跟踪
+        self.group1.isSelected = True  # 设置组1默认选中
 
     """查看历史消息"""
     def checkMsgHistory(self):
@@ -131,21 +133,19 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
     """点击了某个群组"""
     def on_mouseClick_clicked(self, widget:QtWidgets.QWidget):
         groupIndex = int(widget.objectName()[-1]) - 1 # 取得组号
-        if self.checkedGroupIndex == groupIndex:
+        if widget.isSelected:
             # 当前点击了已经选中的群组就直接返回
             return
         else:
             # 不是当前选中的分组，把当前的分组中的输入消息记录存入inputBoxList中
             self.inputBoxList[self.checkedGroupIndex] = self.textEdit.toPlainText()
-            # 遍历
-            for index, temp in enumerate(self.groupVLList):
-                # 设置所有群组无背景色
-                temp.setStyleSheet("")
-                # 设置切片全为None
-                self.msgSectionList[index] = COUNT
-
-            # 设置当前选中的群组的背景色
-            self.groupVLList[groupIndex].setStyleSheet(SELECT_STYLE)
+            # 初始化上一群组的部分值
+            self.msgSectionList[self.checkedGroupIndex] = COUNT
+            self.groupVLList[self.checkedGroupIndex].setStyleSheet("") # 设置无背景色
+            self.groupVLList[self.checkedGroupIndex].isSelected = False
+            # 当前群组
+            widget.isSelected = True
+            widget.setStyleSheet(SELECT_STYLE)
             self.checkedGroupIndex = groupIndex # 设置当前选中的群组的下标
             # 重绘聊天区域
             MsgWidgetUtil.redraw(self.verticalLayout, self.scrollWidget,

@@ -2,12 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="824463d5-eacc-4b7d-bb38-0e74345ac0a3" name="Default Changelist" comment="agc">
+      <change afterPath="$PROJECT_DIR$/model/dto/ServerDataRecordDto.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/enum_/GroupNameEnum.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/ui/MainWindow_ui.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/ui/MainWindow_ui.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/ui/qt_file/MainWindow_ui.ui" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/ui/qt_file/MainWindow_ui.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/resource/user_file/a/records/0.data" beforeDir="false" afterPath="$PROJECT_DIR$/client/resource/user_file/a/records/0.data" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/gui/MainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/gui/MainWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/handler/MyLabel.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/handler/MyLabel.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/handler/MyWidget.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/handler/MyWidget.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/enum_/HeadStyleEnum.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/enum_/HeadStyleEnum.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/api/ClientSocketApi.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/api/ClientSocketApi.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/gui/MainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/gui/MainWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/signal/ServerSignal.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/signal/ServerSignal.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/thread_/ClientSocketThread.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/thread_/ClientSocketThread.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/thread_/ServerSocketThread.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/thread_/ServerSocketThread.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/ui/MainWindow_ui.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/ui/MainWindow_ui.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/ui/qt_file/MainWindow_ui.ui" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/ui/qt_file/MainWindow_ui.ui" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +75,7 @@
       <recent name="E:\PythonProject\study\pythonProject\agc\server\src\handler" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.ServerApplication">
+  <component name="RunManager" selected="Python.ClientApplication">
     <configuration name="ClientApplication" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="agc" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -175,8 +183,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.ServerApplication" />
         <item itemvalue="Python.ClientApplication" />
+        <item itemvalue="Python.ServerApplication" />
         <item itemvalue="Python.MainWindow" />
         <item itemvalue="Python.ToObjectUtil" />
         <item itemvalue="Python.ClientSocketThread" />
@@ -191,13 +199,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1623552947619</updated>
-    </task>
-    <task id="LOCAL-00021" summary="agc">
-      <created>1623933560201</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1623933560201</updated>
     </task>
     <task id="LOCAL-00022" summary="agc">
       <created>1623933823931</created>
@@ -535,7 +536,14 @@
       <option name="project" value="LOCAL" />
       <updated>1624458469342</updated>
     </task>
-    <option name="localTasksCounter" value="70" />
+    <task id="LOCAL-00070" summary="agc">
+      <created>1624611997175</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1624611997176</updated>
+    </task>
+    <option name="localTasksCounter" value="71" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
