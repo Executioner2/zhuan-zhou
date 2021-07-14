@@ -18,6 +18,8 @@
   
   `source tbl_user.sql;` // 导入用户表
   
-3、运行`server/src/ServerApplication.py`开启服务器窗口
+3、在`server/resource/config/datasource.ini`中修改为自己的数据库连接信息
+  
+4、运行`server/src/ServerApplication.py`开启服务器窗口
 
-4、运行`client/src/ClientApplication.py`开启客户端窗口
+5、运行`client/src/ClientApplication.py`开启客户端窗口
