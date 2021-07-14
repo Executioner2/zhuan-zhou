@@ -2,9 +2,7 @@
 
 #### 这是在下的第一个python微型项目，python也是在写这个项目的过程中学习的。
 #### 所以，假如您发现了许多奇奇怪怪的代码风格还请见谅！
-
 <br/><br/>
-
 1、使用命令下载模块  
   `pip install -r requirements.txt` // pip install -r 文件路径
   
