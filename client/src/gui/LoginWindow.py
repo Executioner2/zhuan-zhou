@@ -33,6 +33,7 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
     userConfigFilePath = os.path.dirname(os.path.dirname(sys.argv[0])) + "/resource/config/"
     loginFilePath = os.path.dirname(os.path.dirname(sys.argv[0])) + "/resource/config/"
     fakePassword = None # 假密码
+    firstEditLoginInfo = True # 第一次编辑登录信息
 
     def __init__(self, clientSignal:ClientSignal):
         super(LoginWindow, self).__init__()
@@ -70,6 +71,10 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
         self.registerUsernameLE.blurSignal.connect(self.on_register_blurSignal)
         self.registerPasswordLE.blurSignal.connect(self.on_register_blurSignal)
         self.registerCofirmPasswordLE.blurSignal.connect(self.on_register_blurSignal)
+        # 密码输入
+        self.passwordLE.keyPressSignal.connect(self.on_loginLE_keyDown)
+        # 用户名输入
+        self.usernameLE.keyPressSignal.connect(self.on_loginLE_keyDown)
         # 绑定注册提交按钮
         self.registerBtn.clicked.connect(self.on_registerBtn_click)
         # 绑定记住密码
@@ -148,6 +153,18 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
                 elif serverResult["code"] == ResultCodeEnum.REGISTER_USERNAME_ERROR.value[0]:
                     msgBox = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Information, "提示", "用户名已被使用，请重新输入")
                     msgBox.exec_()
+
+    """登录lineText按键按下"""
+    def on_loginLE_keyDown(self):
+        # 满足一个就删除存储的token信息
+        if self.firstEditLoginInfo:
+            self.passwordLE.clear()
+            self._loginDto.token = None
+            # 删除登录信息
+            if os.path.exists(self.loginFilePath + LOGIN_FILE_NAME):
+                os.remove(self.loginFilePath + LOGIN_FILE_NAME)
+            self.firstEditLoginInfo = False
+
 
     """register LE失去焦点时"""
     def on_register_blurSignal(self, val = None):
@@ -257,10 +274,6 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
         username = self.usernameLE.text().strip()
         password = self.passwordLE.text().strip()
 
-        if self.passwordLE.text() != self.fakePassword or username != self._loginDto.username:
-            # 从登录文件中读取的值已经被修改
-            self._loginDto.token = None
-
         if not (self.remberPasswordCheck.isChecked() and self._loginDto.token != None):
             if username == "" or password == "":
                 msgHint = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Warning, "警告", "用户名或密码不能为空！")
@@ -297,22 +310,22 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
             if serverResult["code"] == ResultCodeEnum.SUCCESS.value[0]: # 如果为200，则登录成功
                 self._loginDto.username = serverResult["data"][0]
                 self._loginDto.nickname = serverResult["data"][1]
+                # 判断当前是否需要记住密码
+                if self.remberPasswordCheck.isChecked():
+                    if not os.path.exists(self.loginFilePath): os.makedirs(self.loginFilePath)
+                    aliase = self.crypLE.text() if self.crypCheck.isChecked() else ""
+                    params = {"token": self._loginDto.token.decode(), "username": username,
+                              "length": len(self.passwordLE.text()), "aliase": aliase}
+                    ConfigFileUtil.wirteConfig(self.loginFilePath + LOGIN_FILE_NAME, params)
+                else:
+                    # 删除登录文件
+                    if os.path.exists(self.loginFilePath + LOGIN_FILE_NAME):
+                        os.remove(self.loginFilePath + LOGIN_FILE_NAME)
                 self.clientSignal.skipSignal.emit((self._loginDto, clientSocket)) # 跳转到聊天主窗口
                 self.close()
             else:
                 msgBox = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Warning, "警告", ResultCodeEnum.getDescribeByCode(serverResult["code"]))
                 msgBox.exec_()
-            # 判断当前是否需要记住密码
-            if self.remberPasswordCheck.isChecked():
-                if not os.path.exists(self.loginFilePath): os.makedirs(self.loginFilePath)
-                aliase = self.crypLE.text() if self.crypCheck.isChecked() else ""
-                params = {"token": self._loginDto.token.decode(), "username": self._loginDto.username,
-                          "length": len(self.passwordLE.text()), "aliase": aliase}
-                ConfigFileUtil.wirteConfig(self.loginFilePath + LOGIN_FILE_NAME, params)
-            else:
-                # 删除登录文件
-                if os.path.exists(self.loginFilePath + LOGIN_FILE_NAME):
-                    os.remove(self.loginFilePath + LOGIN_FILE_NAME)
 
     """获取（创建）client socket"""
     def __getClientSocket(self):
