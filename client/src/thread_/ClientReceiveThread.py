@@ -27,7 +27,6 @@ class ClientReceiveThread(QtCore.QThread):
         print("进入到消息接收线程")
         try:
             while True:
-                print("开始接收消息")
                 result = TransmitUtil.receive(self.clientSocket)
                 data = ToObjectUtil.dictToObject(result["data"])
                 # 发送信号渲染到ui上

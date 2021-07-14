@@ -62,7 +62,9 @@ class SocketService(QtCore.QThread):
                 self.clientList.append(clientSocket)
                 self.clientAddressList.append(clientAddress)
                 # 为这个客户端开启一个消息读取和发送的线程
-                clientThread = ClientSocketThread.ClientSocketThread(self.clientList, clientSocket, self.sqlConnPool, self.msgList, self.dataRecord, lock, self.serverSignal, clientAddress)
+                clientThread = ClientSocketThread.ClientSocketThread(self.clientList, clientSocket, self.sqlConnPool,
+                                                                     self.msgList, self.dataRecord, lock,
+                                                                     self.serverSignal, clientAddress)
                 clientThread.start()
                 self.serverSignal.insertClientInfoSignal.emit(clientAddress)
                 try:

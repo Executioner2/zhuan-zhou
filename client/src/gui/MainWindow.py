@@ -44,9 +44,15 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
     """重写窗口缩放事件"""
     def resizeEvent(self, a0: QtGui.QResizeEvent) -> None:
         # 重新设置sendWidget的坐标
+        if len(self.msgSectionList) != 0 and len(self.msgSectionList) >= self.checkedGroupIndex:
+            length = self.msgSectionList[self.checkedGroupIndex]
+            if length > COUNT: # 如果长度大于历史消息加载数说明加载了历史消息
+                # 并且加载了后也生成了widget，那么直接从groupMsgHistoryWidgetList中截取
+                historyMsgList = self.groupMsgHistoryWidgetList[self.checkedGroupIndex][0:length]
         if len(self.groupMsgWidgetList) > 0:
             msgWidgetList = self.groupMsgWidgetList[self.checkedGroupIndex]
-            MsgWidgetUtil.refresh(self.scrollArea, self.scrollWidget, self.msgHistoryLabel, msgWidgetList)
+            historyMsgList.extend(msgWidgetList)
+            MsgWidgetUtil.refresh(self.scrollArea, self.scrollWidget, self.msgHistoryLabel, historyMsgList)
 
     """重写关闭确认"""
     def closeEvent(self, a0: QtGui.QCloseEvent) -> None:
