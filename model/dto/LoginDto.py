@@ -19,38 +19,3 @@ class LoginDto:
 
     def __str__(self):
         return str(self.__dict__)
-
-    # @property
-    # def cryp(self):
-    #     return self._cryp
-    # @cryp.setter
-    # def cryp(self, cryp):
-    #     self._cryp = cryp
-    #
-    # @property
-    # def token(self):
-    #     return self._token
-    # @token.setter
-    # def token(self, token):
-    #     self._token = token
-    #
-    # @property
-    # def serverIp(self):
-    #     return self._serverIp
-    # @serverIp.setter
-    # def serverIp(self, serverIp):
-    #     self._serverIp = serverIp
-    #
-    # @property
-    # def serverPort(self):
-    #     return self._serverPort
-    # @serverPort.setter
-    # def serverPort(self, serverPort):
-    #     self._serverPort = serverPort
-    #
-    # @property
-    # def headStyle(self):
-    #     return self._headStyle
-    # @headStyle.setter
-    # def headStyle(self, headStyle):
-    #     self._headStyle = headStyle

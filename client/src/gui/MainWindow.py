@@ -6,8 +6,9 @@
 # editDate：
 # editBy：
 # version：1.0.0
-import copy
+import datetime
 import os
+import pickle
 import sys
 import time
 
@@ -16,14 +17,12 @@ from PyQt5 import QtWidgets, QtGui, QtCore
 from client.src.signal import ClientSignal
 from client.src.thread_ import ClientReceiveThread
 from client.src.ui import MainWindow_ui
-from common.util import MsgWidgetUtil
-from model.enum_.MsgTypeEnum import MsgTypeEnum
-from common.util import TransmitUtil
-from common.result.Result import Result
 from common.result.IndexTableEnum import IndexTableEnum
+from common.result.Result import Result
+from common.util import MsgWidgetUtil
+from common.util import TransmitUtil
 from model.dto import MsgDto
-import datetime
-import pickle
+from model.enum_.MsgTypeEnum import MsgTypeEnum
 
 SELECT_STYLE = "background-color: rgb(186, 186, 186)" # 选中时的样式
 COUNT = 20 # 历史消息每次加载数量为20

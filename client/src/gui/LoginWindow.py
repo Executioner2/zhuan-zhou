@@ -7,23 +7,23 @@
 # editBy：
 # version：1.0.0
 
+import os
 import re  # 正则表达式
 import socket
+import sys
 
-from PyQt5 import QtWidgets, QtCore, QtGui
+from PyQt5 import QtWidgets, QtCore
 
+from client.src.signal import ClientSignal
 from common.result.IndexTableEnum import IndexTableEnum
 from common.result.Result import Result
 from common.result.ResultCodeEnum import ResultCodeEnum
+from common.util import ConfigFileUtil
 from common.util import TransmitUtil
 from common.util.Base64Util import Base64Util
 from model.dto import LoginDto
 from model.enum_.HeadStyleEnum import HeadStyleEnum
 from ui import LoginWindow_ui
-from common.util import ConfigFileUtil
-import os, sys
-from client.src.signal import ClientSignal
-
 
 LOGIN_FILE_NAME = "login.ini"
 USER_CONFIG_FILE_NAME = "user_config.ini"

@@ -22,8 +22,4 @@ if __name__ == '__main__':
     window = MainWindow.MainWindow(serverSignal)
     window.show()
 
-    # 开启socket服务
-    # socketService = SocketService.SocketService()
-    # socketService.start(serverSignal)
-
     sys.exit(app.exec_())

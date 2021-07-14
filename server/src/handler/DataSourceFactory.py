@@ -9,11 +9,11 @@
 
 import threading
 import time
+import warnings
 
 import pymysql
 
 from common.util import ConfigFileUtil
-import warnings
 
 warnings.warn("该类不建议使用，有更好的替代品", DeprecationWarning)
 class DataSourceFactory:

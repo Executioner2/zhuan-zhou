@@ -8,10 +8,11 @@
 # version：1.0.0
 
 from PyQt5 import QtCore
+
 from client.src.signal import ClientSignal
-from common.util import TransmitUtil
 from common.util import ToObjectUtil
-from model.enum_.MsgTypeEnum import MsgTypeEnum
+from common.util import TransmitUtil
+
 
 class ClientReceiveThread(QtCore.QThread):
 

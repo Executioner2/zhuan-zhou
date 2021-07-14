@@ -9,6 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 from client.src.handler import MyTextEdit, MyLabel, MyWidget
 
 
@@ -235,4 +236,3 @@ class Ui_MainWindow(object):
         self.textEdit.setPlaceholderText(_translate("MainWindow", "此处输入文字...  "))
         self.pushBtn.setText(_translate("MainWindow", "发送"))
 
-from client.src.ui import MainWindow_rc

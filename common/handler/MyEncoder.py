@@ -7,8 +7,7 @@
 # editBy：
 # version：1.0.0
 import json
-from common.result.Result import Result
-from model.dto import MsgDto
+
 
 class MyEncoder(json.JSONEncoder):
     def default(self, o):

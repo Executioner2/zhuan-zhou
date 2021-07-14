@@ -2,17 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="824463d5-eacc-4b7d-bb38-0e74345ac0a3" name="Default Changelist" comment="agc">
-      <change afterPath="$PROJECT_DIR$/client/resource/config/login.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/resource/config/connect_config.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/resource/user_file/records.data" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/gui/LoginWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/gui/LoginWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/ui/LoginWindow_ui.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/ui/LoginWindow_ui.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/ui/qt_file/LoginWindow_ui.ui" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/ui/qt_file/LoginWindow_ui.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/util/ConfigFileUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/util/ConfigFileUtil.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/util/ToObjectUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/util/ToObjectUtil.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/resource/data_record/serverRecord.data" beforeDir="false" afterPath="$PROJECT_DIR$/server/resource/data_record/serverRecord.data" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/gui/MainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/gui/MainWindow.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,7 +62,7 @@
       <recent name="E:\PythonProject\study\pythonProject\agc\server\resource" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.ClientApplication">
+  <component name="RunManager" selected="Python.ServerApplication">
     <configuration name="ClientApplication" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="agc" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -187,9 +177,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.ServerApplication" />
         <item itemvalue="Python.ClientApplication" />
         <item itemvalue="Python.LoginWindow" />
-        <item itemvalue="Python.ServerApplication" />
         <item itemvalue="Python.test (1)" />
         <item itemvalue="Python.MainWindow" />
       </list>
@@ -203,13 +193,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1623552947619</updated>
-    </task>
-    <task id="LOCAL-00030" summary="agc">
-      <created>1624082895986</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1624082895986</updated>
     </task>
     <task id="LOCAL-00031" summary="agc">
       <created>1624083765944</created>
@@ -547,7 +530,14 @@
       <option name="project" value="LOCAL" />
       <updated>1626248636216</updated>
     </task>
-    <option name="localTasksCounter" value="79" />
+    <task id="LOCAL-00079" summary="agc">
+      <created>1626255376061</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1626255376061</updated>
+    </task>
+    <option name="localTasksCounter" value="80" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

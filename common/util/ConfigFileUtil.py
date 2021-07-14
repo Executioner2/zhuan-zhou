@@ -7,10 +7,7 @@
 # editBy：
 # version：1.0.0
 
-import sys
-
 import configparser
-import os
 
 """读取数据库配置文件"""
 def readDataSourceConfig(path, datasource=None) -> None:
