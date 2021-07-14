@@ -24,9 +24,15 @@ from common.util import ConfigFileUtil
 import os, sys
 from client.src.signal import ClientSignal
 
+
+LOGIN_FILE_NAME = "login.ini"
+USER_CONFIG_FILE_NAME = "user_config.ini"
+
 class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject):
     clientSocket = None
-    userConfigFilePath = os.path.dirname(os.path.dirname(sys.argv[0])) + "/resource/config/user_config.ini"
+    userConfigFilePath = os.path.dirname(os.path.dirname(sys.argv[0])) + "/resource/config/"
+    loginFilePath = os.path.dirname(os.path.dirname(sys.argv[0])) + "/resource/config/"
+    fakePassword = None # 假密码
 
     def __init__(self, clientSignal:ClientSignal):
         super(LoginWindow, self).__init__()
@@ -66,18 +72,52 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
         self.registerCofirmPasswordLE.blurSignal.connect(self.on_register_blurSignal)
         # 绑定注册提交按钮
         self.registerBtn.clicked.connect(self.on_registerBtn_click)
+        # 绑定记住密码
+        self.remberPasswordCheck.clicked.connect(self.on_remverPasswordCheck_click)
         # 读取用户配置文件
-        configInfo = ConfigFileUtil.readUserConfig(self.userConfigFilePath)
-        tempRadio = self.radioBtnGroupWidget.findChild(QtWidgets.QRadioButton, configInfo[0])
-        if tempRadio == self.customRB:
-            tempTuple = configInfo[1].split(",")
-            self.RSB.setValue(int(tempTuple[0]))
-            self.GSB.setValue(int(tempTuple[1]))
-            self.BSB.setValue(int(tempTuple[2]))
-            self.selectCustomHeadStyle(True)
-        tempRadio.setChecked(True)
-        self.serverIpLE.setText(configInfo[2])
-        self.serverPortLE.setText(configInfo[3])
+        self.readUserConfig()
+        # 读取登录文件
+        self.readLoginFile()
+
+    """读取登录文件"""
+    def readLoginFile(self):
+        if os.path.exists(self.loginFilePath + LOGIN_FILE_NAME):
+            result = ConfigFileUtil.readConfig(self.loginFilePath + LOGIN_FILE_NAME)
+            if result[0][1] != None and result[0][1].strip() != "":
+                self._loginDto.token = result[0][1].encode()
+                self._loginDto.username = result[1][1]
+                self.usernameLE.setText(result[1][1])
+                self.fakePassword = " " * int(result[2][1])
+                self.passwordLE.setText(self.fakePassword) # 填充空格占位
+                self.remberPasswordCheck.setChecked(True)
+                if result[0][1] != None and result[3][1].strip() != "":
+                    self.crypCheck.setChecked(True)
+                    self.crypLE.setText(result[3][1])
+                    self.crypLE.setEnabled(True)
+
+    """读取用户配置文件"""
+    def readUserConfig(self):
+        if os.path.exists(self.userConfigFilePath + USER_CONFIG_FILE_NAME):
+            configInfo = ConfigFileUtil.readUserConfig(self.userConfigFilePath + USER_CONFIG_FILE_NAME)
+            tempRadio = self.radioBtnGroupWidget.findChild(QtWidgets.QRadioButton, configInfo[0])
+            if tempRadio == self.customRB:
+                tempTuple = configInfo[1].split(",")
+                self.RSB.setValue(int(tempTuple[0]))
+                self.GSB.setValue(int(tempTuple[1]))
+                self.BSB.setValue(int(tempTuple[2]))
+                self.selectCustomHeadStyle(True)
+            tempRadio.setChecked(True)
+            self.serverIpLE.setText(configInfo[2])
+            self.serverPortLE.setText(configInfo[3])
+
+    """记住密码"""
+    def on_remverPasswordCheck_click(self):
+        if self.passwordLE.text() == self.fakePassword:
+            self.passwordLE.clear()
+            self.usernameLE.clear()
+            # 删除登录文件
+            if os.path.exists(self.loginFilePath + LOGIN_FILE_NAME):
+                os.remove(self.loginFilePath + LOGIN_FILE_NAME)
 
     """注册请求"""
     def on_registerBtn_click(self):
@@ -108,7 +148,6 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
                 elif serverResult["code"] == ResultCodeEnum.REGISTER_USERNAME_ERROR.value[0]:
                     msgBox = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Information, "提示", "用户名已被使用，请重新输入")
                     msgBox.exec_()
-
 
     """register LE失去焦点时"""
     def on_register_blurSignal(self, val = None):
@@ -217,11 +256,19 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
     def on_loginBtn_click(self):
         username = self.usernameLE.text().strip()
         password = self.passwordLE.text().strip()
-        if username == "" or password == "":
-            msgHint = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Warning, "警告", "用户名或密码不能为空！")
-            msgHint.exec_()
-            return
 
+        if self.passwordLE.text() != self.fakePassword or username != self._loginDto.username:
+            # 从登录文件中读取的值已经被修改
+            self._loginDto.token = None
+
+        if not (self.remberPasswordCheck.isChecked() and self._loginDto.token != None):
+            if username == "" or password == "":
+                msgHint = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Warning, "警告", "用户名或密码不能为空！")
+                msgHint.exec_()
+                return
+            else:
+                # 封装用户名和密码，创建token
+                self._loginDto.token = Base64Util.createToken(self.usernameLE.text(), self.passwordLE.text())
         # 设置头像
         self.setHeadStyle()
         # 设置服务器ip和服务器端口
@@ -238,8 +285,6 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
             msgHint = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical, "错误", "连接服务器失败！")
             msgHint.exec_()
         else: # 连接成功，开始用户登录
-            # 封装用户名和密码，创建token
-            self._loginDto.token = Base64Util.createToken(self.usernameLE.text(), self.passwordLE.text())
             # 封装传输对象
             result = Result.ok(IndexTableEnum.LOGIN.value, self._loginDto)
             print("客户端传输过去的对象", result)
@@ -248,6 +293,7 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
             # 服务器返回结果
             serverResult = TransmitUtil.receive(clientSocket)
             print("服务器返回的结果", serverResult)
+
             if serverResult["code"] == ResultCodeEnum.SUCCESS.value[0]: # 如果为200，则登录成功
                 self._loginDto.username = serverResult["data"][0]
                 self._loginDto.nickname = serverResult["data"][1]
@@ -256,6 +302,17 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
             else:
                 msgBox = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Warning, "警告", ResultCodeEnum.getDescribeByCode(serverResult["code"]))
                 msgBox.exec_()
+            # 判断当前是否需要记住密码
+            if self.remberPasswordCheck.isChecked():
+                if not os.path.exists(self.loginFilePath): os.makedirs(self.loginFilePath)
+                aliase = self.crypLE.text() if self.crypCheck.isChecked() else ""
+                params = {"token": self._loginDto.token.decode(), "username": self._loginDto.username,
+                          "length": len(self.passwordLE.text()), "aliase": aliase}
+                ConfigFileUtil.wirteConfig(self.loginFilePath + LOGIN_FILE_NAME, params)
+            else:
+                # 删除登录文件
+                if os.path.exists(self.loginFilePath + LOGIN_FILE_NAME):
+                    os.remove(self.loginFilePath + LOGIN_FILE_NAME)
 
     """获取（创建）client socket"""
     def __getClientSocket(self):
@@ -327,10 +384,11 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
                 if colorRB == HeadStyleEnum.CUSTOM.value["name"]:
                     headStyle = "{}, {}, {}".format(self.RSB.value(), self.GSB.value(), self.BSB.value())
                 break
-        ConfigFileUtil.wirteUserConfig(self.userConfigFilePath, colorRB, self.serverIpLE.text(), self.serverPortLE.text(), headStyle)
+        if not os.path.exists(self.userConfigFilePath): os.makedirs(self.userConfigFilePath)
+        ConfigFileUtil.wirteUserConfig(self.userConfigFilePath + USER_CONFIG_FILE_NAME, colorRB, self.serverIpLE.text(),
+                                       self.serverPortLE.text(), headStyle)
         # 隐藏配置widget
         self.configWidget.hide()
         # 显示登录widget
         self.loginWidget.show()
         self.setWindowTitle("登录")
-

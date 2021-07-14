@@ -2,22 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="824463d5-eacc-4b7d-bb38-0e74345ac0a3" name="Default Changelist" comment="agc">
-      <change afterPath="$PROJECT_DIR$/client/src/test.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/resource/records/2021-07-11/records.data" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/resource/user_file/ls/records.data" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/resource/user_file/zs/records.data" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/resource/config/login.ini" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/resource/config/connect_config.ini" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/resource/user_file/records.data" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/resource/config/user_config.ini" beforeDir="false" afterPath="$PROJECT_DIR$/client/resource/config/user_config.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/resource/user_file/a/records/0.data" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/resource/user_file/a/records/1.data" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/resource/user_file/a/records/2.data" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/gui/MainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/gui/MainWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/thread_/ClientReceiveThread.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/thread_/ClientReceiveThread.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/util/MsgWidgetUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/util/MsgWidgetUtil.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/gui/LoginWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/gui/LoginWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/ui/LoginWindow_ui.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/ui/LoginWindow_ui.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/ui/qt_file/LoginWindow_ui.ui" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/ui/qt_file/LoginWindow_ui.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/util/ConfigFileUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/util/ConfigFileUtil.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/util/ToObjectUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/util/ToObjectUtil.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/resource/data_record/serverRecord.data" beforeDir="false" afterPath="$PROJECT_DIR$/server/resource/data_record/serverRecord.data" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/thread_/ClientSocketThread.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/thread_/ClientSocketThread.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/thread_/ServerSocketThread.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/thread_/ServerSocketThread.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/gui/MainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/gui/MainWindow.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,9 +65,9 @@
       <recent name="E:\PythonProject\study\pythonProject\agc\client\src\ui" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\PythonProject\study\pythonProject\agc\client\src\ui" />
       <recent name="E:\PythonProject\study\pythonProject\agc\common\util" />
       <recent name="E:\PythonProject\study\pythonProject\agc\server\src\ui" />
-      <recent name="E:\PythonProject\study\pythonProject\agc\client\src\ui" />
       <recent name="E:\PythonProject\study\pythonProject\agc\client\resource\qrc" />
       <recent name="E:\PythonProject\study\pythonProject\agc\server\resource" />
     </key>
@@ -91,6 +86,27 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/client/src/ClientApplication.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="LoginWindow" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="agc" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/client/src/gui" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/client/src/gui/LoginWindow.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -162,41 +178,20 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="agc" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/client/src" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="E:\PythonProject\study\pythonProject\agc\client\src\test.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <list>
       <item itemvalue="Python.ClientApplication" />
       <item itemvalue="Python.ServerApplication" />
       <item itemvalue="Python.MainWindow" />
-      <item itemvalue="Python.test" />
       <item itemvalue="Python.test (1)" />
+      <item itemvalue="Python.LoginWindow" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.ClientApplication" />
+        <item itemvalue="Python.LoginWindow" />
         <item itemvalue="Python.ServerApplication" />
         <item itemvalue="Python.test (1)" />
         <item itemvalue="Python.MainWindow" />
-        <item itemvalue="Python.test" />
       </list>
     </recent_temporary>
   </component>
@@ -208,13 +203,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1623552947619</updated>
-    </task>
-    <task id="LOCAL-00029" summary="agc">
-      <created>1624028375288</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1624028375288</updated>
     </task>
     <task id="LOCAL-00030" summary="agc">
       <created>1624082895986</created>
@@ -552,7 +540,14 @@
       <option name="project" value="LOCAL" />
       <updated>1625964276451</updated>
     </task>
-    <option name="localTasksCounter" value="78" />
+    <task id="LOCAL-00078" summary="agc">
+      <created>1626248636216</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1626248636216</updated>
+    </task>
+    <option name="localTasksCounter" value="79" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

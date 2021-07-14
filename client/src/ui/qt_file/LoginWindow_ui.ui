@@ -47,7 +47,7 @@
     <property name="geometry">
      <rect>
       <x>260</x>
-      <y>200</y>
+      <y>190</y>
       <width>85</width>
       <height>26</height>
      </rect>
@@ -60,26 +60,16 @@
     <property name="geometry">
      <rect>
       <x>130</x>
-      <y>80</y>
+      <y>70</y>
       <width>216</width>
       <height>104</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
-     <item row="0" column="0">
-      <widget class="QLabel" name="label">
+     <item row="2" column="0">
+      <widget class="QCheckBox" name="crypCheck">
        <property name="text">
-        <string>账号：</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="usernameLE"/>
-     </item>
-     <item row="1" column="1">
-      <widget class="QLineEdit" name="passwordLE">
-       <property name="echoMode">
-        <enum>QLineEdit::Password</enum>
+        <string>别称</string>
        </property>
       </widget>
      </item>
@@ -87,6 +77,13 @@
       <widget class="QLabel" name="label_2">
        <property name="text">
         <string>密码：</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>账号：</string>
        </property>
       </widget>
      </item>
@@ -100,12 +97,22 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="0">
-      <widget class="QCheckBox" name="crypCheck">
+     <item row="2" column="2">
+      <widget class="QCheckBox" name="remberPasswordCheck">
        <property name="text">
-        <string>别称</string>
+        <string>记住密码</string>
        </property>
       </widget>
+     </item>
+     <item row="1" column="1" colspan="2">
+      <widget class="QLineEdit" name="passwordLE">
+       <property name="echoMode">
+        <enum>QLineEdit::Password</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1" colspan="2">
+      <widget class="QLineEdit" name="usernameLE"/>
      </item>
     </layout>
    </widget>
@@ -126,7 +133,7 @@
     <property name="geometry">
      <rect>
       <x>130</x>
-      <y>200</y>
+      <y>190</y>
       <width>85</width>
       <height>26</height>
      </rect>
@@ -638,9 +645,9 @@ background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5
     </property>
    </widget>
   </widget>
-  <zorder>loginWidget</zorder>
   <zorder>registerWidget</zorder>
   <zorder>configWidget</zorder>
+  <zorder>loginWidget</zorder>
  </widget>
  <tabstops>
   <tabstop>usernameLE</tabstop>

@@ -33,7 +33,7 @@ class Dict(dict):
 
     """反序列化时调用"""
     def __setstate__(self, state):
-        print(state)
+        pass
 
 """json转对象"""
 def jsonToObject(jsonData):

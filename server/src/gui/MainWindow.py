@@ -19,6 +19,7 @@ from server.src.ui import MainWindow_ui
 
 from model.dto import ServerDataRecordDto
 from model.enum_.GroupNameEnum import GroupNameEnum
+from common.util import ConfigFileUtil
 
 FILENAME = "records.data"
 SERVICE_DATA_FILE = "/resource/data_record/serverRecord.data"
@@ -49,6 +50,14 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow):
             for item in self.msgList:
                 with open(path, "ab") as f:
                         pickle.dump(item, f)
+
+            # 保存ip和端口到配置文件
+            folder = os.path.dirname(os.path.dirname(sys.argv[0])) + "/resource/config/"
+            if not os.path.exists(folder): os.makedirs(folder)
+            path = folder + "connect_config.ini"
+            params = {"ip": self.serverIpLE.text(), "port": int(self.serverPortLE.text())}
+            ConfigFileUtil.wirteConfig(path, params)
+
             a0.accept()
             QtWidgets.QWidget.closeEvent(self, a0)
         else:
@@ -60,6 +69,7 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow):
         self.setWindowTitle("小又丑服务端")
         self.dataRecord = self.readDataRecordFile()
         self.serverSignal = serverSignal
+        # 服务器开关
         self.startServerBtn.clicked.connect(self.on_startServer_cliecked)
         # 启动socket服务线程
         self.socketService = ServerSocketThread.SocketService(serverSignal, self.dataRecord, self.msgList, self.clientAddressList)
@@ -75,6 +85,16 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow):
         self.serverSignal.removeClientInfoSignal.connect(self.removeClientInfo)
         # 读取数据记录
         self.readDataRecordFile()
+        # 读取配置文件
+        self.readConfig()
+
+    """读取配置文件设置ip和端口"""
+    def readConfig(self):
+        path = os.path.dirname(os.path.dirname(sys.argv[0])) + "/resource/config/connect_config.ini"
+        if os.path.exists(path):
+            result = ConfigFileUtil.readConfig(path)
+            self.serverIpLE.setText(result[0][1])
+            self.serverPortLE.setText(result[1][1])
 
     """移除列表中的客户端信息"""
     def removeClientInfo(self, address):
