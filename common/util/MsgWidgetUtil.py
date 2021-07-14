@@ -201,5 +201,5 @@ def simpleSetStyle(scrollWidget, verticalLayout, scrollArea, msgDto, checkedGrou
     # 设置聊天框显示效果
     setShowStyle(widget, scrollWidget, verticalLayout, scrollArea, group, show)
     # 包装一下
-    msgObj = {"widget": widget, "type": MsgTypeEnum.SEND.value}
+    msgObj = {"widget": widget, "type": msgDto.type}
     return msgObj

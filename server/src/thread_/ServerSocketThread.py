@@ -19,7 +19,7 @@ import threading
 from common.util import ConfigFileUtil
 from server.src.thread_ import ClientSocketThread
 
-MAX_CONTENT = 100 # 排队个数
+MAX_CONTENT = 25 # 最大监听数
 
 class SocketService(QtCore.QThread):
     clientList = [] # 客户端socket集合

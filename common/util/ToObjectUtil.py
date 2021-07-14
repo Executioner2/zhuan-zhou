@@ -6,6 +6,7 @@
 # editDate：
 # editBy：
 # version：1.0.0
+import inspect
 
 class UpdateParams:
     def __init__(self, **kwargs):
@@ -21,6 +22,18 @@ class UpdateParams:
 class Dict(dict):
     __setattr__ = dict.__setitem__
     __getattr__ = dict.__getitem__
+    __bases__ = dict.__bases__
+
+    """返回序列化状态值"""
+    def __getstate__(self):
+        # 序列化时以字典类型返回该动态对象的属性和值
+        # 动态取得属性和值
+        propertiesDict = inspect.getmembers(self)[2][1]
+        return propertiesDict
+
+    """反序列化时调用"""
+    def __setstate__(self, state):
+        print(state)
 
 """json转对象"""
 def jsonToObject(jsonData):

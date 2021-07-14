@@ -11,6 +11,7 @@ from PyQt5 import QtCore
 from client.src.signal import ClientSignal
 from common.util import TransmitUtil
 from common.util import ToObjectUtil
+from model.enum_.MsgTypeEnum import MsgTypeEnum
 
 class ClientReceiveThread(QtCore.QThread):
 

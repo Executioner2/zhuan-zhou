@@ -88,8 +88,8 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
         self.group1.mouseReleaseSignal.connect(self.on_mouseClick_clicked)
         self.group2.mouseReleaseSignal.connect(self.on_mouseClick_clicked)
         self.group3.mouseReleaseSignal.connect(self.on_mouseClick_clicked)
-        # 设置鼠标跟踪
-        self.group1.isSelected = True  # 设置组1默认选中
+        # 设置组1默认选中
+        self.group1.isSelected = True
 
     """查看历史消息"""
     def checkMsgHistory(self):
@@ -195,8 +195,9 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
 
     """添加widget"""
     def addMsgWidgets(self, msgDto, isHistory=None):
+        flag = self.checkedGroupIndex == msgDto.group
         # 超简单设置文本效果
-        msgObj = MsgWidgetUtil.simpleSetStyle(self.scrollWidget, self.verticalLayout, self.scrollArea, msgDto, self.checkedGroupIndex)
+        msgObj = MsgWidgetUtil.simpleSetStyle(self.scrollWidget, self.verticalLayout, self.scrollArea, msgDto, self.checkedGroupIndex, flag)
 
         # 添加到集合中
         self.groupMsgWidgetList[msgDto.group].append(msgObj)

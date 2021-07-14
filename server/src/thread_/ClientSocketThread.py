@@ -34,7 +34,7 @@ class ClientSocketThread(QtCore.QThread):
                     if result == None: break
                     data = result["data"]
                     data = ToObjectUtil.dictToObject(data)
-                    fun = getattr(self.clientSocketApi, result["url"])
+                    fun = getattr(self.clientSocketApi, result["url"]) # 类似java的反射，这个屌
                     fun(data) # 调用有参数的方法
                 except AttributeError:
                     continue
