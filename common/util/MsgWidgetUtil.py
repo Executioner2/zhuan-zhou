@@ -12,7 +12,8 @@ from PyQt5 import QtWidgets, QtGui
 from model.enum_.MsgTypeEnum import MsgTypeEnum
 
 """添加历史消息"""
-def addMsgHistory(layout:QtWidgets.QVBoxLayout, scrollWidget:QtWidgets.QWidget, scrollArea:QtWidgets.QScrollArea, msgHistoryList, msgWidgetList:list, isWidget=False) -> []:
+def addMsgHistory(layout:QtWidgets.QVBoxLayout, scrollWidget:QtWidgets.QWidget,
+                  scrollArea:QtWidgets.QScrollArea, msgHistoryList, msgWidgetList:list, isWidget=False) -> []:
     # 追加历史消息
     msgHistoryWidgetList = []
     if not isWidget: # 如果没有历史消息widget，就创建widget

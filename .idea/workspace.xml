@@ -2,10 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="824463d5-eacc-4b7d-bb38-0e74345ac0a3" name="Default Changelist" comment="agc">
+      <change afterPath="$PROJECT_DIR$/client/src/ClientApplication1.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/resource/records/2021-07-15/records.data" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/resource/config/login.ini" beforeDir="false" afterPath="$PROJECT_DIR$/client/resource/config/login.ini" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/resource/config/user_config.ini" beforeDir="false" afterPath="$PROJECT_DIR$/client/resource/config/user_config.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/resource/user_file/ls/records/0.data" beforeDir="false" afterPath="$PROJECT_DIR$/client/resource/user_file/ls/records/0.data" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/resource/user_file/ls/records/1.data" beforeDir="false" afterPath="$PROJECT_DIR$/client/resource/user_file/ls/records/1.data" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/resource/user_file/zs/records/0.data" beforeDir="false" afterPath="$PROJECT_DIR$/client/resource/user_file/zs/records/0.data" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/resource/user_file/zs/records/1.data" beforeDir="false" afterPath="$PROJECT_DIR$/client/resource/user_file/zs/records/1.data" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/gui/MainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/gui/MainWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/result/Result.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/result/Result.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/util/Base64Util.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/util/Base64Util.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/util/MsgWidgetUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/util/MsgWidgetUtil.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/resource/data_record/serverRecord.data" beforeDir="false" afterPath="$PROJECT_DIR$/server/resource/data_record/serverRecord.data" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/resource/user_file/ls/records.data" beforeDir="false" afterPath="$PROJECT_DIR$/server/resource/user_file/ls/records.data" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/resource/user_file/zs/records.data" beforeDir="false" afterPath="$PROJECT_DIR$/server/resource/user_file/zs/records.data" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/handler/DataSourceFactory.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/handler/DataSourceFactory.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/thread_/ServerSocketThread.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/thread_/ServerSocketThread.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -181,8 +195,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.ClientApplication" />
         <item itemvalue="Python.ServerApplication" />
+        <item itemvalue="Python.ClientApplication" />
         <item itemvalue="Python.ClientApplication1" />
         <item itemvalue="Python.LoginWindow" />
         <item itemvalue="Python.test (1)" />
@@ -197,13 +211,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1623552947619</updated>
-    </task>
-    <task id="LOCAL-00034" summary="agc">
-      <created>1624084864471</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1624084864471</updated>
     </task>
     <task id="LOCAL-00035" summary="agc">
       <created>1624092117224</created>
@@ -541,7 +548,14 @@
       <option name="project" value="LOCAL" />
       <updated>1626276138118</updated>
     </task>
-    <option name="localTasksCounter" value="83" />
+    <task id="LOCAL-00083" summary="agc">
+      <created>1626310185394</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1626310185394</updated>
+    </task>
+    <option name="localTasksCounter" value="84" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

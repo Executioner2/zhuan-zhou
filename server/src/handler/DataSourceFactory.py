@@ -15,9 +15,9 @@ import pymysql
 
 from common.util import ConfigFileUtil
 
-warnings.warn("该类不建议使用，有更好的替代品", DeprecationWarning)
+warnings.warn("该类写错了不建议使用，有更好的替代品", DeprecationWarning)
 class DataSourceFactory:
-    cursorList = [] # 数据库游标集合（j2ee的数据库连接池）
+    cursorList = [] # 数据库游标集合
 
     def __init__(self, path=None, datasource=None):
         self.datasource = ConfigFileUtil.readDataSourceConfig(path, datasource)  # 连接源

@@ -27,6 +27,7 @@ class SocketService(QtCore.QThread):
     server = None
     address = None
     rootPath = os.path.dirname(os.path.dirname(os.path.abspath(sys.argv[0])))
+    # 读取文件取得数据源
     datasource = ConfigFileUtil.readDataSourceConfig(rootPath + "\\resource\\config\\datasource.ini")
     # 数据库连接池
     sqlConnPool = PooledDB(

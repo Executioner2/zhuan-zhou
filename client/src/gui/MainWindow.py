@@ -44,6 +44,7 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
     """重写窗口缩放事件"""
     def resizeEvent(self, a0: QtGui.QResizeEvent) -> None:
         # 重新设置sendWidget的坐标
+        historyMsgList = []
         if len(self.msgSectionList) != 0 and len(self.msgSectionList) >= self.checkedGroupIndex:
             length = self.msgSectionList[self.checkedGroupIndex]
             if length > COUNT: # 如果长度大于历史消息加载数说明加载了历史消息
@@ -98,18 +99,20 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
 
     """查看历史消息"""
     def checkMsgHistory(self):
-        length = self.msgSectionList[self.checkedGroupIndex]
+        length = self.msgSectionList[self.checkedGroupIndex] # 当前可读取的历史消息范围
+        # 读取的历史消息widget（这是已经经过了一次可视化操作的消息集合，避免了重复创建widget对象label对象等以提升效率）
         tempWidgetList = self.groupMsgHistoryWidgetList[self.checkedGroupIndex][0:length]
         if len(tempWidgetList) > length:
             MsgWidgetUtil.addMsgHistory(self.verticalLayout, self.scrollWidget, self.scrollArea, tempWidgetList,
                                         self.groupMsgWidgetList[self.checkedGroupIndex], True)
             self.msgSectionList[self.checkedGroupIndex] = length + COUNT
             return
-
+        # 这是未进行可视化的历史消息集合，从第一个未可视化那条开始取
         tempList = self.groupMsgHistoryList[self.checkedGroupIndex][-length:None]
         if length - COUNT < len(self.groupMsgHistoryList[self.checkedGroupIndex]):
             resultList = MsgWidgetUtil.addMsgHistory(self.verticalLayout, self.scrollWidget, self.scrollArea, tempList,
                                                      self.groupMsgWidgetList[self.checkedGroupIndex])
+            # 把可视化了的历史消息放入groupMsgHistoryWidgetList集合对应分组中
             resultList.extend(self.groupMsgHistoryWidgetList[self.checkedGroupIndex])
             self.groupMsgHistoryWidgetList[self.checkedGroupIndex] = resultList
             self.msgSectionList[self.checkedGroupIndex] = length + COUNT
@@ -203,7 +206,8 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
     def addMsgWidgets(self, msgDto, isHistory=None):
         flag = self.checkedGroupIndex == msgDto.group
         # 超简单设置文本效果
-        msgObj = MsgWidgetUtil.simpleSetStyle(self.scrollWidget, self.verticalLayout, self.scrollArea, msgDto, self.checkedGroupIndex, flag)
+        msgObj = MsgWidgetUtil.simpleSetStyle(self.scrollWidget, self.verticalLayout, self.scrollArea, msgDto,
+                                              self.checkedGroupIndex, flag)
 
         # 添加到集合中
         self.groupMsgWidgetList[msgDto.group].append(msgObj)

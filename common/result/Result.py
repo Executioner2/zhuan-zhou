@@ -15,9 +15,7 @@ class Result:
     def __init__(self, url, code, data=None):
         self.result["url"] = url
         self.result["code"] = code
-        # self.__setCode(code)
         self.__setData(data)
-
 
     def __setCode(self, code):
         if code == None:

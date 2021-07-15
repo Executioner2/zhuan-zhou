@@ -22,6 +22,7 @@ class Base64Util:
     def __init__(self):
         pass
 
+    """创建token"""
     @staticmethod
     def createToken(username:str, password:str):
         password = MD5Util.saltMD5(password) # 对密码进行MD5加盐加密
@@ -124,7 +125,7 @@ class Base64Util:
         map = json.loads(mapStr)
         return map["username"], map["password"]
 
-    """数据加密""" # Decipher
+    """数据加密"""
     @staticmethod
     def encipher(data):
         ciphertext = base64.b64encode(data.encode(encoding='utf-8'))
