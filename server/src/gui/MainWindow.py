@@ -113,6 +113,7 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow):
         fileName, fileType = QtWidgets.QFileDialog.getOpenFileName(self, "选取聊天记录文件", "../resource/records", "Data File(*.data);")
         tempList = []
         try:
+            if not os.path.exists(fileName): return
             with open(fileName, "rb") as f:
                 while True:
                     tempList.append(pickle.load(f))
