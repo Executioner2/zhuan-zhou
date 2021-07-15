@@ -144,6 +144,7 @@ class MainWindow(QtWidgets.QMainWindow, MainWindow_ui.Ui_MainWindow, QtCore.QObj
         else:
             # 不是当前选中的分组，把当前的分组中的输入消息记录存入inputBoxList中
             self.inputBoxList[self.checkedGroupIndex] = self.textEdit.toPlainText()
+            self.textEdit.setPlainText(self.inputBoxList[groupIndex]) # 把选中分组的输入消息给还原
             # 初始化上一群组的部分值
             self.msgSectionList[self.checkedGroupIndex] = COUNT
             self.groupVLList[self.checkedGroupIndex].setStyleSheet("") # 设置无背景色
