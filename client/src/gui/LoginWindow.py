@@ -274,7 +274,7 @@ class LoginWindow(QtWidgets.QMainWindow, LoginWindow_ui.Ui_Form, QtCore.QObject)
         username = self.usernameLE.text().strip()
         password = self.passwordLE.text().strip()
 
-        if not (self.remberPasswordCheck.isChecked() and self._loginDto.token != None):
+        if not (self.remberPasswordCheck.isChecked() and self._loginDto.token != None and self.firstEditLoginInfo):
             if username == "" or password == "":
                 msgHint = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Warning, "警告", "用户名或密码不能为空！")
                 msgHint.exec_()
