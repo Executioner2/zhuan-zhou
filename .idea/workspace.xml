@@ -2,21 +2,46 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="824463d5-eacc-4b7d-bb38-0e74345ac0a3" name="Default Changelist" comment="agc">
-      <change afterPath="$PROJECT_DIR$/client/resource/user_file/wangwu/records/0.data" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/resource/user_file/wangwu/records/1.data" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/resource/user_file/wangwu/records/2.data" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/resource/records/2021-07-16/records.data" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/resource/user_file/wangwu/records.data" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ClientApplication.spec" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ServerApplication.spec" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/ClientApplication/Analysis-00.toc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/ClientApplication/ClientApplication.exe.manifest" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/ClientApplication/EXE-00.toc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/ClientApplication/PKG-00.pkg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/ClientApplication/PKG-00.toc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/ClientApplication/PYZ-00.pyz" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/ClientApplication/PYZ-00.toc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/ClientApplication/Tree-00.toc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/ClientApplication/Tree-01.toc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/ClientApplication/Tree-02.toc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/ClientApplication/base_library.zip" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/ClientApplication/runw.exe.2gebqx24" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/ClientApplication/warn-ClientApplication.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/ClientApplication/xref-ClientApplication.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/ServerApplication/Analysis-00.toc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/ServerApplication/EXE-00.toc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/ServerApplication/PKG-00.pkg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/ServerApplication/PKG-00.toc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/ServerApplication/PYZ-00.pyz" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/ServerApplication/PYZ-00.toc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/ServerApplication/ServerApplication.exe.manifest" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/ServerApplication/Tree-00.toc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/ServerApplication/Tree-01.toc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/ServerApplication/Tree-02.toc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/ServerApplication/base_library.zip" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/ServerApplication/warn-ServerApplication.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/ServerApplication/xref-ServerApplication.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client.ico" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/ClientApplication.exe" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/tt_voice.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/tzyx.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server.ico" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/ServerApplication.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/resource/config/login.ini" beforeDir="false" afterPath="$PROJECT_DIR$/client/resource/config/login.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/resource/config/user_config.ini" beforeDir="false" afterPath="$PROJECT_DIR$/client/resource/config/user_config.ini" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/resource/user_file/ls/records/0.data" beforeDir="false" afterPath="$PROJECT_DIR$/client/resource/user_file/ls/records/0.data" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/resource/user_file/ls/records/2.data" beforeDir="false" afterPath="$PROJECT_DIR$/client/resource/user_file/ls/records/2.data" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/resource/user_file/zs/records/0.data" beforeDir="false" afterPath="$PROJECT_DIR$/client/resource/user_file/zs/records/0.data" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/resource/config/connect_config.ini" beforeDir="false" afterPath="$PROJECT_DIR$/server/resource/config/connect_config.ini" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/resource/data_record/serverRecord.data" beforeDir="false" afterPath="$PROJECT_DIR$/server/resource/data_record/serverRecord.data" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/resource/records/2021-07-16/records.data" beforeDir="false" afterPath="$PROJECT_DIR$/server/resource/records/2021-07-16/records.data" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/resource/user_file/ls/records.data" beforeDir="false" afterPath="$PROJECT_DIR$/server/resource/user_file/ls/records.data" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/resource/user_file/zs/records.data" beforeDir="false" afterPath="$PROJECT_DIR$/server/resource/user_file/zs/records.data" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -184,11 +209,11 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Python.ClientApplication1" />
       <item itemvalue="Python.ClientApplication" />
+      <item itemvalue="Python.LoginWindow" />
       <item itemvalue="Python.ServerApplication" />
       <item itemvalue="Python.test (1)" />
-      <item itemvalue="Python.LoginWindow" />
-      <item itemvalue="Python.ClientApplication1" />
     </list>
     <recent_temporary>
       <list>
@@ -208,13 +233,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1623552947619</updated>
-    </task>
-    <task id="LOCAL-00037" summary="agc">
-      <created>1624093266354</created>
-      <option name="number" value="00037" />
-      <option name="presentableId" value="LOCAL-00037" />
-      <option name="project" value="LOCAL" />
-      <updated>1624093266354</updated>
     </task>
     <task id="LOCAL-00038" summary="agc">
       <created>1624101225396</created>
@@ -552,7 +570,14 @@
       <option name="project" value="LOCAL" />
       <updated>1626360828139</updated>
     </task>
-    <option name="localTasksCounter" value="86" />
+    <task id="LOCAL-00086" summary="agc">
+      <created>1626403165604</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1626403165605</updated>
+    </task>
+    <option name="localTasksCounter" value="87" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
